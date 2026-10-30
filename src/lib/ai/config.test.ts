@@ -25,6 +25,19 @@ describe("resolveAiConfig", () => {
     });
   });
 
+  it("takes deepseek as DeepSeek's OpenAI-compatible API, at its own address unless DOSSIER_AI_URL says otherwise", () => {
+    const deepseek = { DOSSIER_AI_PROVIDER: "deepseek", DOSSIER_AI_MODEL: "deepseek-flash", DOSSIER_AI_KEY: "sk-deepseek" } as const;
+    expect(resolveAiConfig(nothingSaved, deepseek)).toEqual({
+      provider: "OPENAI",
+      baseUrl: "https://api.deepseek.com",
+      model: "deepseek-flash",
+      apiKey: "sk-deepseek",
+      apiKeyProblem: null,
+      timeoutMs: 120_000,
+    });
+    expect(resolveAiConfig(nothingSaved, { ...deepseek, DOSSIER_AI_URL: "https://proxy.example/v1" }).baseUrl).toBe("https://proxy.example/v1");
+  });
+
   it("uses the DOSSIER_AI_* variables until a provider is saved", () => {
     const config = resolveAiConfig(nothingSaved, {
       DOSSIER_AI_PROVIDER: "anthropic",

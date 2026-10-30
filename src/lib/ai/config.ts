@@ -36,7 +36,12 @@ const FROM_ENV: Record<NonNullable<Env["DOSSIER_AI_PROVIDER"]>, AiProvider> = {
   anthropic: AiProvider.ANTHROPIC,
   mistral: AiProvider.MISTRAL,
   lmstudio: AiProvider.LMSTUDIO,
+  // DeepSeek speaks the OpenAI API; the name only saves typing its address.
+  deepseek: AiProvider.OPENAI,
 };
+
+/** DeepSeek's API, for DOSSIER_AI_PROVIDER=deepseek without a DOSSIER_AI_URL. */
+export const DEEPSEEK_URL = "https://api.deepseek.com";
 
 type SavedSettings = {
   provider: AiProvider | null;
@@ -76,7 +81,7 @@ export function resolveAiConfig(saved: SavedSettings | null, source: AiEnv, secr
 
   return {
     provider,
-    baseUrl: (useSaved ? saved!.baseUrl : source.DOSSIER_AI_URL) || defaults.baseUrl,
+    baseUrl: (useSaved ? saved!.baseUrl : source.DOSSIER_AI_URL) || (!useSaved && source.DOSSIER_AI_PROVIDER === "deepseek" ? DEEPSEEK_URL : defaults.baseUrl),
     model: (useSaved ? saved!.model : source.DOSSIER_AI_MODEL) || defaults.model,
     apiKey,
     apiKeyProblem,
