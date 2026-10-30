@@ -4,7 +4,7 @@ import { DOCUMENT_LANGUAGES, detectDirection, documentLanguage, hasRightToLeft }
 
 describe("documentLanguage", () => {
   it("knows every built-in language (SET-7)", () => {
-    expect(DOCUMENT_LANGUAGES).toHaveLength(21);
+    expect(DOCUMENT_LANGUAGES).toHaveLength(22);
     expect(documentLanguage("Persian", "")).toEqual({ lang: "fa", dir: "rtl" });
     expect(documentLanguage("arabic", "")).toEqual({ lang: "ar", dir: "rtl" });
     expect(documentLanguage("Chinese (Simplified)", "")).toEqual({ lang: "zh-Hans", dir: "ltr" });

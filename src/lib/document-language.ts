@@ -15,6 +15,8 @@ export const DOCUMENT_LANGUAGES: readonly LanguageInfo[] = [
   { name: "Spanish", tag: "es" },
   { name: "Italian", tag: "it" },
   { name: "Portuguese", tag: "pt" },
+  // As written in Portugal, Mozambique and Angola; "Portuguese" above is Brazil's.
+  { name: "Portuguese (European)", tag: "pt-PT" },
   { name: "Polish", tag: "pl" },
   { name: "Swedish", tag: "sv" },
   { name: "Danish", tag: "da" },
