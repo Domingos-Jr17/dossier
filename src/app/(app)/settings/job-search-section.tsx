@@ -178,6 +178,11 @@ export function JobSearchSection({ initial }: { initial: JobSearchSettingsView }
                   : `No key needed. Dossier searches your own FreeHire at ${view.freehire.host}.`}
               </p>
             )}
+            {source === "EMPREGO_MZ" && (
+              <p className="text-sm text-muted">
+                No key needed. Dossier reads emprego.co.mz&apos;s pages as a visitor would; set the country to Mozambique. Without keywords, the place picks a city&apos;s postings.
+              </p>
+            )}
 
             {testable && (
               <div className="flex flex-wrap items-center gap-3.5 pt-1">

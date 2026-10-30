@@ -47,6 +47,7 @@ const FROM_ENV: Record<NonNullable<Env["DOSSIER_JOBS_SOURCE"]>, JobSource | null
   adzuna: "ADZUNA",
   arbeitsagentur: "ARBEITSAGENTUR",
   freehire: "FREEHIRE",
+  "emprego-mz": "EMPREGO_MZ",
   off: null,
 };
 
@@ -153,6 +154,7 @@ export function credentialsFor<S extends JobSource>(config: JobSearchConfig, sou
       return {} as SourceCredentials[S];
     }
     case "FREEHIRE":
+    case "EMPREGO_MZ":
       return {} as SourceCredentials[S];
   }
 }

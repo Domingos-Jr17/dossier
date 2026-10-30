@@ -143,6 +143,14 @@ describe("requestContext", () => {
   });
 });
 
+describe("emprego.co.mz", () => {
+  it("is chosen with DOSSIER_JOBS_SOURCE=emprego-mz, and needs no key", () => {
+    const config = resolveJobSearchConfig(nothingSaved, { DOSSIER_JOBS_SOURCE: "emprego-mz" });
+    expect(config.source).toBe("EMPREGO_MZ");
+    expect(credentialsFor(config, "EMPREGO_MZ")).toEqual({});
+  });
+});
+
 describe("FreeHire from the environment", () => {
   it("chooses FreeHire when DOSSIER_JOBS_SOURCE says so", () => {
     expect(resolveJobSearchConfig(nothingSaved, { DOSSIER_JOBS_SOURCE: "freehire" }).source).toBe("FREEHIRE");

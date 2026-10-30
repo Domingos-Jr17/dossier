@@ -36,13 +36,14 @@ beforeEach(() => {
 });
 
 describe("JobSearchSection", () => {
-  it("offers the four sources and Off, as a radio group, Off by default", () => {
+  it("offers the five sources and Off, as a radio group, Off by default", () => {
     render(<JobSearchSection initial={off} />);
     expect(screen.getByRole("heading", { name: "Job search" })).toBeInTheDocument();
     expect(screen.getAllByRole("radio").map((radio) => radio.getAttribute("aria-label"))).toEqual([
       "JSearch",
       "Adzuna",
       "FreeHire",
+      "emprego.co.mz",
       "Bundesagentur für Arbeit",
       "Off",
     ]);
@@ -128,7 +129,14 @@ describe("JobSearchSection", () => {
 
   it("leaves the Arbeitsagentur out when the server doesn't offer it", () => {
     render(<JobSearchSection initial={withSource({ arbeitsagentur: { offered: false, acceptedAt: null } })} />);
-    expect(screen.getAllByRole("radio").map((radio) => radio.getAttribute("aria-label"))).toEqual(["JSearch", "Adzuna", "FreeHire", "Off"]);
+    expect(screen.getAllByRole("radio").map((radio) => radio.getAttribute("aria-label"))).toEqual(["JSearch", "Adzuna", "FreeHire", "emprego.co.mz", "Off"]);
+  });
+
+  it("says emprego.co.mz needs no key and is searched in Mozambique", () => {
+    render(<JobSearchSection initial={withSource({ source: "EMPREGO_MZ" })} />);
+    expect(screen.getByText(/No key needed\. Dossier reads emprego\.co\.mz's pages as a visitor would; set the country to Mozambique\./)).toBeInTheDocument();
+    expect(screen.queryByLabelText(/key/i)).not.toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "Test connection" })).toBeInTheDocument();
   });
 
   it("says which FreeHire it searches, with no key to ask for", () => {

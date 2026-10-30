@@ -47,6 +47,9 @@ export type SourceInfo = {
   radius: boolean;
 };
 
+/** emprego.co.mz, read from the pages a visitor sees (it has no API). */
+export const EMPREGO_MZ_URL = "https://www.emprego.co.mz";
+
 export const SOURCE_INFO: Record<JobSource, SourceInfo> = {
   JSEARCH: {
     name: "JSearch",
@@ -92,6 +95,18 @@ export const SOURCE_INFO: Record<JobSource, SourceInfo> = {
     attributionLink: null,
     countries: null,
     // It has a city filter, but only for the names it knows, and a country with it widens rather than narrows.
+    radius: false,
+  },
+  EMPREGO_MZ: {
+    name: "emprego.co.mz",
+    description: "Mozambique's main job board, with full postings. Read from its pages, as a visitor sees them; expired postings are left out.",
+    tag: "Mozambique only · free, no key · no distance filter",
+    keyUrl: null,
+    quotaPeriod: null,
+    attribution: "Vagas de emprego.co.mz",
+    attributionLink: { home: EMPREGO_MZ_URL, local: /^www\.emprego\.co\.mz$/ },
+    countries: ["mz"],
+    // Its city pages hold one city each; without keywords the place picks one, with them it only puts its postings first.
     radius: false,
   },
 };
