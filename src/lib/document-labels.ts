@@ -159,6 +159,23 @@ const WORDS: Record<string, Words> = {
     hiringTeam: "Equipe de recrutamento",
     greeting: (company) => (company ? `Prezada equipe de ${company},` : "Prezada equipe de recrutamento,"),
   },
+  "pt-PT": {
+    profile: "Perfil",
+    experience: "Experiência profissional",
+    projects: "Projectos",
+    publications: "Publicações",
+    education: "Formação académica",
+    skills: "Competências",
+    languages: "Línguas",
+    contact: "Contacto",
+    references: "Referências",
+    present: "Presente",
+    age: (years) => `${years} anos`,
+    levels: levels(["Língua materna", "Fluente (C2)", "Avançado (C1)", "Intermédio superior (B2)", "Intermédio (B1)", "Elementar (A2)", "Iniciante (A1)"]),
+    hiringTeam: "Departamento de Recursos Humanos",
+    // The formal greeting; with the company's name it would need its gender ("do Banco", "da Vodacom").
+    greeting: () => "Exmos. Senhores,",
+  },
   pl: {
     profile: "Profil",
     experience: "Doświadczenie zawodowe",

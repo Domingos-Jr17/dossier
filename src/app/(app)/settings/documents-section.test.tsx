@@ -45,11 +45,11 @@ describe("Documents settings (E10-3)", () => {
     expect(screen.getByLabelText("Resume length")).toHaveDisplayValue("One page");
   });
 
-  it("offers the posting's language, the 21 built-in ones and the user's own", () => {
+  it("offers the posting's language, the 22 built-in ones and the user's own", () => {
     open();
     const options = [...(screen.getByLabelText("Write documents in") as HTMLSelectElement).options].map((option) => option.text);
     expect(options[0]).toBe("The posting's language");
-    expect(options).toHaveLength(1 + 21 + 1 + 1);
+    expect(options).toHaveLength(1 + 22 + 1 + 1);
     expect(options.slice(-2)).toEqual(["Farsi", "Other language…"]);
   });
 
@@ -85,7 +85,7 @@ describe("Documents settings (E10-3)", () => {
     open();
     const select = screen.getByLabelText("Base resume language") as HTMLSelectElement;
     expect(select).toHaveDisplayValue("English");
-    expect(select.options).toHaveLength(21);
+    expect(select.options).toHaveLength(22);
     expect(select).toHaveAccessibleDescription("For its headings and dates. Tailored documents use their application's language.");
     await user.selectOptions(select, "German");
     expect(updateSettings).toHaveBeenLastCalledWith({ resumeLanguage: "German" });

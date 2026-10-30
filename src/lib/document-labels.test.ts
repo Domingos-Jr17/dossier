@@ -29,6 +29,14 @@ describe("document labels", () => {
     expect(ENGLISH_LABELS.levels[LanguageLevel.B2]).toBe("Upper intermediate (B2)");
   });
 
+  it("writes European Portuguese apart from Brazil's", () => {
+    const european = documentLabels("Portuguese (European)");
+    expect(european.locale).toBe("pt-PT");
+    expect([european.contact, european.hiringTeam, european.greeting("Vodacom")]).toEqual(["Contacto", "Departamento de Recursos Humanos", "Exmos. Senhores,"]);
+    expect(european.levels[LanguageLevel.B1]).toBe("Intermédio (B1)");
+    expect(documentLabels("Portuguese").contact).toBe("Contato");
+  });
+
   it("knows a language by its name, whatever its case, and Farsi as Persian", () => {
     expect(documentLabels(" german ").experience).toBe("Berufserfahrung");
     expect(documentLabels("Farsi")).toEqual(documentLabels("Persian"));
