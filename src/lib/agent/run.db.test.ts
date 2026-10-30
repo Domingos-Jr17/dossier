@@ -38,6 +38,9 @@ const fake = vi.hoisted(() => ({
   ai: true,
   failOn: null as string | null,
   onScore: (() => {}) as (title: string) => void,
+  /** The whole text a source gives for a posting that came with only its start. */
+  fullTexts: {} as Record<string, string>,
+  prompts: [] as string[],
 }));
 vi.mock("@/lib/job-search", () => ({
   searchPostings: vi.fn(async () => {
@@ -55,6 +58,9 @@ vi.mock("@/lib/job-search/config", () => ({
   credentialsFor: () => ({ key: "jsearch-key", host: "openwebninja" }),
   requestContext: () => ({}),
 }));
+vi.mock("@/lib/job-search/find", () => ({
+  fullText: vi.fn(async (posting: FoundPosting) => (posting.complete ? posting.description : (fake.fullTexts[posting.externalId] ?? null))),
+}));
 vi.mock("@/lib/ai/config", () => ({ isAiConfigured: async () => fake.ai }));
 vi.mock("@/lib/ai", async (importOriginal) => ({
   ...(await importOriginal<typeof import("@/lib/ai")>()),
@@ -63,6 +69,7 @@ vi.mock("@/lib/ai", async (importOriginal) => ({
       reply: (call) => {
         const { title } = JSON.parse(call.messages[0].content.split("The posting's facts:\n")[1].split("\n\nThe posting:")[0]) as { title: string };
         fake.onScore(title);
+        fake.prompts.push(call.messages[0].content);
         if (title === fake.failOn) return "not json at all";
         return { score: /senior/i.test(title) ? 90 : /designer/i.test(title) ? 75 : 40, reasons: [`Fits ${title}.`], redFlags: [] };
       },
@@ -103,12 +110,31 @@ const context = (abort?: AbortController): JobContext & { steps: string[] } => {
 
 beforeEach(async () => {
   await resetDatabase(prisma());
-  Object.assign(fake, { postings: page, searches: 0, source: "JSEARCH", ai: true, failOn: null, onScore: () => {} });
+  Object.assign(fake, { postings: page, searches: 0, source: "JSEARCH", ai: true, failOn: null, onScore: () => {}, fullTexts: {}, prompts: [] });
   await saveSettings({ agentEnabled: true, agentQuery: query });
 });
 afterAll(() => prisma().$disconnect());
 
 describe("runAgentScan (E16-3)", () => {
+  it("scores a posting that came with only its start on its whole text, and keeps that text", async () => {
+    fake.postings = [page[0], posting("d", "Product Designer", "2026-10-16T00:00:00Z", { description: "Already whole.", complete: true })];
+    fake.fullTexts = { a: "Senior Product Designer at Company a. Five years of design systems; Dutch and English." };
+    await runAgentScan({ manual: true }, context(), now);
+    expect(fake.prompts.some((prompt) => prompt.includes("Five years of design systems; Dutch and English."))).toBe(true);
+    expect(fake.prompts.some((prompt) => prompt.includes("Already whole."))).toBe(true);
+    const kept = await prisma().agentCandidate.findMany({ orderBy: { externalId: "asc" } });
+    expect(kept.map(({ externalId, description, complete }) => [externalId, description, complete])).toEqual([
+      ["a", fake.fullTexts.a, true],
+      ["d", "Already whole.", true],
+    ]);
+  });
+
+  it("scores the start when the whole posting can't be had", async () => {
+    fake.postings = [page[1]];
+    await runAgentScan({ manual: true }, context(), now);
+    expect(await prisma().agentCandidate.findMany({ select: { description: true, complete: true } })).toEqual([{ description: "Product Designer at Company b.", complete: false }]);
+  });
+
   it("searches once, scores the new postings and keeps them, below the minimum too", async () => {
     const run = context();
     const result = await runAgentScan({ manual: false }, run, now);

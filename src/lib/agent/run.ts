@@ -12,6 +12,7 @@ import { scorePosting } from "@/lib/ai/tasks";
 import { searchPostings } from "@/lib/job-search";
 import { credentialsFor, loadJobSearchConfig, requestContext } from "@/lib/job-search/config";
 import { JobSearchError } from "@/lib/job-search/errors";
+import { fullText } from "@/lib/job-search/find";
 import { postingKey, postingText, type FoundPosting, type SearchQuery } from "@/lib/job-search/search";
 import { startJob, type JobContext } from "@/lib/jobs/runner";
 import { logServerError } from "@/lib/log";
@@ -134,9 +135,13 @@ export async function runAgentScan({ manual }: { manual: boolean }, context: Job
   let queued = 0;
   const kept: string[] = [];
   let problem: string | null = null;
-  for (const posting of toScore) {
+  for (const found of toScore) {
     if (context.signal.aborted) break;
     try {
+      // A source that sent only the start of a posting is asked for the rest
+      // first, as Score in Find jobs does: a one-line summary scores poorly.
+      const whole = found.complete ? null : await fullText(found);
+      const posting = whole ? { ...found, description: whole.slice(0, 100_000), complete: true } : found;
       const { data, promptVersion } = await scorePosting(
         provider,
         { posting: postingText(posting), title: posting.title, company: posting.company, place: posting.place, remote: posting.remote, salary: posting.salary, profile },
