@@ -25,8 +25,28 @@ const SOURCE = "KUKWIRA";
 const MAX_BYTES = 2 * 1024 * 1024;
 const CA = [...tls.rootCertificates, SECTIGO_DV_R36];
 
-/** GETs a page from Kukwira, turning every failure into a JobSearchError. */
+/** A connection that failed before any answer, as Kukwira's server sometimes resets one. */
+class ConnectionFailed extends Error {}
+
+const RETRY_DELAY_MS = 500;
+const unwrap = (error: unknown) => (error instanceof ConnectionFailed ? (error.cause as Error) : error);
+
+/**
+ * GETs a page from Kukwira, turning every failure into a JobSearchError. Its
+ * server now and then resets a connection, so one that fails before any
+ * answer is tried once more.
+ */
 async function requestText(url: URL, signal?: AbortSignal): Promise<string> {
+  try {
+    return await requestOnce(url, signal);
+  } catch (error) {
+    if (!(error instanceof ConnectionFailed) || signal?.aborted) throw unwrap(error);
+    await new Promise((resolve) => setTimeout(resolve, RETRY_DELAY_MS));
+    return requestOnce(url, signal).catch((again) => Promise.reject(unwrap(again)));
+  }
+}
+
+async function requestOnce(url: URL, signal?: AbortSignal): Promise<string> {
   const detail = (reason: string) => ({ detail: `${url.pathname}: ${reason}` });
   return new Promise((resolve, reject) => {
     const client = url.protocol === "https:" ? https : http;
@@ -52,7 +72,11 @@ async function requestText(url: URL, signal?: AbortSignal): Promise<string> {
       incoming.on("error", (error) => reject(jobSearchError("unavailable", SOURCE, detail(error.message))));
     });
     outgoing.on("timeout", () => outgoing.destroy(Object.assign(new Error("timed out"), { code: "ETIMEDOUT" })));
-    outgoing.on("error", (error: Error & { code?: string }) => reject(jobSearchError("unavailable", SOURCE, detail(error.code ?? error.message))));
+    outgoing.on("error", (error: Error & { code?: string }) => {
+      const failure = jobSearchError("unavailable", SOURCE, detail(error.code ?? error.message));
+      // Waiting as long again for a server that didn't answer in time helps no one.
+      reject(error.code === "ETIMEDOUT" ? failure : new ConnectionFailed("no answer", { cause: failure }));
+    });
   });
 }
 

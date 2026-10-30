@@ -57,12 +57,19 @@ describe("Kukwira's fragments", () => {
 describe("Kukwira adapter", () => {
   const requests: string[] = [];
   let status = 200;
+  /** How many of the next requests the server drops without answering, as Kukwira's sometimes does. */
+  let resets = 0;
   let server: http.Server;
   let baseUrl = "";
 
   beforeAll(async () => {
     server = http.createServer((request, response) => {
       requests.push(request.url ?? "");
+      if (resets > 0) {
+        resets -= 1;
+        request.socket.destroy();
+        return;
+      }
       response.writeHead(status, { "content-type": "text/html; charset=UTF-8" });
       response.end(request.url?.startsWith("/endpoints/") ? kukwiraInfo : kukwiraOpenings);
     });
@@ -83,6 +90,17 @@ describe("Kukwira adapter", () => {
     await expect(kukwira.details(posting, {}, { baseUrl })).resolves.toMatch(/^Chefe de Secção de Trade/);
     expect(requests.at(-1)).toBe("/endpoints/info_endpoint.php?process_id=500");
     await expect(kukwira.details({ ...posting, externalId: "500&x=1" }, {}, { baseUrl })).resolves.toBeNull();
+  });
+
+  it("tries once more when the server drops the connection, then gives up", async () => {
+    resets = 1;
+    const before = requests.length;
+    await expect(kukwira.search(query, {}, null, { baseUrl })).resolves.toMatchObject({ postings: [expect.objectContaining({ externalId: "500" }), expect.anything()] });
+    expect(requests.length - before).toBe(2);
+    resets = 5;
+    await expect(kukwira.search(query, {}, null, { baseUrl })).rejects.toMatchObject({ problem: "unavailable", detail: expect.stringContaining("ECONNRESET") });
+    expect(requests.length - before).toBe(4);
+    resets = 0;
   });
 
   it("says when the site is down, and tests with the list", async () => {
