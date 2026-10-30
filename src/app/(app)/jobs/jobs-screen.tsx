@@ -197,7 +197,7 @@ function SearchForm({
     event.preventDefault();
     if (pending) return;
     const problems = {
-      keywords: form.keywords.trim() ? undefined : "Type what you're looking for.",
+      keywords: form.keywords.trim() || SOURCE_INFO[source].browses ? undefined : "Type what you're looking for.",
       country: form.country ? uncovered : "Choose a country.",
     };
     setErrors(problems);

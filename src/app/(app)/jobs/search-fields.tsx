@@ -44,7 +44,7 @@ export function SearchFields({
         label="What"
         className="sm:col-span-2 lg:col-span-1"
         value={value.keywords}
-        placeholder="Job title, skill or company"
+        placeholder={source !== null && SOURCE_INFO[source].browses ? "Optional: job title or skill" : "Job title, skill or company"}
         error={errors.keywords}
         onChange={(event) => onChange({ keywords: event.target.value })}
         onBlur={onBlur}

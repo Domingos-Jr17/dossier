@@ -45,6 +45,8 @@ export type SourceInfo = {
   countries: readonly string[] | null;
   /** Whether it looks within a distance of the place; without, the place only puts postings there first. */
   radius: boolean;
+  /** Whether it lists postings without keywords too (a city's, or the newest), so "What" can stay empty. */
+  browses: boolean;
 };
 
 /** emprego.co.mz, read from the pages a visitor sees (it has no API). */
@@ -64,6 +66,7 @@ export const SOURCE_INFO: Record<JobSource, SourceInfo> = {
     attributionLink: null,
     countries: null,
     radius: true,
+    browses: false,
   },
   ADZUNA: {
     name: "Adzuna",
@@ -76,6 +79,7 @@ export const SOURCE_INFO: Record<JobSource, SourceInfo> = {
     attributionLink: { home: "https://www.adzuna.co.uk", local: /^www\.adzuna\.(?:[a-z]{2,3}|co\.[a-z]{2}|com\.[a-z]{2})$/ },
     countries: ["at", "au", "be", "br", "ca", "ch", "de", "es", "fr", "gb", "in", "it", "mx", "nl", "nz", "pl", "sg", "us", "za"],
     radius: true,
+    browses: false,
   },
   ARBEITSAGENTUR: {
     name: "Bundesagentur für Arbeit",
@@ -87,6 +91,7 @@ export const SOURCE_INFO: Record<JobSource, SourceInfo> = {
     attributionLink: null,
     countries: ["de"],
     radius: true,
+    browses: false,
   },
   FREEHIRE: {
     name: "FreeHire",
@@ -99,6 +104,7 @@ export const SOURCE_INFO: Record<JobSource, SourceInfo> = {
     countries: null,
     // It has a city filter, but only for the names it knows, and a country with it widens rather than narrows.
     radius: false,
+    browses: false,
   },
   EMPREGO_MZ: {
     name: "emprego.co.mz",
@@ -111,6 +117,7 @@ export const SOURCE_INFO: Record<JobSource, SourceInfo> = {
     countries: ["mz"],
     // Its city pages hold one city each; without keywords the place picks one, with them it only puts its postings first.
     radius: false,
+    browses: true,
   },
   KUKWIRA: {
     name: "Kukwira",
@@ -123,6 +130,7 @@ export const SOURCE_INFO: Record<JobSource, SourceInfo> = {
     countries: ["mz"],
     // Its openings don't say where the job is.
     radius: false,
+    browses: true,
   },
 };
 

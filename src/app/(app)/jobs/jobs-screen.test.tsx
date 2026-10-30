@@ -150,6 +150,14 @@ describe("the search form", () => {
     expect(screen.getByLabelText("Within")).toBeDisabled();
   });
 
+  it("lets a source that lists postings by place search without keywords", async () => {
+    renderScreen({ source: "EMPREGO_MZ", countries: [...countries, { code: "mz", name: "Mozambique" }], query: { ...EMPTY_QUERY, place: "Maputo", country: "mz" } });
+    expect(screen.getByLabelText("What")).toHaveAttribute("placeholder", "Optional: job title or skill");
+    await userEvent.click(screen.getByRole("button", { name: "Search" }));
+    expect(screen.queryByText("Type what you're looking for.")).not.toBeInTheDocument();
+    expect(runJobSearch).toHaveBeenCalledWith({ query: { ...EMPTY_QUERY, place: "Maputo", country: "mz" } });
+  });
+
   it("has no radius for a source without one", () => {
     renderScreen({ source: "FREEHIRE" });
     expect(screen.getByLabelText("Within")).toBeDisabled();
@@ -320,6 +328,11 @@ describe("the results", () => {
   it("says when nothing was found on a source without a radius", () => {
     renderScreen({ source: "FREEHIRE", search: { ...stored([]), source: "FREEHIRE" } });
     expect(screen.getByText("No postings for “product designer” in Hamburg. Try fewer words.")).toBeInTheDocument();
+  });
+
+  it("says when a search without keywords found nothing open", () => {
+    renderScreen({ source: "EMPREGO_MZ", search: { ...stored([]), source: "EMPREGO_MZ", query: { ...query, keywords: "", place: "Pemba", country: "mz" } } });
+    expect(screen.getByText("No open postings in Pemba right now.")).toBeInTheDocument();
   });
 
   it("labels each of Adzuna's postings with a link to its site for the posting's country, as its terms ask", () => {
