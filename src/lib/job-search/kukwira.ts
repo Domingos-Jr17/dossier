@@ -113,6 +113,13 @@ export function matches(posting: Pick<FoundPosting, "title" | "description">, ke
     .every((word) => haystack.includes(word));
 }
 
+/**
+ * Kukwira recruits for clients it doesn't name, so it isn't the employer:
+ * said in each opening's text, so the AI doesn't write to Kukwira as if it
+ * were (it did, in a cover letter, before).
+ */
+export const AGENCY_NOTE = "Recrutamento através da Kukwira, uma agência de recrutamento: a oferta não diz qual é a empresa cliente.";
+
 const postingUrl = (id: string, baseUrl: string) => `${baseUrl}/#/info#${id}`;
 const applyUrl = (id: string, baseUrl: string) => `${baseUrl}/#/candidatura#${id}`;
 
@@ -132,15 +139,15 @@ export function parseOpenings(html: string, baseUrl = KUKWIRA_URL): FoundPosting
       source: SOURCE,
       externalId: id,
       title: tidy(heading?.text ?? "").slice(0, 500),
-      company: "Kukwira",
+      // The client it recruits for isn't named; Kukwira is where it was found.
+      company: "",
       place: "",
       remote: null,
       salary: "",
       postedAt: null,
       url: postingUrl(id, base).slice(0, 2000),
-      via: "",
-      description: parts
-        .map(({ label, text }) => (label ? `${label}\n${text}` : text))
+      via: "Kukwira",
+      description: [AGENCY_NOTE, ...parts.map(({ label, text }) => (label ? `${label}\n${text}` : text))]
         .join("\n\n")
         .slice(0, 100_000),
       complete: false,
@@ -161,7 +168,7 @@ export function openingText(html: string, id: string, baseUrl = KUKWIRA_URL): st
     .filter((part) => part.text)
     .map(({ label, text }) => (label ? `${label}\n${text}` : text));
   if (!title && parts.length === 0) return null;
-  return [title, ...parts, `Candidatura: ${applyUrl(id, baseUrl.replace(/\/+$/, ""))}`].filter(Boolean).join("\n\n");
+  return [title, AGENCY_NOTE, ...parts, `Candidatura: ${applyUrl(id, baseUrl.replace(/\/+$/, ""))}`].filter(Boolean).join("\n\n");
 }
 
 async function searchPage(query: SearchQuery, _credentials: Record<string, never>, _next: string | null, context: RequestContext = {}): Promise<SearchPage> {

@@ -5,7 +5,7 @@ import { afterAll, beforeAll, describe, expect, it } from "vitest";
 
 import { kukwiraInfo, kukwiraOpenings } from "@/test/mozambique-job-fixtures";
 
-import { kukwira, matches, openingText, parseOpenings } from "./kukwira";
+import { AGENCY_NOTE, kukwira, matches, openingText, parseOpenings } from "./kukwira";
 import { EMPTY_QUERY } from "./search";
 
 const query = { ...EMPTY_QUERY, country: "mz" };
@@ -18,14 +18,15 @@ describe("Kukwira's fragments", () => {
       source: "KUKWIRA",
       externalId: "500",
       title: "Chefe de Secção de Trade - Banca Transaccional",
-      company: "Kukwira",
+      company: "",
       place: "",
       remote: null,
       salary: "",
       postedAt: null,
       url: "https://www.kukwira.co.mz/#/info#500",
-      via: "",
+      via: "Kukwira",
       description: [
+        AGENCY_NOTE,
         "Descrição\n- Desenvolver estratégias de produtos e vendas;\n- Identificar oportunidades de venda cruzada (cross-selling) e venda incrementa...",
         "Requisitos\n- Licenciatura em Gestão, Finanças, Economia ou áreas afins;\n- Mínimo de 5 anos de experiência na área de Banca...",
       ].join("\n\n"),
@@ -45,6 +46,7 @@ describe("Kukwira's fragments", () => {
     expect(openingText(kukwiraInfo, "500")).toBe(
       [
         "Chefe de Secção de Trade - Banca Transaccional",
+        AGENCY_NOTE,
         "Descrição\n- Desenvolver estratégias de produtos e vendas;\n- Identificar oportunidades de venda cruzada (cross-selling) e venda incremental de produtos e serviços;",
         "Requisitos\n- Licenciatura em Gestão, Finanças, Economia ou áreas afins;\n- Fluência em Português e Inglês;",
         "Candidatura: https://www.kukwira.co.mz/#/candidatura#500",
