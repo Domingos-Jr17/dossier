@@ -7,10 +7,10 @@ import { action, ActionError } from "@/lib/action";
 import { createApplicationFromDocuments } from "@/lib/application-create";
 import { matchSchema } from "@/lib/application-data";
 import { handOffPastedPosting } from "@/lib/connector/handoff";
+import { fetchPostingFromLink } from "@/lib/job-search/fetch-posting";
 import { readPostingJob } from "@/lib/jobs/read-posting";
 import { startJob } from "@/lib/jobs/runner";
 import { writeDocumentsJob } from "@/lib/jobs/write-documents";
-import { fetchPosting } from "@/lib/posting-fetch";
 import { prisma } from "@/lib/prisma";
 
 /** "Read the posting →": starts reading it in the background and returns the job's id (E7-2). */
@@ -88,7 +88,7 @@ export const startWritingDocuments = action(
 export const fetchPostingText = action(z.object({ link: z.string().max(2000) }), async ({ link }) => {
   const url = postingLink(link);
   if (!url) throw new ActionError("Enter the link to the posting first.");
-  const fetched = await fetchPosting(url);
+  const fetched = await fetchPostingFromLink(url);
   if (!fetched.ok) throw new ActionError(fetched.error);
   return { text: fetched.text, url: fetched.url };
 });

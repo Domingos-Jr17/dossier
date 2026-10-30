@@ -11,11 +11,11 @@ import { scoreFrom } from "@/lib/ai/tasks/score-posting";
 import { unitsSchema } from "@/lib/application-data";
 import { fitBand } from "@/lib/fit";
 import { countryCodeFor, countryName } from "@/lib/job-search/countries";
+import { fetchPostingFromLink } from "@/lib/job-search/fetch-posting";
 import { fullText } from "@/lib/job-search/find";
 import { DEFAULT_RADIUS_KM, foundPostingSchema, POSTED_WITHIN, postingText, RADII_KM, type FoundPosting, type PostedWithin, type SearchQuery, type ShownPosting } from "@/lib/job-search/search";
 import { getJob, startJob } from "@/lib/jobs/runner";
 import { withoutPrivateParts } from "@/lib/letter-frame";
-import { fetchPosting } from "@/lib/posting-fetch";
 import { saveScore } from "@/lib/posting-scores";
 import { loadSearch, runSearch, showMoreFor } from "@/lib/posting-searches";
 import { foundFromPosting, storePosting } from "@/lib/postings";
@@ -115,7 +115,7 @@ async function resolvePosting(source: PostingSource): Promise<ResolvedPosting | 
     };
   }
   if (source.posting_url) {
-    const fetched = await fetchPosting(source.posting_url);
+    const fetched = await fetchPostingFromLink(source.posting_url);
     if (!fetched.ok) return { error: `${fetched.error} Paste the posting's text as posting_text instead.` };
     return { text: fetched.text, url: fetched.url, postingId: null };
   }
