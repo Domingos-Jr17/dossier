@@ -5,6 +5,7 @@ import { handsOffToClaude } from "@/lib/connector/handoff";
 import { loadJobSearchConfig } from "@/lib/job-search/config";
 import { COUNTRIES } from "@/lib/job-search/countries";
 import { defaultSearch, latestRole, queryFromParams, viewFromParams } from "@/lib/job-search/search";
+import { SOURCE_INFO } from "@/lib/job-search/sources";
 import { countSearches, listSearches, loadSearch } from "@/lib/posting-searches";
 import { countPostings, listPostings } from "@/lib/postings";
 import { prisma } from "@/lib/prisma";
@@ -49,7 +50,7 @@ export default async function JobsPage({ searchParams }: PageProps<"/jobs">) {
       // Named here: the browser's ICU can name a few countries differently from the server's.
       countries={COUNTRIES}
       view={view}
-      query={typed ?? search?.query ?? (await latestQuery()) ?? (await profileSearch())}
+      query={typed ?? search?.query ?? (await latestQuery()) ?? (await profileSearch(config.source !== null && SOURCE_INFO[config.source].browses))}
       search={search}
       missingSearch={Boolean(searchId) && !search}
       kept={kept}
@@ -65,12 +66,16 @@ async function latestQuery() {
   return (await loadSearch())?.query ?? null;
 }
 
-/** The first search: the current or latest role, in the profile's city and country. */
-async function profileSearch() {
+/**
+ * The first search: the current or latest role, in the profile's city and
+ * country. A source that lists postings by place starts from the place
+ * alone: a whole job title rarely matches its own search (emprego.co.mz).
+ */
+async function profileSearch(byPlace: boolean) {
   const [fields, experience] = await Promise.all([
     prisma.profileField.findMany({ where: { key: { in: ["city", "country"] } } }),
     prisma.experience.findMany({ select: { role: true, current: true, startYear: true, startMonth: true, endYear: true, endMonth: true } }),
   ]);
   const field = (key: string) => fields.find((entry) => entry.key === key)?.value ?? "";
-  return defaultSearch({ role: latestRole(experience), city: field("city"), country: field("country") });
+  return defaultSearch({ role: byPlace ? "" : latestRole(experience), city: field("city"), country: field("country") });
 }
