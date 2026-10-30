@@ -1,6 +1,6 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
 
-import { empregoMzCityPage, empregoMzFrontPage, empregoMzPosting, empregoMzSearchPage } from "@/test/emprego-mz-fixtures";
+import { empregoMzCityPage, empregoMzFrontPage, empregoMzPosting, empregoMzSearchPage } from "@/test/mozambique-job-fixtures";
 
 import { citySlug, empregoMz, firstPageUrl, parseListPage, postingText } from "./emprego-mz";
 import { EMPTY_QUERY } from "./search";

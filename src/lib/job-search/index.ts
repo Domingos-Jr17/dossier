@@ -10,6 +10,7 @@ import { arbeitsagentur } from "./arbeitsagentur";
 import { empregoMz } from "./emprego-mz";
 import { freehire } from "./freehire";
 import { jsearch } from "./jsearch";
+import { kukwira } from "./kukwira";
 import { postingKey, type FoundPosting, type JobSource, type SearchPage, type SearchQuery } from "./search";
 import { sourceCovers } from "./sources";
 
@@ -27,6 +28,7 @@ const ADAPTERS: { [S in JobSource]: JobSourceAdapter<S> } = {
   ARBEITSAGENTUR: arbeitsagentur,
   FREEHIRE: freehire,
   EMPREGO_MZ: empregoMz,
+  KUKWIRA: kukwira,
 };
 
 const adapterFor = <S extends JobSource>(source: S) => ADAPTERS[source] as JobSourceAdapter<S>;

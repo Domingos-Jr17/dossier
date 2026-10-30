@@ -50,6 +50,9 @@ export type SourceInfo = {
 /** emprego.co.mz, read from the pages a visitor sees (it has no API). */
 export const EMPREGO_MZ_URL = "https://www.emprego.co.mz";
 
+/** Kukwira's site, whose openings are read from the fragments its own pages load. */
+export const KUKWIRA_URL = "https://www.kukwira.co.mz";
+
 export const SOURCE_INFO: Record<JobSource, SourceInfo> = {
   JSEARCH: {
     name: "JSearch",
@@ -107,6 +110,18 @@ export const SOURCE_INFO: Record<JobSource, SourceInfo> = {
     attributionLink: { home: EMPREGO_MZ_URL, local: /^www\.emprego\.co\.mz$/ },
     countries: ["mz"],
     // Its city pages hold one city each; without keywords the place picks one, with them it only puts its postings first.
+    radius: false,
+  },
+  KUKWIRA: {
+    name: "Kukwira",
+    description: "A Mozambican recruitment agency's own openings, with full postings. A handful at a time; keywords are matched in their text.",
+    tag: "Mozambique only · free, no key · no place filter",
+    keyUrl: null,
+    quotaPeriod: null,
+    attribution: "Vagas da Kukwira",
+    attributionLink: { home: KUKWIRA_URL, local: /^www\.kukwira\.co\.mz$/ },
+    countries: ["mz"],
+    // Its openings don't say where the job is.
     radius: false,
   },
 };

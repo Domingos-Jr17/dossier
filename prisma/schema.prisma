@@ -584,6 +584,7 @@ enum PostingSource {
   ARBEITSAGENTUR
   FREEHIRE
   EMPREGO_MZ
+  KUKWIRA
 }
 
 /// A posting from Find jobs that the user kept (E14-5): saved, dismissed, or

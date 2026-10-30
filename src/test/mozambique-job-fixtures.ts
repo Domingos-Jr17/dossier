@@ -1,5 +1,5 @@
-// emprego.co.mz's pages, cut down to what the adapter reads (markup as served
-// in October 2026, unquoted attributes included).
+// emprego.co.mz's and Kukwira's pages, cut down to what the adapters read
+// (markup as served in October 2026, unquoted attributes included).
 
 /** A search: list rows with a closing date or "Expirado", and a next page. */
 export const empregoMzSearchPage = `<!doctype html><html><head>
@@ -25,3 +25,36 @@ export const empregoMzFrontPage = `<!doctype html><html><head></head><body><ul>
 export const empregoMzPosting = `<!doctype html><html><head>
 <script type="application/ld+json">{"@context":"http://schema.org","@type":"JobPosting","title":"Agronomist","description":"Heading is hiring an Agronomist, in Maputo, Mozambique."}</script>
 </head><body><nav>Menu</nav><div class="content-col-1-2 adjust content-vacancy left right-24m border-top top-20p"><h2 class="page-small-title">Vaga</h2><h1 class="h3">Agronomist</h1><h3 class="h4">Heading Moçambique</h3><div class=medium-large-text> Heading is recruiting an Agronomist, to be based in Maputo, Mozambique.<h6>Duties</h6><ul> <li>Identify, select and test the seeds required for the vegetable oil production initiatives (bio feedstock)</li> <li>Evaluate, identify and select the best cultivation systems and cycles for bio feedstock production</li></ul></div><div></div><div class="how-to-apply-section hidden"><h6> <b>Como se Candidatar</b></h6><ul> <li><div class=needs-logout> Via employer's website <a href="https://www.emprego.co.mz/candidato/vaga/?vacancy_id=50001" class=filter-login>Login</a></div><div class=needs-login> Via employer's website <a href="https://bit.ly/agronomist-maputo" target=_blank>https://bit.ly/agronomist-maputo</a></div></li></ul></div></div><footer>Rodapé</footer></body></html>`;
+
+// Kukwira's fragments, cut down (markup as served in October 2026).
+
+/** /partials/oportunidades.php: one card per opening, its text cut short. */
+export const kukwiraOpenings = `<div ng-controller="oportunidadesController" ng-init="initialize()"><section><div class="container"><div class="row">
+<h3 class="text-center p-bottom-20 section-title">OFERTAS DE EMPREGO</h3>
+<div class="bg-orange-light p-20">
+<h5 class="text-center"><span class="text_bold">Cargo </span>Chefe de Secção de Trade - Banca Transaccional</h5>
+<p><span class="text_bold">Descrição:</span>  • Desenvolver estratégias de produtos e vendas;
+• Identificar oportunidades de venda cruzada (cross-selling) e venda incrementa...</p>
+<p><span class="text_bold">Requisitos-:</span> •  Licenciatura em Gestão, Finanças, Economia ou áreas afins;
+•  Mínimo de 5 anos de experiência na área de Banca...</p>
+<a href="#/info#500" class="btn button-orange-full-width text-uppercase">+ Info</a>
+<a href="#/candidatura#500" class="btn button-orange-full-width text-uppercase">CANDIDATAR-SE</a>
+</div>
+<div class="bg-orange-light p-20">
+<h5 class="text-center"><span class="text_bold">Cargo </span>Técnico de Manutenção</h5>
+<p><span class="text_bold">Descrição:</span> • Manutenção preventiva de geradores</p>
+<a href="#/info#501" class="btn button-orange-full-width text-uppercase">+ Info</a>
+</div>
+</div></div></section></div>`;
+
+/** /endpoints/info_endpoint.php?process_id=500: the opening's whole text. */
+export const kukwiraInfo = `<h5 class="text-center p-bottom-20 section-title"></h5>
+<h5 class="text-center"><span class="text_bold">Cargo: </span>Chefe de Secção de Trade - Banca Transaccional</h5>
+<p><span class="text_bold"></span> </p>
+<p><span class="text_bold">Descrição:</span>  • Desenvolver estratégias de produtos e vendas;
+• Identificar oportunidades de venda cruzada (cross-selling) e venda incremental de produtos e serviços;
+</p>
+<p><span class="text_bold">Requisitos:</span> •  Licenciatura em Gestão, Finanças, Economia ou áreas afins;
+•  Fluência em Português e Inglês;
+</p>
+<div class="row p-top-20 col-lg-12"><a href="#/oportunidades" class="btn">Voltar</a><a href="#/candidatura#500" class="btn">CANDIDATAR-SE</a></div>`;

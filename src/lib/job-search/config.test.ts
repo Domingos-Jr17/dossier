@@ -143,11 +143,17 @@ describe("requestContext", () => {
   });
 });
 
-describe("emprego.co.mz", () => {
+describe("Mozambique's sources", () => {
   it("is chosen with DOSSIER_JOBS_SOURCE=emprego-mz, and needs no key", () => {
     const config = resolveJobSearchConfig(nothingSaved, { DOSSIER_JOBS_SOURCE: "emprego-mz" });
     expect(config.source).toBe("EMPREGO_MZ");
     expect(credentialsFor(config, "EMPREGO_MZ")).toEqual({});
+  });
+
+  it("chooses Kukwira with DOSSIER_JOBS_SOURCE=kukwira, which needs no key either", () => {
+    const config = resolveJobSearchConfig(nothingSaved, { DOSSIER_JOBS_SOURCE: "kukwira" });
+    expect(config.source).toBe("KUKWIRA");
+    expect(credentialsFor(config, "KUKWIRA")).toEqual({});
   });
 });
 

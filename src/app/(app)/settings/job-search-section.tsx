@@ -183,6 +183,11 @@ export function JobSearchSection({ initial }: { initial: JobSearchSettingsView }
                 No key needed. Dossier reads emprego.co.mz&apos;s pages as a visitor would; set the country to Mozambique. Without keywords, the place picks a city&apos;s postings.
               </p>
             )}
+            {source === "KUKWIRA" && (
+              <p className="text-sm text-muted">
+                No key needed. Dossier reads Kukwira&apos;s current openings, usually a handful; set the country to Mozambique. Its openings don&apos;t say where the job is, so the place isn&apos;t used.
+              </p>
+            )}
 
             {testable && (
               <div className="flex flex-wrap items-center gap-3.5 pt-1">
