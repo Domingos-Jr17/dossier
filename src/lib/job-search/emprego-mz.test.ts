@@ -97,14 +97,22 @@ describe("emprego.co.mz postings", () => {
 });
 
 describe("emprego.co.mz adapter", () => {
+  it("reaches localhost only for the end-to-end tests' fake source", async () => {
+    fetchHtml.mockResolvedValue(page(empregoMzFrontPage));
+    await empregoMz.search(query, {}, null, { baseUrl: "http://localhost:3998/emprego_mz" });
+    expect(fetchHtml).toHaveBeenLastCalledWith("http://localhost:3998/emprego_mz/", { lookup: expect.any(Function) });
+    await empregoMz.search(query, {}, null);
+    expect(fetchHtml.mock.lastCall?.[1]).toEqual({});
+  });
+
   it("asks the first page, then follows the site's own next link only", async () => {
     fetchHtml.mockResolvedValue(page(empregoMzSearchPage));
     const first = await empregoMz.search({ ...query, keywords: "gestão" }, {}, null);
-    expect(fetchHtml).toHaveBeenLastCalledWith("https://www.emprego.co.mz/pesquisa/gest%C3%A3o/");
+    expect(fetchHtml).toHaveBeenLastCalledWith("https://www.emprego.co.mz/pesquisa/gest%C3%A3o/", {});
     await empregoMz.search({ ...query, keywords: "gestão" }, {}, first.next);
-    expect(fetchHtml).toHaveBeenLastCalledWith("https://www.emprego.co.mz/pesquisa/gestao/page/2/");
+    expect(fetchHtml).toHaveBeenLastCalledWith("https://www.emprego.co.mz/pesquisa/gestao/page/2/", {});
     await empregoMz.search({ ...query, keywords: "gestão" }, {}, "https://elsewhere.example/page/2/");
-    expect(fetchHtml).toHaveBeenLastCalledWith("https://www.emprego.co.mz/pesquisa/gest%C3%A3o/");
+    expect(fetchHtml).toHaveBeenLastCalledWith("https://www.emprego.co.mz/pesquisa/gest%C3%A3o/", {});
   });
 
   it("finds nothing for a city without a page, and reports the site being down", async () => {
@@ -121,6 +129,6 @@ describe("emprego.co.mz adapter", () => {
     await expect(empregoMz.details({ ...posting, url: "" }, {})).resolves.toBeNull();
     fetchHtml.mockResolvedValue(page(empregoMzFrontPage));
     await expect(empregoMz.test({})).resolves.toBeUndefined();
-    expect(fetchHtml).toHaveBeenLastCalledWith("https://www.emprego.co.mz/");
+    expect(fetchHtml).toHaveBeenLastCalledWith("https://www.emprego.co.mz/", {});
   });
 });

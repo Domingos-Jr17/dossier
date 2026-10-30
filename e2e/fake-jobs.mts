@@ -36,6 +36,29 @@ function send(response: ServerResponse, status: number, body: unknown) {
   response.end(JSON.stringify(body));
 }
 
+function sendHtml(response: ServerResponse, status: number, html: string) {
+  response.writeHead(status, { "content-type": "text/html; charset=UTF-8" });
+  response.end(html);
+}
+
+// Mozambique's sources have no API: the app reads their pages, so these
+// answer with pages in their markup (src/test/mozambique-job-fixtures.ts has
+// the real ones, cut down), their links pointing back here.
+const EMPREGO = `http://localhost:${port}/emprego_mz`;
+const empregoRow = (slug: string, title: string, company: string, city: string, validity: string) =>
+  `<li class=clearfix><div class="col-65-10 right-m-3p left bold"><h3 class="normal-text"> <a href=${EMPREGO}/vaga/${slug}/ title="${title}"> ${title} </a></h3><h4 class="lowlight ellipsis-text"> A ${company} está a recrutar um ${title}, para ${city}.</h4> <span class=lowlight> <a href=${EMPREGO}/empregador/${slug}-empresa/ class=companylink> ${company} </a> </span></div><div class="col-15-10 right-m-3p left lowlight"> <a href=${EMPREGO}/cidade/${city.toLowerCase()}/ rel=tag>${city}</a></div><div class="col-1-7 left lowlight"> ${validity}</div> </li>`;
+const empregoList = `<!doctype html><html><head></head><body><ul>
+${empregoRow("engenheiro-civil-senior", "Engenheiro Civil Sénior", "Construtora Baía", "Maputo", "30.11.2026")}
+${empregoRow("contabilista-e2e", "Contabilista", "Banco Exemplo", "Beira", "Expirado")}
+</ul></body></html>`;
+const empregoPosting = `<!doctype html><html><head></head><body><div class="content-col-1-2 adjust content-vacancy left"><h2 class="page-small-title">Vaga</h2><h1 class="h3">Engenheiro Civil Sénior</h1><h3 class="h4">Construtora Baía</h3><div class=medium-large-text> A Construtora Baía está a recrutar um Engenheiro Civil Sénior, para Maputo.<h6>Funções</h6><ul><li>Coordenar a fiscalização de obras de estradas e pontes</li><li>Preparar relatórios de progresso para o dono de obra</li></ul><h6>Requisitos</h6><ul><li>Licenciatura em Engenharia Civil</li><li>Mínimo de 5 anos de experiência em fiscalização</li></ul></div><div class="how-to-apply-section hidden"><a href="https://jobs.example/construtora-baia">https://jobs.example/construtora-baia</a></div></div></body></html>`;
+
+const kukwiraOpenings = `<div ng-controller="oportunidadesController"><div class="bg-orange-light p-20"><h5 class="text-center"><span class="text_bold">Cargo </span>Técnico de Manutenção Industrial</h5><p><span class="text_bold">Descrição:</span> • Manutenção preventiva de geradores...</p><a href="#/info#700" class="btn">+ Info</a></div></div>`;
+const kukwiraInfo = `<h5 class="text-center p-bottom-20 section-title"></h5><h5 class="text-center"><span class="text_bold">Cargo: </span>Técnico de Manutenção Industrial</h5><p><span class="text_bold">Descrição:</span> • Manutenção preventiva de geradores e compressores;
+• Registo das intervenções no plano de manutenção;
+</p><p><span class="text_bold">Requisitos:</span> • Curso técnico-profissional em Electromecânica;
+</p>`;
+
 // Startups (#222): YC job posts and "Who is hiring?" through Hacker News'
 // APIs, and the startups' own sites, which the app reaches at
 // /startups/<host>/<path>. The profile is in Rotterdam, the Netherlands.
@@ -143,6 +166,20 @@ createServer((request, response) => {
       meta: { total: 1, limit: 20, offset: 0 },
     });
   }
+
+  if (url.pathname.startsWith("/emprego_mz/")) {
+    searches += 1;
+    const path = url.pathname.slice("/emprego_mz".length);
+    if (path.startsWith("/vaga/")) return sendHtml(response, 200, empregoPosting);
+    if (path === "/" || path.startsWith("/pesquisa/") || path === "/cidade/maputo/") return sendHtml(response, 200, empregoList);
+    return sendHtml(response, 404, "<h1>Not Found</h1>");
+  }
+
+  if (url.pathname === "/kukwira/partials/oportunidades.php") {
+    searches += 1;
+    return sendHtml(response, 200, kukwiraOpenings);
+  }
+  if (url.pathname === "/kukwira/endpoints/info_endpoint.php" && url.searchParams.get("process_id") === "700") return sendHtml(response, 200, kukwiraInfo);
 
   send(response, 404, { error: "not found" });
 }).listen(port, "127.0.0.1", () => console.log(`Fake job sources on http://localhost:${port}`));

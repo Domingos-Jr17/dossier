@@ -1,5 +1,7 @@
 import "server-only";
 
+import { lookup } from "node:dns";
+
 import { parse, type HTMLElement } from "node-html-parser";
 
 import { fetchHtml, postingFromHtml } from "@/lib/posting-fetch";
@@ -109,6 +111,13 @@ export function postingText(html: string): string | null {
   return [[company, title].filter(Boolean).join(": "), description, apply].filter(Boolean).join("\n\n");
 }
 
+/**
+ * How to reach the site: with the usual guard against the server's own
+ * network, except when the end-to-end tests point it at their fake source on
+ * localhost (DOSSIER_JOBS_TEST_BASE_URL, the only way `baseUrl` is set).
+ */
+const reach = (context: RequestContext) => (context.baseUrl ? { lookup } : {});
+
 /** Only this site's own pages are followed, so a changed "next" link can't send requests elsewhere. */
 function ownPage(link: string, baseUrl: string): boolean {
   try {
@@ -121,7 +130,7 @@ function ownPage(link: string, baseUrl: string): boolean {
 async function searchPage(query: SearchQuery, _credentials: Record<string, never>, next: string | null, context: RequestContext = {}): Promise<SearchPage> {
   const baseUrl = context.baseUrl ?? EMPREGO_MZ_URL;
   const url = next && ownPage(next, baseUrl) ? next : firstPageUrl(query, baseUrl);
-  const page = await fetchHtml(url);
+  const page = await fetchHtml(url, reach(context));
   if (!page.ok) {
     // A city the site has no page for has no postings.
     if (page.status === 404) return { postings: [], next: null };
@@ -134,9 +143,9 @@ async function searchPage(query: SearchQuery, _credentials: Record<string, never
 export const empregoMz: JobSourceAdapter<"EMPREGO_MZ"> = {
   source: SOURCE,
   search: searchPage,
-  details: async (posting) => {
+  details: async (posting, _credentials, context = {}) => {
     if (!posting.url) return null;
-    const page = await fetchHtml(posting.url);
+    const page = await fetchHtml(posting.url, reach(context));
     return page.ok ? postingText(page.html) : null;
   },
   test: async (_credentials, context) => {
