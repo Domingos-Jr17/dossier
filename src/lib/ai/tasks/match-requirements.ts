@@ -1,15 +1,18 @@
 import { z } from "zod";
 
 import { matchSchema, type Extracted, type Match } from "@/lib/application-data";
-import { experienceMonths, formatMonthYear, languageLevelLabel, sameName, type ProfileData } from "@/lib/profile";
+import { experienceMonths, formatDateRange, formatMonthYear, languageLevelLabel, sameName, type ProfileData } from "@/lib/profile";
 
 import { system, UNTRUSTED_POSTING, type Task, type TaskOptions } from "./prompt-parts";
 
-export const MATCH_REQUIREMENTS_VERSION = "match-requirements@1";
+export const MATCH_REQUIREMENTS_VERSION = "match-requirements@2";
 
-// The model only says which profile skill or language each requirement is
-// about; code decides covered, partial or gap from the profile itself, so the
-// match is deterministic and explainable (NEW-4, E7-4).
+// The model only says which of the profile's skills, languages, degrees and
+// roles each requirement is about; code decides covered, partial or gap from
+// the profile itself, so the match is deterministic and explainable (NEW-4,
+// E7-4). Degrees and the roles an amount of experience counts were added
+// when a "Licenciatura em Economia" didn't meet "Economia ou áreas afins",
+// and all of a career counted for "5 years in transaction banking".
 const answerSchema = z.object({
   matches: z.array(
     z.object({
@@ -19,19 +22,30 @@ const answerSchema = z.object({
       skill: z.string().nullable(),
       /** A language from the profile's list, or null. */
       language: z.string().nullable(),
+      /** The id of the candidate's degree that meets a requirement for one, or null. */
+      degree: z.string().nullable().default(null),
+      /** For an amount of experience in a field: the ids of the candidate's roles in it; null when it's experience in general. */
+      roles: z.array(z.string()).nullable().default(null),
     }),
   ),
 });
 
-const INSTRUCTIONS = `You compare a job's requirements with a candidate's skills and languages.
+const INSTRUCTIONS = `You compare a job's requirements with a candidate's skills, languages, degrees and roles.
 
-For each numbered requirement, answer which ONE of the candidate's skills it is about, if any, and which of the candidate's languages, if any. Copy names exactly as they appear in the candidate's lists. Match on meaning ("Strong prototyping skills in Figma" is about "Figma"; "Has built or maintained a design system" is about "Design systems"), but don't stretch: when no skill really fits, answer null. Answer every requirement once.`;
+For each numbered requirement, answer:
+- skill: which ONE of the candidate's skills it is about, if any. Match on meaning ("Strong prototyping skills in Figma" is about "Figma"; "Has built or maintained a design system" is about "Design systems"), but don't stretch: when no skill really fits, answer null.
+- language: which of the candidate's languages it is about, if any.
+- degree: when it asks for a degree or qualification, the id of the candidate's degree that meets it: in the field it names, or in one it accepts ("or related fields", "ou áreas afins", "or equivalent"); a higher degree in that field meets a lower one. Null when none does, or when it isn't about a degree.
+- roles: when it asks for an amount of experience in a particular field ("5 years in transaction banking"), the ids of the candidate's roles in that field, or an empty list when none is; null when it asks for experience in general ("5+ years of experience").
+
+Copy names and ids exactly as they appear in the candidate's lists. Answer every requirement once.`;
 
 export type MatchInput = { requirements: Extracted["requirements"]; profile: ProfileData; today?: Date };
 
 /** NEW-4: each requirement covered, partial or a gap, with its evidence. */
 export const matchRequirements: Task<MatchInput, Match> = async (provider, { requirements, profile, today = new Date() }, { signal, letterGaps }) => {
-  const needsModel = requirements.some((requirement) => requirement.kind !== "years");
+  // Even an amount of experience needs it now: it may be in a field.
+  const needsModel = requirements.length > 0;
   const answer = needsModel
     ? await provider.complete({
         system: system(INSTRUCTIONS, UNTRUSTED_POSTING),
@@ -43,6 +57,8 @@ export const matchRequirements: Task<MatchInput, Match> = async (provider, { req
                 requirements: requirements.map((requirement, index) => ({ number: index, text: requirement.text, kind: requirement.kind, skill: requirement.skill })),
                 candidateSkills: profile.skills.map((skill) => skill.name),
                 candidateLanguages: profile.languages.map((language) => language.name),
+                candidateDegrees: profile.education.map((entry) => ({ id: entry.id, degree: entry.degree, school: entry.school })),
+                candidateRoles: profile.experience.map((entry) => ({ id: entry.id, role: entry.role, company: entry.company, dates: formatDateRange(entry) })),
               },
               null,
               2,
@@ -68,9 +84,11 @@ export const matchRequirements: Task<MatchInput, Match> = async (provider, { req
 
 type Item = Match["items"][number];
 
+type Mapped = z.infer<typeof answerSchema>["matches"][number];
+
 function classify(
   requirement: Extracted["requirements"][number],
-  mapped: { skill: string | null; language: string | null } | undefined,
+  mapped: Mapped | undefined,
   profile: ProfileData,
   today: Date,
   letterGaps: TaskOptions["letterGaps"],
@@ -78,17 +96,28 @@ function classify(
   const base = { requirement: requirement.text, skill: null, experienceIds: [] as string[], note: null };
 
   if (requirement.kind === "years") {
-    const dated = profile.experience.filter((entry) => entry.startYear !== null);
+    // Ids must be the profile's own: a model can't add a role by naming one.
+    const inField = mapped?.roles ? profile.experience.filter((entry) => mapped.roles!.includes(entry.id)) : null;
+    if (inField && inField.length === 0) return { ...base, result: "gap", note: "No role in your profile in this field" };
+    const counted = inField ?? profile.experience;
+    const dated = counted.filter((entry) => entry.startYear !== null);
     if (dated.length === 0) return { ...base, result: "gap", note: "Add your experience to check this" };
     const first = dated.reduce((earliest, entry) =>
       entry.startYear! * 12 + (entry.startMonth ?? 1) < earliest.startYear! * 12 + (earliest.startMonth ?? 1) ? entry : earliest,
     );
-    const count = profile.experience.length;
-    const roles = `${count} ${count === 1 ? "role" : "roles"} in your profile, since ${formatMonthYear(first.startYear, first.startMonth)}`;
-    const years = Math.floor(experienceMonths(profile, today) / 12);
+    const count = counted.length;
+    const where = inField ? "in this field" : "in your profile";
+    const roles = `${count} ${count === 1 ? "role" : "roles"} ${where}, since ${formatMonthYear(first.startYear, first.startMonth)}`;
+    const years = Math.floor(experienceMonths({ experience: counted }, today) / 12);
+    const evidence = inField ? inField.map((entry) => entry.id) : [];
     return years >= (requirement.years ?? 0)
-      ? { ...base, result: "covered", note: roles }
-      : { ...base, result: "gap", note: `${roles} (about ${years} ${years === 1 ? "year" : "years"})` };
+      ? { ...base, result: "covered", experienceIds: evidence, note: roles }
+      : { ...base, result: "gap", experienceIds: evidence, note: `${roles} (about ${years} ${years === 1 ? "year" : "years"})` };
+  }
+
+  const degree = mapped?.degree ? profile.education.find((entry) => entry.id === mapped.degree) : undefined;
+  if (degree) {
+    return { ...base, result: "covered", note: [degree.degree, degree.school].filter(Boolean).join(" · ") };
   }
 
   // Names must be the profile's own: a model can't add a skill by misspelling one.

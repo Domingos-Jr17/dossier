@@ -127,7 +127,7 @@ describe("matchRequirements", () => {
   it("classifies in code: covered with the roles as evidence, partial, gap (NEW-4)", async () => {
     const provider = model(answer);
     const { data, promptVersion } = await matchRequirements(provider, { requirements: extracted.requirements, profile, today }, options);
-    expect(promptVersion).toBe("match-requirements@1");
+    expect(promptVersion).toBe("match-requirements@2");
     expect(sent(provider).effort).toBe("low");
     expect(data.items.map((item) => [item.requirement, item.result, item.note])).toEqual([
       ["5+ years of product design", "covered", "3 roles in your profile, since Sep 2015"],
@@ -170,12 +170,41 @@ describe("matchRequirements", () => {
     expect(data.items[0]).toMatchObject({ result: "gap", skill: null });
   });
 
-  it("works out experience years without asking the model", async () => {
-    const provider = model({});
+  const years = (text: string, amount: number) => ({ text, kind: "years" as const, skill: null, years: amount, language: null });
+  const one = (fields: { roles?: string[] | null; degree?: string | null }) => ({ matches: [{ requirement: 0, skill: null, language: null, roles: null, degree: null, ...fields }] });
+
+  it("counts experience in general from every role, in code", async () => {
+    const provider = model(one({ roles: null }));
     const { data } = await matchRequirements(provider, { requirements: [{ ...extracted.requirements[0], years: 15 }], profile, today }, options);
-    expect(provider.calls).toHaveLength(0);
     expect(data.items[0]).toMatchObject({ result: "gap", note: "3 roles in your profile, since Sep 2015 (about 11 years)" });
     expect(experienceMonths(profile, today)).toBe(133);
+    // The model sees the roles and degrees by id, to point at them.
+    expect(prompt(provider)).toContain('"id": "e1"');
+    expect(prompt(provider)).toContain('"degree": "MSc Design for Interaction"');
+  });
+
+  it("counts experience in a field from that field's roles only", async () => {
+    const leading = years("6+ years designing for logistics", 6);
+    const { data } = await matchRequirements(model(one({ roles: ["e1"] })), { requirements: [leading], profile, today }, options);
+    expect(data.items[0]).toMatchObject({ result: "gap", note: "1 role in this field, since Mar 2021 (about 5 years)", experienceIds: ["e1"] });
+    const five = await matchRequirements(model(one({ roles: ["e1"] })), { requirements: [{ ...leading, years: 5 }], profile, today }, options);
+    expect(five.data.items[0]).toMatchObject({ result: "covered", note: "1 role in this field, since Mar 2021" });
+  });
+
+  it("calls a field with none of the candidate's roles a gap, and can't be given a role that isn't there", async () => {
+    const banking = years("5 years in transaction banking", 5);
+    for (const roles of [[], ["e9"]]) {
+      const { data } = await matchRequirements(model(one({ roles })), { requirements: [banking], profile, today }, options);
+      expect(data.items[0]).toMatchObject({ result: "gap", note: "No role in your profile in this field", experienceIds: [] });
+    }
+  });
+
+  it("covers a degree requirement with the candidate's degree, and only one they have", async () => {
+    const masters = { text: "Master's in interaction design or a related field", kind: "other" as const, skill: null, years: null, language: null };
+    const { data } = await matchRequirements(model(one({ degree: "d1" })), { requirements: [masters], profile, today }, options);
+    expect(data.items[0]).toMatchObject({ result: "covered", note: "MSc Design for Interaction · TU Delft" });
+    const invented = await matchRequirements(model(one({ degree: "d9" })), { requirements: [masters], profile, today }, options);
+    expect(invented.data.items[0]).toMatchObject({ result: "gap" });
   });
 });
 

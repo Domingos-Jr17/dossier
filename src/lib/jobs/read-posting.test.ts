@@ -40,7 +40,7 @@ describe("readPostingJob (E7-2)", () => {
       extracted: { company: "Ledgerly", title: "Senior Product Designer · Ledgerly" },
       extractedWith: "extract-posting@2",
       match: { items: [{ requirement: "Strong prototyping skills in Figma", result: "covered", experienceIds: ["e2"] }] },
-      matchedWith: "match-requirements@1",
+      matchedWith: "match-requirements@2",
     });
     expect(demoProfile().experience[1].id).toBe("e2");
   });
