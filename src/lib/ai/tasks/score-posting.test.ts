@@ -44,6 +44,15 @@ describe("scorePosting (E16-2)", () => {
     expect(call.effort).toBe("low");
   });
 
+  it("writes its reasons in the documents' language, else the posting's", async () => {
+    const european = new MockProvider({ reply: () => answer });
+    await scorePosting(european, input, { ...options, language: "Portuguese (European)" });
+    expect(sent(european).system).toContain("Write the reasons and red flags in Portuguese (European).");
+    const posting = new MockProvider({ reply: () => answer });
+    await scorePosting(posting, input, options);
+    expect(sent(posting).system).toContain("Write the reasons and red flags in the language the posting is written in.");
+  });
+
   it("trusts nothing in the answer: a whole score within 0–100, and short lists within their limits", () => {
     expect(scoreFrom({ score: 104.6, reasons: [" A ", "", "B", "C", "D", "E"], redFlags: ["1", "2", "3", "4", "  "] })).toEqual({
       score: 100,
