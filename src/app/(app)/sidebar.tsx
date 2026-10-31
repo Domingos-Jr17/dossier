@@ -4,8 +4,9 @@ import Link from "next/link";
 import { BrandMark } from "@/components/brand-mark";
 import { signOut } from "@/lib/auth/actions";
 import type { Release } from "@/lib/releases";
-import type { ColorScheme } from "@/lib/ui-preferences";
+import type { ColorScheme, InterfaceLanguage } from "@/lib/ui-preferences";
 
+import { LanguageToggle } from "./language-toggle";
 import { NavLinks } from "./nav-links";
 import { RepositoryLink } from "./repository-link";
 import { SidebarFrame } from "./sidebar-frame";
@@ -31,6 +32,7 @@ export function Sidebar({
   colorScheme,
   counts,
   hidden,
+  language = "en",
 }: {
   userName: string;
   update: Release | null;
@@ -43,6 +45,8 @@ export function Sidebar({
   counts?: Record<string, number>;
   /** Nav items left out by the user's choice, by their address, e.g. "/startups". */
   hidden?: string[];
+  /** The interface's language, for its switch. */
+  language?: InterfaceLanguage;
 }) {
   return (
     <SidebarFrame
@@ -80,6 +84,7 @@ export function Sidebar({
 
       <div className="flex flex-col gap-0.5 border-t border-line p-2 group-data-collapsed/sidebar:px-1">
         <ThemeToggle serverScheme={colorScheme} />
+        <LanguageToggle language={language} />
         <RepositoryLink />
       </div>
 

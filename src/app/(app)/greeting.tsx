@@ -20,10 +20,6 @@ export function Greeting({ name, serverPeriod }: { name: string; serverPeriod: D
     document.cookie = `${TIME_ZONE_COOKIE}=${encodeURIComponent(zone)}; path=/; max-age=${YEAR_SECONDS}; samesite=lax`;
   }, []);
 
-  return (
-    <>
-      Good {period}
-      {name && `, ${name}`}
-    </>
-  );
+  // One text, so the interface translator sees the whole greeting.
+  return <>{`Good ${period}${name ? `, ${name}` : ""}`}</>;
 }

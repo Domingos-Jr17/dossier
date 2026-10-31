@@ -5,6 +5,15 @@
 
 export const COLOR_SCHEME_COOKIE = "dossier_theme";
 export const SIDEBAR_COOKIE = "dossier_sidebar";
+export const LANGUAGE_COOKIE = "dossier_language";
+
+/** The interface's language: English, as written, or European Portuguese through src/lib/i18n. */
+export type InterfaceLanguage = "en" | "pt-PT";
+
+/** The language the sidebar's switch chose; undefined until it's used. */
+export function parseInterfaceLanguage(value: string | undefined): InterfaceLanguage | undefined {
+  return value === "en" || value === "pt-PT" ? value : undefined;
+}
 
 export type ColorScheme = "light" | "dark";
 

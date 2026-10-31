@@ -4,6 +4,7 @@ import { connection } from "next/server";
 
 import { Toaster } from "@/components/toast";
 import { fontVariables } from "@/fonts";
+import { interfaceLanguage } from "@/lib/i18n/language";
 import { COLOR_SCHEME_COOKIE, parseColorScheme } from "@/lib/ui-preferences";
 
 import "./globals.css";
@@ -19,7 +20,7 @@ export default async function RootLayout({ children }: LayoutProps<"/">) {
   // Light or dark as chosen in the sidebar; without a choice, the system's.
   const scheme = parseColorScheme((await cookies()).get(COLOR_SCHEME_COOKIE)?.value);
   return (
-    <html lang="en" data-theme={scheme} className={`${fontVariables} h-full antialiased`}>
+    <html lang={await interfaceLanguage()} data-theme={scheme} className={`${fontVariables} h-full antialiased`}>
       <body className="min-h-full">
         {children}
         <Toaster />

@@ -178,6 +178,14 @@ docker compose exec -e JOBS_LIVE=adzuna -e ADZUNA_TEST_APP_ID=… -e ADZUNA_TEST
 docker compose exec -e JOBS_LIVE=freehire app yarn vitest run src/lib/job-search/sources.live.test.ts
 ```
 
+## Interface language
+
+The screens are written in English. European Portuguese (`pt-PT`) is laid over them once the page has loaded: `src/components/interface-translator.tsx` looks each text, placeholder, label for screen readers and tooltip up in `src/lib/i18n/pt-PT.ts` and replaces it, and keeps doing so as the page changes. What the user or the AI wrote (the documents, the posting, fields, `[data-no-translate]`) stays as written. Texts with numbers or names in them are patterns (`pattern("{count} postings", "$1 vagas")`); dates and other hand-made cases are in `src/lib/i18n/pt-PT-patterns.ts`. A text the dictionary doesn't know shows in English, so a new screen works before it's translated.
+
+This keeps the screens themselves untouched, so changes from upstream Dossier merge cleanly. The language is the `dossier_language` cookie, set by the button in the sidebar, or `DOSSIER_INTERFACE_LANGUAGE` before that; `<html lang>` follows it. The dictionary is only downloaded when Portuguese is on.
+
+To add a translation, put the English text exactly as the screen shows it (whitespace aside) in `pt-PT.ts`. A new text built from parts needs the same parts in English, in one text node: `Good ${period}, ${name}` translates, `Good {period}` split over two nodes doesn't.
+
 ## Your data
 
 Settings → Your data exports everything (profile, custom themes, settings, applications with their history, documents, chat and notes, and the postings kept from Find jobs) as one JSON file, and imports such a file to restore it. An import replaces all data in one transaction, after writing a backup of the current data to `DOSSIER_DATA_DIR/backups` (default `/data`; `./data` in development, which git ignores). "Download all PDFs" zips every tailored document there too, in `downloads`, and removes the zip once it's downloaded.

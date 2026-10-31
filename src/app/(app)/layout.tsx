@@ -11,6 +11,8 @@ import { rememberBrowserTimeZone, userTimeZone } from "@/lib/time-zone";
 import { checkForUpdatesDaily, updateNotice } from "@/lib/update-check";
 import { askForUsagePing, notePageLoad, USAGE_PING_HOST } from "@/lib/usage-ping";
 import { appVersion } from "@/lib/version";
+import { InterfaceTranslator } from "@/components/interface-translator";
+import { interfaceLanguage } from "@/lib/i18n/language";
 
 import { Sidebar } from "./sidebar";
 import { UsagePingDialog } from "./usage-ping-dialog";
@@ -30,13 +32,14 @@ export default async function AppLayout({ children }: LayoutProps<"/">) {
   const zone = await userTimeZone();
   after(() => rememberBrowserTimeZone(zone));
 
-  const [name, settings, jar] = await Promise.all([loadProfileName(), loadSettings(), cookies()]);
+  const [name, settings, jar, language] = await Promise.all([loadProfileName(), loadSettings(), cookies(), interfaceLanguage()]);
   const userName = name.trim() || "New user";
   // Replies waiting for an answer or a link, on the Inbox item; the job agent's finds and drafts on its own (E16-6).
   const [waiting, agent] = await Promise.all([inboxCount().catch(() => 0), countAgentQueue().catch(() => 0)]);
 
   return (
     <div className="flex min-h-screen">
+      <InterfaceTranslator language={language} />
       <a
         href="#main"
         className="fixed top-3 left-3 z-50 -translate-y-[200%] rounded-control bg-primary px-4 py-2.5 text-sm font-medium text-on-primary hover:text-on-primary focus:translate-y-0"
@@ -50,6 +53,7 @@ export default async function AppLayout({ children }: LayoutProps<"/">) {
         collapsed={parseSidebarCollapsed(jar.get(SIDEBAR_COOKIE)?.value)}
         counts={{ ...(waiting > 0 ? { "/inbox": waiting } : {}), ...(agent > 0 ? { "/agent": agent } : {}) }}
         hidden={settings.showStartups ? [] : ["/startups"]}
+        language={language}
         colorScheme={parseColorScheme(jar.get(COLOR_SCHEME_COOKIE)?.value)}
       />
       {/* The screen sits in a white panel inset from the shell. Each screen

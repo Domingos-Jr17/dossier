@@ -109,6 +109,11 @@ const schema = z.object({
       .transform(Number)
       .pipe(z.number().min(5, { error: "DOSSIER_AI_TIMEOUT_SECONDS must be at least 5." })),
   ),
+  // The interface's language until the sidebar's switch chooses one: en
+  // (default) or pt-PT, as written in Portugal and Mozambique.
+  DOSSIER_INTERFACE_LANGUAGE: optional(
+    z.enum(["en", "pt-PT"], { error: (issue) => `DOSSIER_INTERFACE_LANGUAGE must be en or pt-PT (got "${String(issue.input)}").` }),
+  ),
   // Defaults for Settings → Job search (E14-4), until a choice is saved there.
   DOSSIER_JOBS_SOURCE: optional(
     z.enum(JOB_SOURCE_NAMES, {
