@@ -37,6 +37,10 @@ describe("PT_PT", () => {
     expect(pt("Mozambique and South Africa")).toBe("Moçambique e África do Sul");
     expect(pt("terms and conditions")).toBeNull();
     expect(pt("9 of 31")).toBe("9 de 31");
+    expect(pt(" of ")).toBe(" de ");
+    expect(pt("Worth being ready to talk about “SAP”, “IFRS” and “FMCG”, since they aren't in your profile")).toBe(
+      "Convém estar preparado para falar de “SAP”, “IFRS” e “FMCG”, porque não estão no seu perfil",
+    );
     expect(pt("2 roles in this field, since Feb 2015 (about 6 years)")).toBe("2 funções nesta área, desde fev. 2015 (cerca de 6 anos)");
     expect(pt("Rewrote your summary for the Gestor Financeiro role")).toBe("Reescrevi o seu resumo para a função de Gestor Financeiro");
   });

@@ -1556,6 +1556,7 @@ export const PT_PT: Dictionary = {
     "it (In production). Unpublished, Google stops the access after 7 days.": "-o (Em produção). Sem publicar, a Google corta o acesso ao fim de 7 dias.",
     "languages": "as línguas",
     "not in the file": "não está no ficheiro",
+    "of": "de",
     "of 100": "de 100",
     "of type Web application, with this authorised redirect URI:": "do tipo Aplicação web, com este URI de redirecionamento autorizado:",
     "offer you're deciding on": "proposta a decidir",

@@ -54,6 +54,8 @@ export const PT_PT_PATTERNS: Dictionary["patterns"] = [
   // A list of names: "emprego.co.mz, Kukwira and CONTACT". Only names
   // (capitalised, or with a dot), so "Terms and conditions" stays as it is.
   [new RegExp(`^(${NAME}(?:, ${NAME})*) and (${NAME})$`, "u"), ([list, last], translate) => `${list.split(", ").map(translate).join(", ")} e ${translate(last)}`],
+  // A list of quoted texts: "“Excel”, “SAP” and “Power BI”"
+  [/^(“[^”]+”(?:, “[^”]+”)*) and (“[^”]+”)$/u, ([list, last]) => `${list} e ${last}`],
   // Counts: "9 of 31"
   [/^(\d+) of (\d+)$/u, ([part, whole]) => `${part} de ${whole}`],
   // What the agent searches: "financeiro · Mozambique · via Kukwira"
