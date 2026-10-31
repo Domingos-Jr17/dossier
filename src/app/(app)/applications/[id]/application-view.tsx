@@ -21,6 +21,7 @@ import {
 } from "@/generated/prisma/enums";
 import { type Match, type Requirement, type Unit } from "@/lib/application-data";
 import { EMAIL_UNITS, WRITTEN_EMAIL_UNITS } from "@/lib/application-email";
+import { applyOnSite } from "@/lib/apply-on-site";
 import { documentLabels } from "@/lib/document-labels";
 import { defaultFrame, isFrameUnit, isParagraph, withFrame, WRITTEN_FRAME_UNITS } from "@/lib/letter-frame";
 import type { ActivityEntry } from "@/lib/activity";
@@ -738,6 +739,7 @@ export function ApplicationView({
             onWrite={() => void writeEmail()}
             attachments={attachments}
             gmail={gmail && { sender: gmail.sender, sentBefore: gmail.sentBefore }}
+            applyOnSite={applyOnSite(posting.text, posting.url)}
           />
         </TabsContent>
 

@@ -929,6 +929,30 @@ describe("the Email tab", () => {
     expect(within(article).getByRole("group", { name: "Message" })).toHaveTextContent("I'd love to bring calm to Ledgerly's payments.");
   });
 
+  it("says where to apply when the posting takes applications on a site, with the PDFs and the steps", () => {
+    const kukwira = { text: "Chefe de Secção de Trade\n\nCandidatura: https://www.kukwira.co.mz/#/candidatura#500", url: "https://www.kukwira.co.mz/#/info#500", pasted: "30 Oct" };
+    const { unmount } = render(<ApplicationView {...props} initialTab="email" posting={kukwira} />);
+    const card = screen.getByRole("region", { name: "Apply on kukwira.co.mz" });
+    expect(card).toHaveTextContent("This posting takes applications on kukwira.co.mz, not by email.");
+    expect(within(card).getAllByRole("listitem").map((item) => item.textContent)).toContain("Once it's in, mark the application as sent here, so your board and dashboard follow it.");
+    expect(within(card).getByRole("link", { name: /^Open kukwira\.co\.mz/ })).toHaveAttribute("href", "https://www.kukwira.co.mz/#/candidatura#500");
+    // Before the email is written, it's still there to write, for a contact person.
+    expect(screen.getByRole("button", { name: "Write the email" })).toBeInTheDocument();
+    unmount();
+
+    const emprego = { text: "Chef de Cozinha\n\nCandidatura: com uma conta no emprego.co.mz.", url: "https://www.emprego.co.mz/vaga/chef-de-cozinha-2/", pasted: "30 Oct" };
+    render(<ApplicationView {...props} initialTab="email" posting={emprego} email={email.map((unit) => (unit.id === "to" ? { ...unit, text: "" } : unit))} />);
+    const own = screen.getByRole("region", { name: "Apply on emprego.co.mz" });
+    expect(own).toHaveTextContent("This posting takes applications through an account on emprego.co.mz, with the CV you keep there, not by email.");
+    expect(within(own).getByRole("link", { name: /^Open emprego\.co\.mz/ })).toHaveAttribute("href", "https://www.emprego.co.mz/vaga/chef-de-cozinha-2/");
+  });
+
+  it("doesn't send to a site when the email has someone to go to", () => {
+    const kukwira = { text: "Candidatura: https://www.kukwira.co.mz/#/candidatura#500", url: "", pasted: "30 Oct" };
+    render(<ApplicationView {...props} initialTab="email" posting={kukwira} email={email} />);
+    expect(screen.queryByRole("region", { name: /^Apply on / })).not.toBeInTheDocument();
+  });
+
   it("points to Settings without an AI provider", async () => {
     const user = userEvent.setup();
     render(<ApplicationView {...props} initialTab="email" aiReady={false} />);
