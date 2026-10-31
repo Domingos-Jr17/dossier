@@ -1,7 +1,7 @@
 import { execFileSync } from "node:child_process";
 import { crc32, deflateSync } from "node:zlib";
 
-import type { Page } from "@playwright/test";
+import { expect, type Locator, type Page } from "@playwright/test";
 import { Pool } from "pg";
 
 // What the end-to-end tests (E11-2) run against: a production build on its
@@ -195,4 +195,14 @@ export function portraitPng(width = 900, height = 800): Buffer {
     chunk("IDAT", deflateSync(rows)),
     chunk("IEND", Buffer.alloc(0)),
   ]);
+}
+
+/**
+ * Waits until React has hydrated `locator`'s element, so a key pressed on it
+ * reaches its handlers, and listeners on the document (such as Radix's, which
+ * tell a keyboard from a pointer) have seen it too.
+ */
+export async function hydrated(locator: Locator): Promise<Locator> {
+  await expect.poll(() => locator.evaluate((element) => Object.keys(element).some((key) => key.startsWith("__reactProps")))).toBe(true);
+  return locator;
 }

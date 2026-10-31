@@ -39,7 +39,8 @@ export default async function AppLayout({ children }: LayoutProps<"/">) {
 
   return (
     <div className="flex min-h-screen">
-      <InterfaceTranslator language={language} />
+      {/* English needs no translator: nothing of it loads then. */}
+      {language !== "en" && <InterfaceTranslator language={language} />}
       <a
         href="#main"
         className="fixed top-3 left-3 z-50 -translate-y-[200%] rounded-control bg-primary px-4 py-2.5 text-sm font-medium text-on-primary hover:text-on-primary focus:translate-y-0"

@@ -1,6 +1,6 @@
 import { expect, test, type Page } from "@playwright/test";
 
-import { resetData, sql } from "./support";
+import { hydrated, resetData, sql } from "./support";
 
 // Moving applications through the pipeline (E9): dragging on the board, the
 // keyboard alternative, and the table's status select; and the board keeping
@@ -29,7 +29,9 @@ test("drags a card to another column", async ({ page }) => {
 
 test("moves a card from the keyboard", async ({ page }) => {
   await page.goto("/applications");
-  await page.getByRole("button", { name: /^Actions for Product Designer, Mobile, Kestrel Maps/ }).focus();
+  // A key pressed before React hydrates is replayed to the button, but Radix
+  // never sees it as a key and doesn't move focus into the menu.
+  await (await hydrated(page.getByRole("button", { name: /^Actions for Product Designer, Mobile, Kestrel Maps/ }))).focus();
   await page.keyboard.press("Enter");
   // Radix moves focus to the first item once the menu is open.
   await expect(page.getByRole("menuitemradio").first()).toBeFocused();
