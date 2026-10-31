@@ -1,6 +1,6 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
 
-import { empregoMzPosting } from "@/test/mozambique-job-fixtures";
+import { contactOffer, empregoMzPosting } from "@/test/mozambique-job-fixtures";
 
 import { fetchPostingFromLink } from "./fetch-posting";
 
@@ -20,6 +20,14 @@ describe("Fetch for the sites with an adapter", () => {
     expect(fetchPosting).not.toHaveBeenCalled();
     fetchHtml.mockResolvedValue({ ok: false, error: "The job site couldn't be reached." });
     await expect(fetchPostingFromLink("https://emprego.co.mz/vaga/x/")).resolves.toEqual({ ok: false, error: "The job site couldn't be reached." });
+  });
+
+  it("reads a CONTACT opening's own text, with its Workable link", async () => {
+    const link = "https://www.contact.co.mz/pt/recrutamento/oferta-de-emprego/AF848DEAAB/medidor-orcamentista-m-f-1-vaga";
+    fetchHtml.mockResolvedValue({ ok: true, html: contactOffer, url: link });
+    const fetched = await fetchPostingFromLink(link);
+    expect(fetched).toMatchObject({ ok: true, source: "page", url: link, text: expect.stringContaining("Candidatura: https://contact.workable.com/jobs/6233374/candidates/new") });
+    expect(fetchPosting).not.toHaveBeenCalled();
   });
 
   it("reads a Kukwira link through the opening's own text", async () => {

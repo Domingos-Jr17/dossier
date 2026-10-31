@@ -169,13 +169,13 @@ describe("job search variables (E14-4)", () => {
   it("reads the sources Several sources asks, and refuses one it can't ask", () => {
     expect(parseEnv({ ...valid, DOSSIER_JOBS_SOURCE: "multi", DOSSIER_JOBS_SOURCES: " emprego-mz, Kukwira ,jsearch" }).DOSSIER_JOBS_SOURCES).toEqual(["emprego-mz", "kukwira", "jsearch"]);
     expect(problems({ ...valid, DOSSIER_JOBS_SOURCES: "emprego-mz,arbeitsagentur" })).toEqual([
-      'DOSSIER_JOBS_SOURCES takes jsearch, adzuna, freehire, emprego-mz, kukwira, separated by commas (got "arbeitsagentur").',
+      'DOSSIER_JOBS_SOURCES takes jsearch, adzuna, freehire, emprego-mz, kukwira, contact-mz, separated by commas (got "arbeitsagentur").',
     ]);
   });
 
   it("rejects sources and hosts it doesn't know, without echoing keys", () => {
     expect(problems({ ...valid, DOSSIER_JOBS_SOURCE: "linkedin", DOSSIER_JSEARCH_HOST: "google", DOSSIER_JSEARCH_KEY: "ak_secret" })).toEqual([
-      'DOSSIER_JOBS_SOURCE must be one of jsearch, adzuna, arbeitsagentur, freehire, emprego-mz, kukwira, multi, off (got "linkedin").',
+      'DOSSIER_JOBS_SOURCE must be one of jsearch, adzuna, arbeitsagentur, freehire, emprego-mz, kukwira, contact-mz, multi, off (got "linkedin").',
       'DOSSIER_JSEARCH_HOST must be openwebninja or rapidapi (got "google").',
     ]);
   });

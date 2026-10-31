@@ -585,6 +585,7 @@ enum PostingSource {
   FREEHIRE
   EMPREGO_MZ
   KUKWIRA
+  CONTACT_MZ
   /// Several of the others at once (Settings → Job search); its postings keep their own source.
   MULTI
 }

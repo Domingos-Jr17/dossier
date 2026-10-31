@@ -54,6 +54,9 @@ export type SourceInfo = {
 /** emprego.co.mz, read from the pages a visitor sees (it has no API). */
 export const EMPREGO_MZ_URL = "https://www.emprego.co.mz";
 
+/** CONTACT's site, whose openings are read from its pages. */
+export const CONTACT_MZ_URL = "https://www.contact.co.mz";
+
 /** Kukwira's site, whose openings are read from the fragments its own pages load. */
 export const KUKWIRA_URL = "https://www.kukwira.co.mz";
 
@@ -134,6 +137,19 @@ export const SOURCE_INFO: Record<JobSource, SourceInfo> = {
     radius: false,
     browses: true,
   },
+  CONTACT_MZ: {
+    name: "CONTACT",
+    description: "A Mozambican recruitment and staffing company's own openings, from call centres to engineering, with full postings. Keywords are matched in their titles.",
+    tag: "Mozambique only · free, no key · no distance filter",
+    keyUrl: null,
+    quotaPeriod: null,
+    attribution: "Vagas da CONTACT",
+    attributionLink: { home: CONTACT_MZ_URL, local: /^www\.contact\.co\.mz$/ },
+    countries: ["mz"],
+    // No distance filter: the place puts its openings first.
+    radius: false,
+    browses: true,
+  },
   MULTI: {
     name: "Several sources",
     description: "The sources you tick below, searched at once. Each posting keeps its source, and a source that fails leaves the others' postings.",
@@ -154,7 +170,7 @@ export const SOURCE_INFO: Record<JobSource, SourceInfo> = {
  * The sources "Several sources" can ask: every other one but the
  * Bundesagentur für Arbeit, whose terms rule out searching it alongside (#223).
  */
-export const MULTI_SOURCES = ["JSEARCH", "ADZUNA", "FREEHIRE", "EMPREGO_MZ", "KUKWIRA"] as const satisfies readonly Exclude<JobSource, "MULTI" | "ARBEITSAGENTUR">[];
+export const MULTI_SOURCES = ["JSEARCH", "ADZUNA", "FREEHIRE", "EMPREGO_MZ", "KUKWIRA", "CONTACT_MZ"] as const satisfies readonly Exclude<JobSource, "MULTI" | "ARBEITSAGENTUR">[];
 export type MultiSource = (typeof MULTI_SOURCES)[number];
 
 /** "emprego.co.mz, Kukwira and JSearch": sources' names as a sentence lists them. */
@@ -164,7 +180,7 @@ export function sourceNames(sources: readonly JobSource[]): string {
 }
 
 /** What "Several sources" asks when nothing is chosen in Settings or DOSSIER_JOBS_SOURCES: Mozambique's own boards. */
-export const DEFAULT_MULTI_SOURCES: readonly MultiSource[] = ["EMPREGO_MZ", "KUKWIRA"];
+export const DEFAULT_MULTI_SOURCES: readonly MultiSource[] = ["EMPREGO_MZ", "KUKWIRA", "CONTACT_MZ"];
 
 /** FreeHire's public catalogue; DOSSIER_FREEHIRE_URL can name a self-hosted one instead. */
 export const FREEHIRE_URL = "https://freehire.me";

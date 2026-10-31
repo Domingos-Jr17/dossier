@@ -40,7 +40,7 @@ beforeEach(() => {
 });
 
 describe("JobSearchSection", () => {
-  it("offers the six sources, Several sources and Off, as a radio group, Off by default", () => {
+  it("offers the seven sources, Several sources and Off, as a radio group, Off by default", () => {
     render(<JobSearchSection initial={off} />);
     expect(screen.getByRole("heading", { name: "Job search" })).toBeInTheDocument();
     expect(screen.getAllByRole("radio").map((radio) => radio.getAttribute("aria-label"))).toEqual([
@@ -49,6 +49,7 @@ describe("JobSearchSection", () => {
       "FreeHire",
       "emprego.co.mz",
       "Kukwira",
+      "CONTACT",
       "Several sources",
       "Bundesagentur für Arbeit",
       "Off",
@@ -135,7 +136,7 @@ describe("JobSearchSection", () => {
 
   it("leaves the Arbeitsagentur out when the server doesn't offer it", () => {
     render(<JobSearchSection initial={withSource({ arbeitsagentur: { offered: false, acceptedAt: null } })} />);
-    expect(screen.getAllByRole("radio").map((radio) => radio.getAttribute("aria-label"))).toEqual(["JSearch", "Adzuna", "FreeHire", "emprego.co.mz", "Kukwira", "Several sources", "Off"]);
+    expect(screen.getAllByRole("radio").map((radio) => radio.getAttribute("aria-label"))).toEqual(["JSearch", "Adzuna", "FreeHire", "emprego.co.mz", "Kukwira", "CONTACT", "Several sources", "Off"]);
   });
 
   it("asks the sources ticked under Several sources, with the keys they need, and says what's sent where", async () => {

@@ -53,6 +53,10 @@ ${empregoRow("contabilista-e2e", "Contabilista", "Banco Exemplo", "Beira", "Expi
 </ul></body></html>`;
 const empregoPosting = `<!doctype html><html><head></head><body><div class="content-col-1-2 adjust content-vacancy left"><h2 class="page-small-title">Vaga</h2><h1 class="h3">Engenheiro Civil Sénior</h1><h3 class="h4">Construtora Baía</h3><div class=medium-large-text> A Construtora Baía está a recrutar um Engenheiro Civil Sénior, para Maputo.<h6>Funções</h6><ul><li>Coordenar a fiscalização de obras de estradas e pontes</li><li>Preparar relatórios de progresso para o dono de obra</li></ul><h6>Requisitos</h6><ul><li>Licenciatura em Engenharia Civil</li><li>Mínimo de 5 anos de experiência em fiscalização</li></ul></div><div class="how-to-apply-section hidden"><a href="https://jobs.example/construtora-baia">https://jobs.example/construtora-baia</a></div></div></body></html>`;
 
+const CONTACT = `http://localhost:${port}/contact_mz`;
+const contactOffers = `<div class="ofertas"><div class="oferta"> <h3 class="titulo"> <a href="${CONTACT}/pt/recrutamento/oferta-de-emprego/AB12CD34EF/digitador-de-dados-m-f-1-vaga">digitador de dados (m/f) - 1 vaga</a> </h3> <span class="data">29-10-2026 às 09:00</span> <div class="descricao"> <span class="local"> Maputo, Maputo Province, Mozambique </span> </div> </div></div>`;
+const contactOffer = `<div class="content-wrapper"> <div class="small-12 columns"> <h2> <span class="titulo"> <span class="left"> digitador de dados (m/f) - 1 vaga<br> <small> Maputo, Maputo Province, Mozambique </small> </span> </span> </h2> </div> <div class="small-8 columns"> <div> <h4>Descrição</h4> <p>Introduzir e verificar dados de inquéritos no sistema do cliente.</p> </div> </div> <div class="small-4 columns"> <a class="button" href="https://contact.workable.example/jobs/1/candidates/new">Candidatar-me</a> </div> </div>`;
+
 const kukwiraOpenings = `<div ng-controller="oportunidadesController"><div class="bg-orange-light p-20"><h5 class="text-center"><span class="text_bold">Cargo </span>Técnico de Manutenção Industrial</h5><p><span class="text_bold">Descrição:</span> • Manutenção preventiva de geradores...</p><a href="#/info#700" class="btn">+ Info</a></div></div>`;
 const kukwiraInfo = `<h5 class="text-center p-bottom-20 section-title"></h5><h5 class="text-center"><span class="text_bold">Cargo: </span>Técnico de Manutenção Industrial</h5><p><span class="text_bold">Descrição:</span> • Manutenção preventiva de geradores e compressores;
 • Registo das intervenções no plano de manutenção;
@@ -174,6 +178,12 @@ createServer((request, response) => {
     if (path === "/" || path.startsWith("/pesquisa/") || path === "/cidade/maputo/") return sendHtml(response, 200, empregoList);
     return sendHtml(response, 404, "<h1>Not Found</h1>");
   }
+
+  if (url.pathname === "/contact_mz/pt/recrutamento/ofertas-de-emprego") {
+    searches += 1;
+    return sendHtml(response, 200, contactOffers);
+  }
+  if (url.pathname.startsWith("/contact_mz/pt/recrutamento/oferta-de-emprego/AB12CD34EF/")) return sendHtml(response, 200, contactOffer);
 
   if (url.pathname === "/kukwira/partials/oportunidades.php") {
     searches += 1;

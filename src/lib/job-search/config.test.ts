@@ -27,7 +27,7 @@ describe("resolveJobSearchConfig", () => {
       adzuna: { appId: "", keyState: "none" },
       arbeitsagentur: { offered: true, acceptedAt: null },
       freehire: { host: "freehire.me" },
-      multi: ["EMPREGO_MZ", "KUKWIRA"],
+      multi: ["EMPREGO_MZ", "KUKWIRA", "CONTACT_MZ"],
     });
   });
 
@@ -145,8 +145,8 @@ describe("requestContext", () => {
 });
 
 describe("Several sources", () => {
-  it("asks the sources chosen in Settings, else DOSSIER_JOBS_SOURCES, else Mozambique's boards", () => {
-    expect(resolveJobSearchConfig(nothingSaved, { DOSSIER_JOBS_SOURCE: "multi" })).toMatchObject({ source: "MULTI", multi: ["EMPREGO_MZ", "KUKWIRA"] });
+  it("asks the sources chosen in Settings, else DOSSIER_JOBS_SOURCES, else Mozambique's boards and agencies", () => {
+    expect(resolveJobSearchConfig(nothingSaved, { DOSSIER_JOBS_SOURCE: "multi" })).toMatchObject({ source: "MULTI", multi: ["EMPREGO_MZ", "KUKWIRA", "CONTACT_MZ"] });
     expect(resolveJobSearchConfig(nothingSaved, { DOSSIER_JOBS_SOURCES: ["kukwira", "jsearch"] }).multi).toEqual(["KUKWIRA", "JSEARCH"]);
     expect(resolveJobSearchConfig({ ...nothingSaved, multiSources: ["FREEHIRE"] }, { DOSSIER_JOBS_SOURCES: ["kukwira"] }).multi).toEqual(["FREEHIRE"]);
     expect(jobSearchView(resolveJobSearchConfig({ ...nothingSaved, multiSources: ["EMPREGO_MZ"] }, noEnv)).multi).toEqual(["EMPREGO_MZ"]);

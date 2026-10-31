@@ -6,6 +6,7 @@ import type { JobSourceAdapter, RequestContext, SourceCredentials } from "./adap
 import { cached, remember } from "./cache";
 import { JobSearchError, jobSearchError } from "./errors";
 import { adzuna } from "./adzuna";
+import { contactMz } from "./contact-mz";
 import { arbeitsagentur } from "./arbeitsagentur";
 import { empregoMz } from "./emprego-mz";
 import { freehire } from "./freehire";
@@ -30,6 +31,7 @@ const ADAPTERS: { [S in JobSource]: JobSourceAdapter<S> } = {
   FREEHIRE: freehire,
   EMPREGO_MZ: empregoMz,
   KUKWIRA: kukwira,
+  CONTACT_MZ: contactMz,
   // Several sources at once, each through searchPostings and testSource below.
   MULTI: {
     source: "MULTI",

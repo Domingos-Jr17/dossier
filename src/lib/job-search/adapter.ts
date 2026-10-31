@@ -16,6 +16,7 @@ export type SourceCredentials = {
   FREEHIRE: Record<string, never>;
   EMPREGO_MZ: Record<string, never>;
   KUKWIRA: Record<string, never>;
+  CONTACT_MZ: Record<string, never>;
   /** The sources it asks, each with what it needs (config.ts → credentialsFor). */
   MULTI: { parts: MultiPart[] };
 };

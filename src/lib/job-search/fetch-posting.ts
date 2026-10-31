@@ -2,6 +2,7 @@ import "server-only";
 
 import { FETCH_MESSAGES, fetchHtml, fetchPosting, type FetchedPosting } from "@/lib/posting-fetch";
 
+import { offerText as contactMzText } from "./contact-mz";
 import { postingText as empregoMzText } from "./emprego-mz";
 import { kukwira } from "./kukwira";
 import type { FoundPosting } from "./search";
@@ -36,6 +37,12 @@ export async function fetchPostingFromLink(link: string): Promise<FetchedPosting
     const page = await fetchHtml(link);
     if (!page.ok) return { ok: false, error: page.error };
     const text = empregoMzText(page.html);
+    return text ? { ok: true, text, source: "page", url: page.url } : { ok: false, error: FETCH_MESSAGES.unreadable };
+  }
+  if (/(^|\.)contact\.co\.mz$/.test(site) && /\/oferta-de-emprego\/[A-Z0-9]+/i.test(link)) {
+    const page = await fetchHtml(link);
+    if (!page.ok) return { ok: false, error: page.error };
+    const text = contactMzText(page.html);
     return text ? { ok: true, text, source: "page", url: page.url } : { ok: false, error: FETCH_MESSAGES.unreadable };
   }
   const opening = /^#\/(?:info|candidatura)#(\d+)$/.exec(URL.canParse(link) ? new URL(link).hash : "")?.[1];

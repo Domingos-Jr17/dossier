@@ -228,6 +228,11 @@ export function JobSearchSection({ initial, showStartups: initialShowStartups = 
                 No key needed. Dossier reads emprego.co.mz&apos;s pages as a visitor would; set the country to Mozambique. Without keywords, the place picks a city&apos;s postings.
               </p>
             )}
+            {uses("CONTACT_MZ") && (
+              <p className="text-sm text-muted">
+                No key needed. Dossier reads CONTACT&apos;s openings page as a visitor would; set the country to Mozambique. Keywords are matched in the openings&apos; titles and places.
+              </p>
+            )}
             {uses("KUKWIRA") && (
               <p className="text-sm text-muted">
                 No key needed. Dossier reads Kukwira&apos;s current openings, usually a handful; set the country to Mozambique. Its openings don&apos;t say where the job is, so the place isn&apos;t used.

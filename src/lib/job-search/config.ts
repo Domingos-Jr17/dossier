@@ -53,6 +53,7 @@ const FROM_ENV: Record<NonNullable<Env["DOSSIER_JOBS_SOURCE"]>, JobSource | null
   freehire: "FREEHIRE",
   "emprego-mz": "EMPREGO_MZ",
   kukwira: "KUKWIRA",
+  "contact-mz": "CONTACT_MZ",
   multi: "MULTI",
   off: null,
 };
@@ -63,6 +64,7 @@ const MULTI_FROM_ENV: Record<NonNullable<Env["DOSSIER_JOBS_SOURCES"]>[number], M
   freehire: "FREEHIRE",
   "emprego-mz": "EMPREGO_MZ",
   kukwira: "KUKWIRA",
+  "contact-mz": "CONTACT_MZ",
 };
 
 /** A saved key, decrypted, or else the environment's. */
@@ -172,6 +174,7 @@ export function credentialsFor<S extends JobSource>(config: JobSearchConfig, sou
     case "FREEHIRE":
     case "EMPREGO_MZ":
     case "KUKWIRA":
+    case "CONTACT_MZ":
       return {} as SourceCredentials[S];
     case "MULTI":
       return { parts: multiParts(config) } as SourceCredentials[S];
