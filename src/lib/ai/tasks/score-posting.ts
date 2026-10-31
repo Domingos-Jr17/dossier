@@ -4,7 +4,7 @@ import type { ProfileData } from "@/lib/profile";
 
 import { postingForPrompt, profileForPrompt, system, UNTRUSTED_POSTING, type Task } from "./prompt-parts";
 
-export const SCORE_POSTING_VERSION = "score-posting@1";
+export const SCORE_POSTING_VERSION = "score-posting@2";
 
 // The job agent's first look at a posting (E16-2): a cheap, explainable fit
 // score before anything is spent on a draft. Adapted from avinashbatchala's
@@ -69,13 +69,24 @@ export function scoreFrom(answer: z.infer<typeof answerSchema>): PostingScore {
   };
 }
 
+/**
+ * The language of the reasons and red flags: the one documents are written
+ * in (SET-7), else the posting's, so a screen of scores doesn't mix two.
+ */
+export function reasonsLanguageRule(language: string | null): string {
+  return language
+    ? `Write the reasons and red flags in ${language}.`
+    : "Write the reasons and red flags in the language the posting is written in.";
+}
+
 /** E16-2: how well a posting fits the profile. Contact details and references are never sent. */
-export const scorePosting: Task<ScorePostingInput, PostingScore> = async (provider, input, { signal }) => {
+export const scorePosting: Task<ScorePostingInput, PostingScore> = async (provider, input, { signal, language }) => {
   const { posting, profile, title, company, place, remote, salary } = input;
   const answer = await provider.complete({
     system: system(
       INSTRUCTIONS,
       "Use only facts that are in the candidate's profile. Never invent or assume an employer, skill, date or credential.",
+      reasonsLanguageRule(language),
       UNTRUSTED_POSTING,
     ),
     messages: [
