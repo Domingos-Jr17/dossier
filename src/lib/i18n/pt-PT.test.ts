@@ -36,6 +36,8 @@ describe("PT_PT", () => {
     expect(pt("Search emprego.co.mz, Kukwira and CONTACT for postings near you, then start an application from the one you like.")).toContain("emprego.co.mz, Kukwira e CONTACT");
     expect(pt("Mozambique and South Africa")).toBe("Moçambique e África do Sul");
     expect(pt("terms and conditions")).toBeNull();
+    expect(pt("9 of 31")).toBe("9 de 31");
+    expect(pt("2 roles in this field, since Feb 2015 (about 6 years)")).toBe("2 funções nesta área, desde fev. 2015 (cerca de 6 anos)");
     expect(pt("Rewrote your summary for the Gestor Financeiro role")).toBe("Reescrevi o seu resumo para a função de Gestor Financeiro");
   });
 });
