@@ -24,6 +24,9 @@ const WEEKDAY = `(${Object.keys(WEEKDAYS).join("|")})`;
 const LONG_MONTH = `(${Object.keys(LONG_MONTHS).join("|")})`;
 const LONG_WEEKDAY = `(${Object.keys(LONG_WEEKDAYS).join("|")})`;
 
+/** A name in a list: "Kukwira", "South Africa", "emprego.co.mz". */
+const NAME = String.raw`(?:[\p{Lu}\d][\p{L}\d.\-]*(?: [\p{Lu}\d][\p{L}\d.\-]*){0,2}|[\p{L}\d-]+\.[\p{L}.]+)`;
+
 /** "Mar 2021" or "2021" in Portuguese; "Present" as "Presente". */
 const monthYear = (value: string) =>
   value === "Present" ? "Presente" : value.replace(new RegExp(`^${MONTH} `), (_, month: string) => `${MONTHS[month]} `);
@@ -48,6 +51,9 @@ export const PT_PT_PATTERNS: Dictionary["patterns"] = [
     new RegExp(`^${LONG_WEEKDAY} (\\d{1,2}) ${LONG_MONTH}$`, "u"),
     ([weekday, day, month]) => `${LONG_WEEKDAYS[weekday]}, ${day} de ${LONG_MONTHS[month]}`,
   ],
+  // A list of names: "emprego.co.mz, Kukwira and CONTACT". Only names
+  // (capitalised, or with a dot), so "Terms and conditions" stays as it is.
+  [new RegExp(`^(${NAME}(?:, ${NAME})*) and (${NAME})$`, "u"), ([list, last], translate) => `${list.split(", ").map(translate).join(", ")} e ${translate(last)}`],
   // What the agent searches: "financeiro · Mozambique · via Kukwira"
   [/^(.+) · via (.+)$/u, ([what, source], translate) => `${what.split(" · ").map(translate).join(" · ")} · via ${source}`],
 ];

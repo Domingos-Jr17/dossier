@@ -33,6 +33,9 @@ describe("PT_PT", () => {
     expect(pt("Good afternoon, Marta")).toBe("Boa tarde, Marta");
     expect(pt("3 applications: 3 waiting to hear back, 0 in conversation.")).toBe("3 candidaturas: 3 à espera de resposta, 0 em conversa.");
     expect(pt("financeiro · Mozambique · via Kukwira")).toBe("financeiro · Moçambique · via Kukwira");
+    expect(pt("Search emprego.co.mz, Kukwira and CONTACT for postings near you, then start an application from the one you like.")).toContain("emprego.co.mz, Kukwira e CONTACT");
+    expect(pt("Mozambique and South Africa")).toBe("Moçambique e África do Sul");
+    expect(pt("terms and conditions")).toBeNull();
     expect(pt("Rewrote your summary for the Gestor Financeiro role")).toBe("Reescrevi o seu resumo para a função de Gestor Financeiro");
   });
 });
