@@ -115,6 +115,7 @@ export default async function SettingsPage({ searchParams }: PageProps<"/setting
             paper: settings.paper,
             dateFormat: settings.dateFormat,
             defaultTone: settings.defaultTone,
+            letterGaps: settings.letterGaps,
             docLanguage: settings.docLanguage,
             resumeLanguage: settings.resumeLanguage,
             customLanguages: settings.customLanguages,

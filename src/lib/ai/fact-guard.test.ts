@@ -65,6 +65,24 @@ describe("the fact guard (E6-6)", () => {
     expect(check("Designing since 2009")).toEqual(["2009"]);
   });
 
+  it("reads Portuguese too: numbers in words, months and credentials", () => {
+    expect(check("Designer com nove anos de experiência, desde março de 2015.")).toEqual([]);
+    expect(check("Liderou uma equipa de dezoito designers")).toEqual(["dezoito"]);
+    expect(check("Sete anos na Northwind Logistics, três deles a liderar")).toEqual(["Sete"]);
+    expect(check("Sou certificada em Scrum e tenho a certificação PMP")).toEqual(["Scrum", "PMP", "certificada", "certificação"]);
+  });
+
+  it("flags plans and commitments the candidate never stated", () => {
+    expect(check("Estou a planear iniciar uma certificação em design de serviços.")).toEqual(["certificação", "Estou a planear"]);
+    expect(check("Next year I plan to complete a course in accessibility.")).toEqual(["I plan to"]);
+    expect(check("Vou iniciar um mestrado em setembro.")).toEqual(["Vou iniciar"]);
+    // What the candidate told the AI backs it.
+    const told = guardSources(profile, extracted, sample.ledgerly.posting, ["Estou a planear iniciar um mestrado."]);
+    expect(unverifiedFacts("Estou a planear iniciar um mestrado.", told)).toEqual([]);
+    // An intention to contribute isn't a plan to check.
+    expect(check("Pretendo contribuir para a equipa de pagamentos.")).toEqual([]);
+  });
+
   it("takes the profile's facts and the application's as backing too (PRO-14, APP-15)", () => {
     const told = { ...profile, facts: [{ id: "f1", text: "I spent a year at Klarna before design school." }] };
     const claim = "A year at Klarna, and a talk at Config.";

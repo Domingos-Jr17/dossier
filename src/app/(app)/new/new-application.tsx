@@ -18,6 +18,7 @@ import { cancel, retry } from "@/lib/jobs/actions";
 import { READ_POSTING_STEPS, WRITE_DOCUMENTS_STEPS } from "@/lib/jobs/application-steps";
 import type { ReadPostingResult } from "@/lib/jobs/read-posting";
 import type { WriteDocumentsResult } from "@/lib/jobs/write-documents";
+import type { LetterGaps } from "@/lib/settings";
 
 import { openPendingTab, sendPendingTab } from "@/lib/claude-tab";
 
@@ -140,6 +141,8 @@ export type NewApplicationProps = {
   samplePosting: string | null;
   /** Settings → default cover letter tone (SET-6). */
   defaultTone: Tone;
+  /** Settings → Documents → "Gaps in the cover letter", for the word on gaps. */
+  letterGaps?: LetterGaps;
   /** "+ New application": start over, whatever the tab kept. */
   fresh?: boolean;
   /** "Start application" on Find jobs: start over from this posting. */
@@ -147,7 +150,7 @@ export type NewApplicationProps = {
 };
 
 /** The new application flow (E7): paste → read → review → create. */
-export function NewApplication({ aiReady, writeInClaude = false, samplePosting, defaultTone, fresh = false, fromPosting = null }: NewApplicationProps) {
+export function NewApplication({ aiReady, writeInClaude = false, samplePosting, defaultTone, letterGaps = "address", fresh = false, fromPosting = null }: NewApplicationProps) {
   const [initial] = useState<Draft>(() => ({
     step: "paste",
     posting: "",
@@ -442,7 +445,7 @@ export function NewApplication({ aiReady, writeInClaude = false, samplePosting, 
           {draft.step === "review" && draft.read && (
             <>
               <DetailsCard details={draft.details} onChange={(details) => update({ details })} />
-              <MatchCard match={draft.read.match} requirements={draft.read.extracted.requirements} onAddSkill={(index, skill) => void addToProfile(index, skill)} />
+              <MatchCard match={draft.read.match} requirements={draft.read.extracted.requirements} letterGaps={letterGaps} onAddSkill={(index, skill) => void addToProfile(index, skill)} />
               <TailoringCard tone={draft.tone} note={draft.note} onTone={(tone) => update({ tone })} onNote={(note) => update({ note })} />
               <div className="flex flex-wrap items-center justify-between gap-3">
                 <Button variant="text" onClick={() => update({ step: "paste" })}>

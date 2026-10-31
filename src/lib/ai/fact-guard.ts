@@ -12,6 +12,10 @@ const NUMBER_WORDS: Record<string, number> = {
   one: 1, two: 2, three: 3, four: 4, five: 5, six: 6, seven: 7, eight: 8, nine: 9, ten: 10,
   eleven: 11, twelve: 12, thirteen: 13, fourteen: 14, fifteen: 15, sixteen: 16, seventeen: 17,
   eighteen: 18, nineteen: 19, twenty: 20, thirty: 30, forty: 40, fifty: 50, hundred: 100,
+  // Portuguese, for documents written in it ("um" and "uma" are left out: they're also "a").
+  dois: 2, duas: 2, três: 3, quatro: 4, cinco: 5, seis: 6, sete: 7, oito: 8, nove: 9, dez: 10,
+  onze: 11, doze: 12, treze: 13, catorze: 14, quinze: 15, dezasseis: 16, dezesseis: 16, dezassete: 17, dezessete: 17,
+  dezoito: 18, dezanove: 19, dezenove: 19, vinte: 20, trinta: 30, quarenta: 40, cinquenta: 50, cem: 100,
 };
 
 const MONTHS_AND_DAYS = new Set(
@@ -19,14 +23,23 @@ const MONTHS_AND_DAYS = new Set(
     "january", "february", "march", "april", "may", "june", "july", "august", "september", "october", "november", "december",
     "jan", "feb", "mar", "apr", "jun", "jul", "aug", "sep", "sept", "oct", "nov", "dec",
     "monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday",
+    "janeiro", "fevereiro", "março", "abril", "maio", "junho", "julho", "agosto", "setembro", "outubro", "novembro", "dezembro",
+    "segunda-feira", "terça-feira", "quarta-feira", "quinta-feira", "sexta-feira", "sábado", "domingo",
   ],
 );
 
 // Capitalised mid-sentence, but not names.
 const NOT_NAMES = new Set(["i", "i'm", "i’m", "i've", "i’ve", "i'd", "i’d", "i'll", "i’ll", "ok"]);
 
-// Credentials said in words rather than as an acronym.
-const CREDENTIAL = /\b(certified|certification|certificate|licensed|license|accredited|chartered)\b/gi;
+// Credentials said in words rather than as an acronym, in English and Portuguese.
+const CREDENTIAL =
+  /(?<![\p{L}])(certified|certification|certificate|licensed|license|accredited|chartered|certificad[oa]s?|certificaç(?:ão|ões)|acreditad[oa]s?|credenciad[oa]s?|habilitad[oa]s?)(?![\p{L}])/giu;
+
+// Plans and commitments: "I plan to start a certification", "estou a planear
+// iniciar…". Only the candidate can make them: a cover letter once promised
+// a certification course the profile never mentioned.
+const PLAN =
+  /(?<![\p{L}])(i(?:'m| am) planning to|i plan to|i intend to (?:start|take|get|complete|pursue)|i will (?:start|enrol|enroll|begin|complete|take)|i(?:'m| am) (?:enrolling|signing up)|estou a planear|planeio|(?:pretendo|tenciono) (?:iniciar|começar|fazer|tirar|obter|concluir)|vou (?:iniciar|começar|inscrever-me|tirar|obter)|irei (?:iniciar|começar|tirar|obter))(?![\p{L}])/giu;
 
 // A number as people write it: "4,000+", "4 000", "120k", "30%", "2.5", "12".
 const NUMBER = /(?<![\p{L}\p{N}])(\d{1,3}(?:[,.\u00A0\u202F ]\d{3})+|\d+(?:[.,]\d+)?)\s*(k|m)?%?(?![\p{L}\p{N}])/giu;
@@ -41,7 +54,7 @@ function numberValue(digits: string, suffix: string | undefined): number {
 
 function numbersIn(text: string): { raw: string; value: number }[] {
   const found = [...text.matchAll(NUMBER)].map((match) => ({ raw: match[0].trim(), value: numberValue(match[1], match[2]) }));
-  for (const match of text.matchAll(/\b([a-z]+)\b/gi)) {
+  for (const match of text.matchAll(/(?<![\p{L}])(\p{L}+)(?![\p{L}])/gu)) {
     const value = NUMBER_WORDS[match[1].toLowerCase()];
     if (value !== undefined) found.push({ raw: match[1], value });
   }
@@ -116,13 +129,18 @@ export function unverifiedFacts(text: string, sources: FactSources): string[] {
   for (const number of numbersIn(text)) {
     if (sources.numbers.has(number.value)) continue;
     // "one of the…", "a single…" aren't claims.
-    if (/^[a-z]+$/i.test(number.raw) && number.value <= 2) continue;
+    if (/^\p{L}+$/u.test(number.raw) && number.value <= 2) continue;
     flag(number.raw);
   }
 
-  // Credentials in words: "certified", "licensed"…
+  // Credentials in words: "certified", "licensed", "certificação"…
   for (const match of text.matchAll(CREDENTIAL)) {
     if (!sources.text.includes(match[1].toLowerCase().slice(0, 7))) flag(match[1]);
+  }
+
+  // Plans the candidate never stated.
+  for (const match of text.matchAll(PLAN)) {
+    if (!sources.text.includes(match[1].toLowerCase())) flag(match[1]);
   }
   return flags;
 }
