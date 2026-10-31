@@ -4,7 +4,7 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 
 import type { JobSearchSettingsView } from "@/lib/job-search/sources";
 
-import { saveJobSearchDetails, saveJobSource, saveJobSourceKey, testJobSource } from "./actions";
+import { saveJobSearchDetails, saveJobSource, saveJobSourceKey, testJobSource, updateSettings } from "./actions";
 import { JobSearchSection } from "./job-search-section";
 
 vi.mock("./actions", () => ({
@@ -12,8 +12,11 @@ vi.mock("./actions", () => ({
   saveJobSearchDetails: vi.fn(),
   saveJobSourceKey: vi.fn(),
   testJobSource: vi.fn(),
+  updateSettings: vi.fn(async () => ({ ok: true, data: null })),
 }));
 vi.mock("@/components/toast", () => ({ toast: vi.fn(), toastResult: (result: unknown) => result }));
+const refresh = vi.hoisted(() => vi.fn());
+vi.mock("next/navigation", () => ({ useRouter: () => ({ refresh }) }));
 
 const off: JobSearchSettingsView = {
   source: "OFF",
@@ -163,6 +166,16 @@ describe("JobSearchSection", () => {
     await userEvent.click(within(screen.getByRole("group", { name: "Sources to search" })).getByLabelText("Kukwira"));
     expect(saveJobSearchDetails).toHaveBeenLastCalledWith({ multiSources: [] });
     expect(screen.getByText("Tick at least one source.")).toBeInTheDocument();
+  });
+
+  it("hides Startups from the menu, and redraws the menu", async () => {
+    render(<JobSearchSection initial={off} />);
+    const toggle = screen.getByRole("switch", { name: "Show Startups in the menu" });
+    expect(toggle).toHaveAttribute("aria-checked", "true");
+    await userEvent.click(toggle);
+    expect(updateSettings).toHaveBeenCalledWith({ showStartups: false });
+    expect(refresh).toHaveBeenCalled();
+    expect(toggle).toHaveAttribute("aria-checked", "false");
   });
 
   it("says emprego.co.mz needs no key and is searched in Mozambique", () => {

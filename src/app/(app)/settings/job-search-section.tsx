@@ -1,5 +1,6 @@
 "use client";
 
+import { useRouter } from "next/navigation";
 import { RadioGroup } from "radix-ui";
 import { useId, useState } from "react";
 
@@ -11,6 +12,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { SegmentedControl } from "@/components/ui/segmented-control";
+import { Toggle } from "@/components/ui/toggle";
 import { JOB_SOURCES, type JobSource, type JSearchHost } from "@/lib/job-search/search";
 import {
   FREEHIRE_URL,
@@ -25,7 +27,7 @@ import {
 } from "@/lib/job-search/sources";
 import { cn } from "@/lib/cn";
 
-import { saveJobSearchDetails, saveJobSource, saveJobSourceKey, testJobSource } from "./actions";
+import { saveJobSearchDetails, saveJobSource, saveJobSourceKey, testJobSource, updateSettings } from "./actions";
 import { SettingsSectionIntro } from "./settings-screen";
 
 type Choice = JobSource | "OFF";
@@ -47,8 +49,10 @@ type Connection =
  * and never shown again. The Bundesagentur für Arbeit is saved only once its
  * note is accepted, and isn't offered when the server turns it off (#223).
  */
-export function JobSearchSection({ initial }: { initial: JobSearchSettingsView }) {
+export function JobSearchSection({ initial, showStartups: initialShowStartups = true }: { initial: JobSearchSettingsView; showStartups?: boolean }) {
   const track = useTrackSave();
+  const router = useRouter();
+  const [showStartups, setShowStartups] = useState(initialShowStartups);
   const [view, setView] = useState(initial);
   const [appId, setAppId] = useState(initial.adzuna.appId);
   const [connection, setConnection] = useState<Connection>({ status: "untested" });
@@ -75,6 +79,12 @@ export function JobSearchSection({ initial }: { initial: JobSearchSettingsView }
   const choices = view.arbeitsagentur.offered ? CHOICES : CHOICES.filter((entry) => entry.value !== "ARBEITSAGENTUR");
   // The BA can't be tested, or searched, before its note is accepted.
   const testable = source !== "ARBEITSAGENTUR" || Boolean(view.arbeitsagentur.acceptedAt);
+
+  const chooseStartups = async (on: boolean) => {
+    setShowStartups(on);
+    // The menu is drawn on the server.
+    if (toastResult(await track(updateSettings({ showStartups: on }))).ok) router.refresh();
+  };
 
   const toggleMulti = async (one: MultiSource, on: boolean) => {
     const next = MULTI_SOURCES.filter((entry) => (entry === one ? on : view.multi.includes(entry)));
@@ -235,6 +245,15 @@ export function JobSearchSection({ initial }: { initial: JobSearchSettingsView }
           </Card>
         </>
       )}
+
+      <Card className="mt-6">
+        <Toggle
+          label="Show Startups in the menu"
+          description="Startups lists startups hiring through Y Combinator and Hacker News' “Who is hiring?”. Hide it if they don't hire where you live."
+          checked={showStartups}
+          onCheckedChange={(on) => void chooseStartups(on)}
+        />
+      </Card>
     </>
   );
 }

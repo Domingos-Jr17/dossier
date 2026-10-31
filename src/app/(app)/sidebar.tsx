@@ -30,6 +30,7 @@ export function Sidebar({
   collapsed,
   colorScheme,
   counts,
+  hidden,
 }: {
   userName: string;
   update: Release | null;
@@ -40,6 +41,8 @@ export function Sidebar({
   colorScheme?: ColorScheme;
   /** Badges by nav item, e.g. replies waiting in the inbox. */
   counts?: Record<string, number>;
+  /** Nav items left out by the user's choice, by their address, e.g. "/startups". */
+  hidden?: string[];
 }) {
   return (
     <SidebarFrame
@@ -66,7 +69,7 @@ export function Sidebar({
           <span className="group-data-collapsed/sidebar:sr-only">New application</span>
         </Link>
 
-        <NavLinks counts={counts} />
+        <NavLinks counts={counts} hidden={hidden} />
       </div>
 
       {update && (

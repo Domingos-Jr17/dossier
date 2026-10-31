@@ -162,6 +162,8 @@ export const settingsSchema = z.object({
   adzunaKeyEnc: z.string().nullable().catch(null),
   /** When "I understand" was ticked under the Bundesagentur für Arbeit's note (#223); its searches wait for it. */
   arbeitsagenturAcceptedAt: z.iso.datetime().nullable().catch(null),
+  /** Whether Startups (YC and Hacker News' hiring posts) is in the menu; it can be hidden where they don't hire. */
+  showStartups: flag(true),
   /** The sources "Several sources" asks; null means "not set in the app": DOSSIER_JOBS_SOURCES, else the default. */
   multiSources: json(z.array(z.enum(MULTI_SOURCES))).nullable().catch(null),
   // Job agent (E16): one search, run once a day. Off until it's turned on.

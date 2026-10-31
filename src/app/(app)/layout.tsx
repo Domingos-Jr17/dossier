@@ -49,6 +49,7 @@ export default async function AppLayout({ children }: LayoutProps<"/">) {
         currentVersion={appVersion}
         collapsed={parseSidebarCollapsed(jar.get(SIDEBAR_COOKIE)?.value)}
         counts={{ ...(waiting > 0 ? { "/inbox": waiting } : {}), ...(agent > 0 ? { "/agent": agent } : {}) }}
+        hidden={settings.showStartups ? [] : ["/startups"]}
         colorScheme={parseColorScheme(jar.get(COLOR_SCHEME_COOKIE)?.value)}
       />
       {/* The screen sits in a white panel inset from the shell. Each screen

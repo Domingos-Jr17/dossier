@@ -37,6 +37,12 @@ describe("NavLinks", () => {
     ]);
   });
 
+  it("leaves out the sections the user hid", () => {
+    render(<NavLinks hidden={["/startups"]} />);
+    expect(screen.queryByRole("link", { name: "Startups" })).not.toBeInTheDocument();
+    expect(screen.getByRole("link", { name: "Agent" })).toBeInTheDocument();
+  });
+
   it("marks exactly one current section", () => {
     expect(currentItem("/")).toEqual(["Dashboard"]);
     expect(currentItem("/profile")).toEqual(["Profile"]);
