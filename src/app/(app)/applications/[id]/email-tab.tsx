@@ -7,6 +7,7 @@ import { DownloadPdfButton } from "@/components/documents/download-pdf-button";
 import { toast } from "@/components/toast";
 import { Button, buttonClassName } from "@/components/ui/button";
 import type { Unit } from "@/lib/application-data";
+import type { ApplyOnSite } from "@/lib/apply-on-site";
 import { emailParts, mailtoHref } from "@/lib/application-email";
 import { cn } from "@/lib/cn";
 import { copyText } from "@/lib/copy-text";
@@ -36,6 +37,7 @@ export function EmailTab({
   onWrite,
   attachments,
   gmail,
+  applyOnSite,
 }: {
   applicationId: string;
   /** The email's units; null until it's written. */
@@ -54,10 +56,14 @@ export function EmailTab({
   attachments: Attachments;
   /** Sending with Gmail (E15-2): who it sends from, and whether it went out that way before. */
   gmail?: { sender: GmailSender; sentBefore: boolean };
+  /** Where the posting is applied for, when it's on a site rather than by email. */
+  applyOnSite?: ApplyOnSite | null;
 }) {
+  const onSite = applyOnSite && (!units || !emailParts(units).to) ? <ApplyOnSiteCard apply={applyOnSite} applicationId={applicationId} attachments={attachments} /> : null;
   if (!units) {
     return (
-      <div className="flex flex-1 flex-col items-center overflow-auto bg-canvas px-10 pt-11 pb-16">
+      <div className="flex flex-1 flex-col items-center gap-4 overflow-auto bg-canvas px-10 pt-11 pb-16">
+        {onSite}
         <div className="flex w-full max-w-[560px] flex-col items-start gap-3 rounded-panel border border-line-card bg-card px-7 py-7">
           <h2 className="font-serif text-section">An email to send it with</h2>
           <p className="text-sm text-muted">
@@ -86,6 +92,7 @@ export function EmailTab({
         {hint && <span>{hint}</span>}
       </div>
       {notice && <div className="w-full max-w-[680px]">{notice}</div>}
+      {onSite}
 
       <article
         aria-label="Email"
@@ -145,6 +152,45 @@ export function EmailTab({
         </Button>
       </div>
     </div>
+  );
+}
+
+/**
+ * For a posting applied for on a site: where, how, and the steps, with the
+ * PDFs to upload. The email below is then for a contact person, if any.
+ */
+function ApplyOnSiteCard({ apply, applicationId, attachments }: { apply: ApplyOnSite; applicationId: string; attachments: Attachments }) {
+  return (
+    <section aria-labelledby="apply-on-site" className="flex w-full max-w-[680px] flex-col gap-3 rounded-panel border border-line-card bg-card px-7 py-6">
+      <h2 id="apply-on-site" className="font-serif text-section">
+        Apply on {apply.site}
+      </h2>
+      <p className="text-sm text-muted">
+        {apply.how === "account"
+          ? "This posting takes applications through an account on emprego.co.mz, with the CV you keep there, not by email."
+          : `This posting takes applications on ${apply.site}, not by email.`}
+      </p>
+      <ol className="flex list-decimal flex-col gap-2 pl-5 text-sm">
+        <li>Download your tailored resume and cover letter.</li>
+        <li>
+          {apply.how === "account"
+            ? "Sign in to emprego.co.mz, or create an account, and bring the CV there up to date from your tailored resume. Then apply from the posting's page."
+            : "Open the application page and fill it in. Upload the PDFs, or paste the letter where it asks for one."}
+        </li>
+        <li>Once it&apos;s in, mark the application as sent here, so your board and dashboard follow it.</li>
+      </ol>
+      {(attachments.resume || attachments.letter) && (
+        <ul className="flex flex-col gap-2">
+          {attachments.resume && <Attachment name={attachments.resume} href={`/api/pdf?doc=resume&application=${applicationId}`} what="tailored resume" />}
+          {attachments.letter && <Attachment name={attachments.letter} href={`/api/pdf?doc=letter&application=${applicationId}`} what="cover letter" />}
+        </ul>
+      )}
+      <a href={apply.url} target="_blank" rel="noopener noreferrer" className={cn(buttonClassName("primary", "md"), "self-start")}>
+        Open {apply.site}
+        <span aria-hidden>↗</span>
+        <span className="sr-only"> (opens in a new tab)</span>
+      </a>
+    </section>
   );
 }
 
