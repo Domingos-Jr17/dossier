@@ -16,6 +16,7 @@ import { env } from "@/lib/env";
 import { JobSearchError, testSource } from "@/lib/job-search";
 import { credentialsFor, jobSearchView, loadJobSearchConfig, requestContext } from "@/lib/job-search/config";
 import { JOB_SOURCES, JSEARCH_HOSTS } from "@/lib/job-search/search";
+import { MULTI_SOURCES } from "@/lib/job-search/sources";
 import { cancelJob, startJob } from "@/lib/jobs/runner";
 import { checkForUpdate } from "@/lib/update-check";
 import { countTailoredDocuments, deleteAllDownloads, zipPdfsJob } from "@/lib/jobs/zip-pdfs";
@@ -131,11 +132,19 @@ export const saveJobSource = action(
   },
 );
 
-/** Saves where the JSearch key is from, or the Adzuna app ID, which isn't a secret. */
+/** Saves where the JSearch key is from, the Adzuna app ID, which isn't a secret, or the sources "Several sources" asks. */
 export const saveJobSearchDetails = action(
-  z.strictObject({ jsearchHost: z.enum(JSEARCH_HOSTS).optional(), adzunaAppId: z.string().trim().max(200).optional() }),
-  async ({ jsearchHost, adzunaAppId }) => {
-    await saveSettings({ jsearchHost, ...(adzunaAppId === undefined ? {} : { adzunaAppId: adzunaAppId || null }) });
+  z.strictObject({
+    jsearchHost: z.enum(JSEARCH_HOSTS).optional(),
+    adzunaAppId: z.string().trim().max(200).optional(),
+    multiSources: z.array(z.enum(MULTI_SOURCES)).max(MULTI_SOURCES.length).optional(),
+  }),
+  async ({ jsearchHost, adzunaAppId, multiSources }) => {
+    await saveSettings({
+      jsearchHost,
+      ...(adzunaAppId === undefined ? {} : { adzunaAppId: adzunaAppId || null }),
+      ...(multiSources === undefined ? {} : { multiSources: [...new Set(multiSources)] }),
+    });
     return loadView();
   },
 );

@@ -32,6 +32,8 @@ import { RemoteOnlyField, SearchFields, uncoveredCountry } from "./search-fields
 export type JobsScreenProps = {
   /** The source chosen in Settings; null while job search is off. */
   source: JobSource | null;
+  /** What it searches, in words, when its name doesn't say: "emprego.co.mz and Kukwira" for Several sources. */
+  sourceLabel?: string;
   /** The Bundesagentur für Arbeit is chosen, but its note isn't accepted yet: it isn't searched until then (#223). */
   arbeitsagenturNote?: boolean;
   /** Score opens a Claude chat, which scores through the connector (#221). */
@@ -61,6 +63,7 @@ const SETTINGS_HREF = "/settings?section=jobs";
 /** Find jobs (E14-6, E14-7, E14-10): the search form and a kept search's postings, past searches, or the postings kept from them. */
 export function JobsScreen({
   source,
+  sourceLabel,
   arbeitsagenturNote = false,
   scoreInClaude = false,
   countries,
@@ -81,7 +84,7 @@ export function JobsScreen({
     <>
       <PageHeader
         title="Find jobs"
-        description={`Search ${source ? SOURCE_INFO[source].name : "job postings"} for postings near you, then start an application from the one you like.`}
+        description={`Search ${source ? (sourceLabel ?? SOURCE_INFO[source].name) : "job postings"} for postings near you, then start an application from the one you like.`}
       />
       <ViewTabs view={view} counts={counts} />
     </>

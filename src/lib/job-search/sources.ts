@@ -12,6 +12,8 @@ export type JobSearchSettingsView = {
   arbeitsagentur: { offered: boolean; acceptedAt: string | null };
   /** The FreeHire it searches: "freehire.me", or a self-hosted one's host (DOSSIER_FREEHIRE_URL). */
   freehire: { host: string };
+  /** The sources "Several sources" asks at once. */
+  multi: JobSource[];
 };
 
 export const JOB_KEY_UNREADABLE = "Your saved key can't be read. Please enter it again.";
@@ -132,7 +134,37 @@ export const SOURCE_INFO: Record<JobSource, SourceInfo> = {
     radius: false,
     browses: true,
   },
+  MULTI: {
+    name: "Several sources",
+    description: "The sources you tick below, searched at once. Each posting keeps its source, and a source that fails leaves the others' postings.",
+    tag: "Any of the others · their keys and limits apply",
+    keyUrl: null,
+    quotaPeriod: null,
+    attribution: null,
+    attributionLink: null,
+    // Each source keeps to its own countries; the others answer.
+    countries: null,
+    radius: false,
+    // Without keywords, only the sources that list postings by place are asked.
+    browses: true,
+  },
 };
+
+/**
+ * The sources "Several sources" can ask: every other one but the
+ * Bundesagentur für Arbeit, whose terms rule out searching it alongside (#223).
+ */
+export const MULTI_SOURCES = ["JSEARCH", "ADZUNA", "FREEHIRE", "EMPREGO_MZ", "KUKWIRA"] as const satisfies readonly Exclude<JobSource, "MULTI" | "ARBEITSAGENTUR">[];
+export type MultiSource = (typeof MULTI_SOURCES)[number];
+
+/** "emprego.co.mz, Kukwira and JSearch": sources' names as a sentence lists them. */
+export function sourceNames(sources: readonly JobSource[]): string {
+  const names = sources.map((source) => SOURCE_INFO[source].name);
+  return names.length <= 1 ? (names[0] ?? "") : `${names.slice(0, -1).join(", ")} and ${names.at(-1)}`;
+}
+
+/** What "Several sources" asks when nothing is chosen in Settings or DOSSIER_JOBS_SOURCES: Mozambique's own boards. */
+export const DEFAULT_MULTI_SOURCES: readonly MultiSource[] = ["EMPREGO_MZ", "KUKWIRA"];
 
 /** FreeHire's public catalogue; DOSSIER_FREEHIRE_URL can name a self-hosted one instead. */
 export const FREEHIRE_URL = "https://freehire.me";

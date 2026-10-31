@@ -2,6 +2,7 @@ import { z } from "zod";
 
 import { AiProvider, Creativity, DateFormat, PaperSize, Tone } from "@/generated/prisma/enums";
 import { EMPTY_QUERY, JOB_SOURCES, JSEARCH_HOSTS, searchQuerySchema } from "@/lib/job-search/search";
+import { MULTI_SOURCES } from "@/lib/job-search/sources";
 import { startupsRefreshSchema } from "@/lib/startups/types";
 
 /** Date styles for documents (SET-6), labelled with an example as in the prototype. */
@@ -161,6 +162,8 @@ export const settingsSchema = z.object({
   adzunaKeyEnc: z.string().nullable().catch(null),
   /** When "I understand" was ticked under the Bundesagentur für Arbeit's note (#223); its searches wait for it. */
   arbeitsagenturAcceptedAt: z.iso.datetime().nullable().catch(null),
+  /** The sources "Several sources" asks; null means "not set in the app": DOSSIER_JOBS_SOURCES, else the default. */
+  multiSources: json(z.array(z.enum(MULTI_SOURCES))).nullable().catch(null),
   // Job agent (E16): one search, run once a day. Off until it's turned on.
   // It asks the source in Settings → Job search, with its key.
   agentEnabled: flag(false),

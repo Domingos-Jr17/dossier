@@ -11,6 +11,7 @@ import { empregoMz } from "./emprego-mz";
 import { freehire } from "./freehire";
 import { jsearch } from "./jsearch";
 import { kukwira } from "./kukwira";
+import { searchSeveral, testSeveral } from "./multi";
 import { postingKey, type FoundPosting, type JobSource, type SearchPage, type SearchQuery } from "./search";
 import { sourceCovers } from "./sources";
 
@@ -29,6 +30,14 @@ const ADAPTERS: { [S in JobSource]: JobSourceAdapter<S> } = {
   FREEHIRE: freehire,
   EMPREGO_MZ: empregoMz,
   KUKWIRA: kukwira,
+  // Several sources at once, each through searchPostings and testSource below.
+  MULTI: {
+    source: "MULTI",
+    search: (query, credentials, next) => searchSeveral(query, credentials, next, searchPostings),
+    // Its postings keep their own source, which reads their whole text.
+    details: async () => null,
+    test: (credentials) => testSeveral(credentials, testSource),
+  },
 };
 
 const adapterFor = <S extends JobSource>(source: S) => ADAPTERS[source] as JobSourceAdapter<S>;

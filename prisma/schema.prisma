@@ -585,6 +585,8 @@ enum PostingSource {
   FREEHIRE
   EMPREGO_MZ
   KUKWIRA
+  /// Several of the others at once (Settings → Job search); its postings keep their own source.
+  MULTI
 }
 
 /// A posting from Find jobs that the user kept (E14-5): saved, dismissed, or

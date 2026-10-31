@@ -1,4 +1,4 @@
-import { render, screen, waitFor } from "@testing-library/react";
+import { render, screen, waitFor, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
@@ -21,6 +21,7 @@ const off: JobSearchSettingsView = {
   adzuna: { appId: "", keyState: "none" },
   arbeitsagentur: { offered: true, acceptedAt: null },
   freehire: { host: "freehire.me" },
+  multi: ["EMPREGO_MZ", "KUKWIRA"],
 };
 const ACCEPTED = "2026-10-23T09:00:00.000Z";
 const withSource = (view: Partial<JobSearchSettingsView>): JobSearchSettingsView => ({ ...off, ...view });
@@ -36,7 +37,7 @@ beforeEach(() => {
 });
 
 describe("JobSearchSection", () => {
-  it("offers the six sources and Off, as a radio group, Off by default", () => {
+  it("offers the six sources, Several sources and Off, as a radio group, Off by default", () => {
     render(<JobSearchSection initial={off} />);
     expect(screen.getByRole("heading", { name: "Job search" })).toBeInTheDocument();
     expect(screen.getAllByRole("radio").map((radio) => radio.getAttribute("aria-label"))).toEqual([
@@ -45,6 +46,7 @@ describe("JobSearchSection", () => {
       "FreeHire",
       "emprego.co.mz",
       "Kukwira",
+      "Several sources",
       "Bundesagentur für Arbeit",
       "Off",
     ]);
@@ -130,7 +132,37 @@ describe("JobSearchSection", () => {
 
   it("leaves the Arbeitsagentur out when the server doesn't offer it", () => {
     render(<JobSearchSection initial={withSource({ arbeitsagentur: { offered: false, acceptedAt: null } })} />);
-    expect(screen.getAllByRole("radio").map((radio) => radio.getAttribute("aria-label"))).toEqual(["JSearch", "Adzuna", "FreeHire", "emprego.co.mz", "Kukwira", "Off"]);
+    expect(screen.getAllByRole("radio").map((radio) => radio.getAttribute("aria-label"))).toEqual(["JSearch", "Adzuna", "FreeHire", "emprego.co.mz", "Kukwira", "Several sources", "Off"]);
+  });
+
+  it("asks the sources ticked under Several sources, with the keys they need, and says what's sent where", async () => {
+    vi.mocked(saveJobSearchDetails).mockImplementation(async ({ multiSources = [] }) => ({ ok: true, data: withSource({ source: "MULTI", multi: multiSources }) }));
+    render(<JobSearchSection initial={withSource({ source: "MULTI", multi: ["EMPREGO_MZ", "KUKWIRA"] })} />);
+    const sources = screen.getByRole("group", { name: "Sources to search" });
+    expect(sources).toBeInTheDocument();
+    expect(within(sources).getByLabelText("emprego.co.mz")).toBeChecked();
+    expect(within(sources).getByLabelText("Kukwira")).toBeChecked();
+    expect(within(sources).getByLabelText("JSearch")).not.toBeChecked();
+    expect(screen.getByRole("note")).toHaveTextContent(
+      "Your searches (keywords, place and filters) go to emprego.co.mz. Kukwira only sends its list of openings; your keywords are matched on your server. Nothing from your profile does.",
+    );
+    // A source that needs a key asks for it once ticked.
+    expect(screen.queryByLabelText("API key")).not.toBeInTheDocument();
+    await userEvent.click(within(sources).getByLabelText("JSearch"));
+    expect(saveJobSearchDetails).toHaveBeenLastCalledWith({ multiSources: ["JSEARCH", "EMPREGO_MZ", "KUKWIRA"] });
+    expect(screen.getByLabelText("API key")).toBeInTheDocument();
+    expect(screen.getByRole("note")).toHaveTextContent("go to JSearch and emprego.co.mz.");
+  });
+
+  it("says nothing leaves the server for Kukwira alone, and asks for at least one source", async () => {
+    vi.mocked(saveJobSearchDetails).mockImplementation(async ({ multiSources = [] }) => ({ ok: true, data: withSource({ source: "MULTI", multi: multiSources }) }));
+    const { unmount } = render(<JobSearchSection initial={withSource({ source: "KUKWIRA" })} />);
+    expect(screen.getByRole("note")).toHaveTextContent("Kukwira only sends its list of openings; your keywords are matched on your server. Nothing from your search or your profile leaves your server.");
+    unmount();
+    render(<JobSearchSection initial={withSource({ source: "MULTI", multi: ["KUKWIRA"] })} />);
+    await userEvent.click(within(screen.getByRole("group", { name: "Sources to search" })).getByLabelText("Kukwira"));
+    expect(saveJobSearchDetails).toHaveBeenLastCalledWith({ multiSources: [] });
+    expect(screen.getByText("Tick at least one source.")).toBeInTheDocument();
   });
 
   it("says emprego.co.mz needs no key and is searched in Mozambique", () => {

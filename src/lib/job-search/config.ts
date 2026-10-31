@@ -5,10 +5,10 @@ import { decryptSecret, JOB_SOURCE_KEY, SecretUnreadable } from "@/lib/secrets";
 import type { SettingsData } from "@/lib/settings";
 import { loadSettings } from "@/lib/settings-data";
 
-import type { RequestContext, SourceCredentials } from "./adapter";
+import type { MultiPart, RequestContext, SourceCredentials } from "./adapter";
 import { JobSearchError, jobSearchError } from "./errors";
 import type { JobSource, JSearchHost } from "./search";
-import { ARBEITSAGENTUR_NOTE, FREEHIRE_URL, SOURCE_INFO, type JobKeyState, type JobSearchSettingsView } from "./sources";
+import { ARBEITSAGENTUR_NOTE, DEFAULT_MULTI_SOURCES, FREEHIRE_URL, SOURCE_INFO, type JobKeyState, type JobSearchSettingsView, type MultiSource } from "./sources";
 
 // Which job source to search, and with which key (E14-4): what's saved in
 // Settings, or else the DOSSIER_JOBS_* variables. Each source keeps its own
@@ -28,9 +28,12 @@ export type JobSearchConfig = {
   arbeitsagentur: { offered: boolean; acceptedAt: string | null };
   /** The FreeHire to search: freehire.me, or a self-hosted one (DOSSIER_FREEHIRE_URL). */
   freehire: { url: string };
+  /** The sources "Several sources" asks at once. */
+  multi: MultiSource[];
 };
 
-type SavedJobSettings = Pick<SettingsData, "jobSource" | "jsearchKeyEnc" | "jsearchHost" | "adzunaAppId" | "adzunaKeyEnc" | "arbeitsagenturAcceptedAt">;
+type SavedJobSettings = Pick<SettingsData, "jobSource" | "jsearchKeyEnc" | "jsearchHost" | "adzunaAppId" | "adzunaKeyEnc" | "arbeitsagenturAcceptedAt"> &
+  Partial<Pick<SettingsData, "multiSources">>;
 type JobEnv = Pick<
   Env,
   | "DOSSIER_JOBS_SOURCE"
@@ -40,7 +43,8 @@ type JobEnv = Pick<
   | "DOSSIER_ADZUNA_KEY"
   | "DOSSIER_FREEHIRE_URL"
   | "DOSSIER_JOBS_ARBEITSAGENTUR"
->;
+> &
+  Partial<Pick<Env, "DOSSIER_JOBS_SOURCES">>;
 
 const FROM_ENV: Record<NonNullable<Env["DOSSIER_JOBS_SOURCE"]>, JobSource | null> = {
   jsearch: "JSEARCH",
@@ -49,7 +53,16 @@ const FROM_ENV: Record<NonNullable<Env["DOSSIER_JOBS_SOURCE"]>, JobSource | null
   freehire: "FREEHIRE",
   "emprego-mz": "EMPREGO_MZ",
   kukwira: "KUKWIRA",
+  multi: "MULTI",
   off: null,
+};
+
+const MULTI_FROM_ENV: Record<NonNullable<Env["DOSSIER_JOBS_SOURCES"]>[number], MultiSource> = {
+  jsearch: "JSEARCH",
+  adzuna: "ADZUNA",
+  freehire: "FREEHIRE",
+  "emprego-mz": "EMPREGO_MZ",
+  kukwira: "KUKWIRA",
 };
 
 /** A saved key, decrypted, or else the environment's. */
@@ -84,6 +97,7 @@ export function resolveJobSearchConfig(saved: SavedJobSettings, source: JobEnv, 
     },
     arbeitsagentur: { offered, acceptedAt: saved.arbeitsagenturAcceptedAt },
     freehire: { url: source.DOSSIER_FREEHIRE_URL ?? FREEHIRE_URL },
+    multi: saved.multiSources ?? source.DOSSIER_JOBS_SOURCES?.map((name) => MULTI_FROM_ENV[name]) ?? [...DEFAULT_MULTI_SOURCES],
   };
 }
 
@@ -110,6 +124,7 @@ export function jobSearchView(config: JobSearchConfig): JobSearchSettingsView {
     adzuna: { appId: config.adzuna.appId, keyState: config.adzuna.keyState },
     arbeitsagentur: config.arbeitsagentur,
     freehire: { host: new URL(config.freehire.url).host },
+    multi: config.multi,
   };
 }
 
@@ -158,5 +173,27 @@ export function credentialsFor<S extends JobSource>(config: JobSearchConfig, sou
     case "EMPREGO_MZ":
     case "KUKWIRA":
       return {} as SourceCredentials[S];
+    case "MULTI":
+      return { parts: multiParts(config) } as SourceCredentials[S];
   }
+}
+
+/**
+ * What "Several sources" asks: each chosen source with its key and address.
+ * One without its key is left out, so the others still answer; with none
+ * left, the search says what's missing.
+ */
+function multiParts(config: JobSearchConfig): MultiPart[] {
+  const parts: MultiPart[] = [];
+  let missing: JobSearchError | null = null;
+  for (const source of config.multi) {
+    try {
+      parts.push({ source, credentials: credentialsFor(config, source), context: requestContext(source) } as MultiPart);
+    } catch (error) {
+      if (!(error instanceof JobSearchError)) throw error;
+      missing ??= error;
+    }
+  }
+  if (parts.length > 0) return parts;
+  throw missing ?? new JobSearchError("no-key", "Tick at least one source under Several sources in Settings → Job search.");
 }

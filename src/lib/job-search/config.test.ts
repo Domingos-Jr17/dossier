@@ -27,6 +27,7 @@ describe("resolveJobSearchConfig", () => {
       adzuna: { appId: "", keyState: "none" },
       arbeitsagentur: { offered: true, acceptedAt: null },
       freehire: { host: "freehire.me" },
+      multi: ["EMPREGO_MZ", "KUKWIRA"],
     });
   });
 
@@ -140,6 +141,34 @@ describe("requestContext", () => {
     expect(requestContext("FREEHIRE", "http://127.0.0.1:3998/", "https://jobs.example")).toEqual({
       baseUrl: "http://127.0.0.1:3998/freehire",
     });
+  });
+});
+
+describe("Several sources", () => {
+  it("asks the sources chosen in Settings, else DOSSIER_JOBS_SOURCES, else Mozambique's boards", () => {
+    expect(resolveJobSearchConfig(nothingSaved, { DOSSIER_JOBS_SOURCE: "multi" })).toMatchObject({ source: "MULTI", multi: ["EMPREGO_MZ", "KUKWIRA"] });
+    expect(resolveJobSearchConfig(nothingSaved, { DOSSIER_JOBS_SOURCES: ["kukwira", "jsearch"] }).multi).toEqual(["KUKWIRA", "JSEARCH"]);
+    expect(resolveJobSearchConfig({ ...nothingSaved, multiSources: ["FREEHIRE"] }, { DOSSIER_JOBS_SOURCES: ["kukwira"] }).multi).toEqual(["FREEHIRE"]);
+    expect(jobSearchView(resolveJobSearchConfig({ ...nothingSaved, multiSources: ["EMPREGO_MZ"] }, noEnv)).multi).toEqual(["EMPREGO_MZ"]);
+  });
+
+  it("asks each source with its own key, leaving out one without", () => {
+    const config = resolveJobSearchConfig({ ...nothingSaved, jobSource: "MULTI", multiSources: ["EMPREGO_MZ", "JSEARCH", "KUKWIRA"] }, noEnv);
+    expect(credentialsFor(config, "MULTI")).toEqual({
+      parts: [
+        { source: "EMPREGO_MZ", credentials: {}, context: {} },
+        { source: "KUKWIRA", credentials: {}, context: {} },
+      ],
+    });
+    const keyed = resolveJobSearchConfig({ ...nothingSaved, jobSource: "MULTI", multiSources: ["JSEARCH"] }, { DOSSIER_JSEARCH_KEY: "ak" });
+    expect(credentialsFor(keyed, "MULTI")).toEqual({ parts: [{ source: "JSEARCH", credentials: { key: "ak", host: "openwebninja" }, context: {} }] });
+  });
+
+  it("says what's missing when no source can be asked", () => {
+    const keyless = resolveJobSearchConfig({ ...nothingSaved, jobSource: "MULTI", multiSources: ["JSEARCH"] }, noEnv);
+    expect(() => credentialsFor(keyless, "MULTI")).toThrow("Add your JSearch key in Settings → Job search first.");
+    const none = resolveJobSearchConfig({ ...nothingSaved, jobSource: "MULTI", multiSources: [] }, noEnv);
+    expect(() => credentialsFor(none, "MULTI")).toThrow("Tick at least one source under Several sources in Settings → Job search.");
   });
 });
 

@@ -65,3 +65,29 @@ test("searches Kukwira's openings and reads one's whole text", async ({ page }) 
   await expect(text).toContainText("Registo das intervenções no plano de manutenção");
   await expect(text).toContainText(/Candidatura: http:\/\/localhost:\d+\/kukwira\/#\/candidatura#700/);
 });
+
+test("searches emprego.co.mz and Kukwira at once, each posting keeping its source", async ({ page }) => {
+  await page.goto("/settings?section=jobs");
+  await page.getByRole("radio", { name: "Several sources" }).click();
+  await chosen("MULTI");
+  const sources = page.getByRole("group", { name: "Sources to search" });
+  await expect(sources.getByLabel("emprego.co.mz")).toBeChecked();
+  await expect(sources.getByLabel("Kukwira")).toBeChecked();
+  await page.getByRole("button", { name: "Test connection" }).click();
+  await expect(page.getByText(/^Connected · Several sources answered in/)).toBeVisible();
+
+  await page.goto("/jobs?country=mz");
+  await expect(page.getByText("Search emprego.co.mz and Kukwira for postings near you, then start an application from the one you like.")).toBeVisible();
+  const form = page.getByRole("search", { name: "Search postings" });
+  await form.getByLabel("What").fill("");
+  await form.getByLabel("Where").fill("Maputo");
+  await form.getByRole("button", { name: "Search" }).click();
+  const list = page.getByRole("list", { name: "Postings" });
+  await expect(list.getByRole("listitem")).toHaveCount(2);
+  await expect(list.getByRole("listitem").filter({ hasText: "Engenheiro Civil Sénior" })).toContainText("Vagas de emprego.co.mz");
+  await expect(list.getByRole("listitem").filter({ hasText: "Técnico de Manutenção Industrial" })).toContainText("Vagas da Kukwira");
+  await expect(page.getByText(/^2 postings from Several sources · searched/)).toBeVisible();
+  // Each one's whole text comes from its own source.
+  await list.getByRole("button", { name: /^Técnico de Manutenção Industrial/ }).click();
+  await expect(page.getByRole("region", { name: "Posting text" })).toContainText("Registo das intervenções no plano de manutenção");
+});

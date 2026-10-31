@@ -7,11 +7,22 @@ import { ArbeitsagenturNote } from "@/components/arbeitsagentur-note";
 import { useTrackSave } from "@/components/save-tracker";
 import { toastResult } from "@/components/toast";
 import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { SegmentedControl } from "@/components/ui/segmented-control";
 import { JOB_SOURCES, type JobSource, type JSearchHost } from "@/lib/job-search/search";
-import { FREEHIRE_URL, JOB_KEY_UNREADABLE, JSEARCH_KEY_URLS, SOURCE_INFO, type JobKeyState, type JobSearchSettingsView } from "@/lib/job-search/sources";
+import {
+  FREEHIRE_URL,
+  JOB_KEY_UNREADABLE,
+  JSEARCH_KEY_URLS,
+  MULTI_SOURCES,
+  SOURCE_INFO,
+  sourceNames,
+  type JobKeyState,
+  type JobSearchSettingsView,
+  type MultiSource,
+} from "@/lib/job-search/sources";
 import { cn } from "@/lib/cn";
 
 import { saveJobSearchDetails, saveJobSource, saveJobSourceKey, testJobSource } from "./actions";
@@ -42,6 +53,8 @@ export function JobSearchSection({ initial }: { initial: JobSearchSettingsView }
   const [appId, setAppId] = useState(initial.adzuna.appId);
   const [connection, setConnection] = useState<Connection>({ status: "untested" });
   const source = view.source;
+  /** Whether a source is searched: chosen alone, or ticked under Several sources. */
+  const uses = (one: MultiSource) => source === one || (source === "MULTI" && view.multi.includes(one));
 
   // Any change means the last test no longer counts.
   const changed = () => setConnection({ status: "untested" });
@@ -62,6 +75,13 @@ export function JobSearchSection({ initial }: { initial: JobSearchSettingsView }
   const choices = view.arbeitsagentur.offered ? CHOICES : CHOICES.filter((entry) => entry.value !== "ARBEITSAGENTUR");
   // The BA can't be tested, or searched, before its note is accepted.
   const testable = source !== "ARBEITSAGENTUR" || Boolean(view.arbeitsagentur.acceptedAt);
+
+  const toggleMulti = async (one: MultiSource, on: boolean) => {
+    const next = MULTI_SOURCES.filter((entry) => (entry === one ? on : view.multi.includes(entry)));
+    setView((current) => ({ ...current, multi: next }));
+    changed();
+    apply(toastResult(await track(saveJobSearchDetails({ multiSources: next }))));
+  };
 
   const chooseHost = async (host: JSearchHost) => {
     setView((current) => ({ ...current, jsearch: { ...current.jsearch, host } }));
@@ -92,7 +112,7 @@ export function JobSearchSection({ initial }: { initial: JobSearchSettingsView }
   return (
     <>
       <SettingsSectionIntro title="Job search">
-        Where Find jobs looks for postings. Pick one source; you can switch any time, and each keeps its own key.
+        Where Find jobs looks for postings. Pick one source, or several at once; you can switch any time, and each keeps its own key.
       </SettingsSectionIntro>
 
       <RadioGroup.Root
@@ -129,11 +149,26 @@ export function JobSearchSection({ initial }: { initial: JobSearchSettingsView }
       {source !== "OFF" && (
         <>
           <p role="note" className="rounded-card bg-warning-surface px-4 py-3 text-meta text-warning">
-            Your searches (keywords, place and filters) go to {SOURCE_INFO[source].name}. Nothing from your profile does.
+            {searchNotice(source === "MULTI" ? view.multi : [source])}
           </p>
 
           <Card className="flex flex-col gap-5">
-            {source === "JSEARCH" && (
+            {source === "MULTI" && (
+              <fieldset className="flex flex-col gap-3">
+                <legend className="mb-1 text-label text-muted">Sources to search</legend>
+                {MULTI_SOURCES.map((one) => (
+                  <Checkbox
+                    key={one}
+                    label={SOURCE_INFO[one].name}
+                    hint={SOURCE_INFO[one].tag}
+                    checked={view.multi.includes(one)}
+                    onChange={(event) => void toggleMulti(one, event.target.checked)}
+                  />
+                ))}
+                {view.multi.length === 0 && <p className="text-sm text-error">Tick at least one source.</p>}
+              </fieldset>
+            )}
+            {uses("JSEARCH") && (
               <>
                 <HostChoice host={view.jsearch.host} onChange={(host) => void chooseHost(host)} />
                 <KeyField
@@ -145,7 +180,7 @@ export function JobSearchSection({ initial }: { initial: JobSearchSettingsView }
                 />
               </>
             )}
-            {source === "ADZUNA" && (
+            {uses("ADZUNA") && (
               <div className="grid grid-cols-1 gap-x-[18px] gap-y-5 sm:grid-cols-2">
                 <Input
                   label="App ID"
@@ -171,19 +206,19 @@ export function JobSearchSection({ initial }: { initial: JobSearchSettingsView }
                 <p className="text-sm text-muted">No key needed. The job agent doesn&apos;t search this source; choose JSearch, Adzuna or FreeHire for it.</p>
               </>
             )}
-            {source === "FREEHIRE" && (
+            {uses("FREEHIRE") && (
               <p className="text-sm text-muted">
                 {view.freehire.host === new URL(FREEHIRE_URL).host
                   ? `No key needed. Dossier searches FreeHire's public catalogue at ${view.freehire.host}.`
                   : `No key needed. Dossier searches your own FreeHire at ${view.freehire.host}.`}
               </p>
             )}
-            {source === "EMPREGO_MZ" && (
+            {uses("EMPREGO_MZ") && (
               <p className="text-sm text-muted">
                 No key needed. Dossier reads emprego.co.mz&apos;s pages as a visitor would; set the country to Mozambique. Without keywords, the place picks a city&apos;s postings.
               </p>
             )}
-            {source === "KUKWIRA" && (
+            {uses("KUKWIRA") && (
               <p className="text-sm text-muted">
                 No key needed. Dossier reads Kukwira&apos;s current openings, usually a handful; set the country to Mozambique. Its openings don&apos;t say where the job is, so the place isn&apos;t used.
               </p>
@@ -282,6 +317,17 @@ function KeyField({
       )}
     </div>
   );
+}
+
+/**
+ * What leaves the server, in words: the search goes to each source, except
+ * Kukwira, whose whole list of openings is fetched and matched here.
+ */
+export function searchNotice(sources: readonly JobSource[]): string {
+  const sent = sources.filter((one) => one !== "KUKWIRA");
+  const local = sources.includes("KUKWIRA") ? "Kukwira only sends its list of openings; your keywords are matched on your server. " : "";
+  if (sent.length === 0) return `${local}Nothing from your search or your profile leaves your server.`;
+  return `Your searches (keywords, place and filters) go to ${sourceNames(sent)}. ${local}Nothing from your profile does.`;
 }
 
 function ConnectionStatus({ connection, source }: { connection: Connection; source: JobSource }) {

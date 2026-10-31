@@ -11,7 +11,9 @@ const GENERATE_SECRET = "for example the output of `openssl rand -base64 32`";
 const HASH_PASSWORD = "Make one with `docker run --rm -it ghcr.io/aientech/dossier hash-password`";
 
 export const AI_PROVIDERS = ["local", "openai", "anthropic", "mistral", "lmstudio", "deepseek"] as const;
-export const JOB_SOURCE_NAMES = ["jsearch", "adzuna", "arbeitsagentur", "freehire", "emprego-mz", "kukwira", "off"] as const;
+/** The sources DOSSIER_JOBS_SOURCES may name for "Several sources" (the Bundesagentur für Arbeit can't be one, #223). */
+export const MULTI_SOURCE_NAMES = ["jsearch", "adzuna", "freehire", "emprego-mz", "kukwira"] as const;
+export const JOB_SOURCE_NAMES = ["jsearch", "adzuna", "arbeitsagentur", "freehire", "emprego-mz", "kukwira", "multi", "off"] as const;
 
 // An empty value (`DOSSIER_AI_KEY=` in .env) counts as unset.
 const unsetIfEmpty = (value: unknown) =>
@@ -119,6 +121,20 @@ const schema = z.object({
     z.enum(["openwebninja", "rapidapi"], {
       error: (issue) => `DOSSIER_JSEARCH_HOST must be openwebninja or rapidapi (got "${String(issue.input)}").`,
     }),
+  ),
+  // The sources DOSSIER_JOBS_SOURCE=multi ("Several sources") asks, comma-separated,
+  // e.g. "emprego-mz,kukwira,jsearch". Unset asks emprego.co.mz and Kukwira.
+  DOSSIER_JOBS_SOURCES: optional(
+    z
+      .string()
+      .transform((value) => value.split(",").map((name) => name.trim().toLowerCase()).filter(Boolean))
+      .pipe(
+        z.array(
+          z.enum(MULTI_SOURCE_NAMES, {
+            error: (issue) => `DOSSIER_JOBS_SOURCES takes ${MULTI_SOURCE_NAMES.join(", ")}, separated by commas (got "${String(issue.input)}").`,
+          }),
+        ),
+      ),
   ),
   DOSSIER_ADZUNA_APP_ID: optional(z.string()),
   DOSSIER_ADZUNA_KEY: optional(z.string()),

@@ -16,7 +16,14 @@ export type SourceCredentials = {
   FREEHIRE: Record<string, never>;
   EMPREGO_MZ: Record<string, never>;
   KUKWIRA: Record<string, never>;
+  /** The sources it asks, each with what it needs (config.ts → credentialsFor). */
+  MULTI: { parts: MultiPart[] };
 };
+
+/** One of the sources "Several sources" asks, with its own key and address. */
+export type MultiPart = {
+  [S in Exclude<JobSource, "MULTI">]: { source: S; credentials: SourceCredentials[S]; context: RequestContext };
+}[Exclude<JobSource, "MULTI">];
 
 export type RequestContext = {
   /** Replaces the source's own address; for the end-to-end tests' fake source. */

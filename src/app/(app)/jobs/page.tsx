@@ -5,7 +5,7 @@ import { handsOffToClaude } from "@/lib/connector/handoff";
 import { loadJobSearchConfig } from "@/lib/job-search/config";
 import { COUNTRIES } from "@/lib/job-search/countries";
 import { defaultSearch, latestRole, queryFromParams, viewFromParams } from "@/lib/job-search/search";
-import { SOURCE_INFO } from "@/lib/job-search/sources";
+import { SOURCE_INFO, sourceNames } from "@/lib/job-search/sources";
 import { countSearches, listSearches, loadSearch } from "@/lib/posting-searches";
 import { countPostings, listPostings } from "@/lib/postings";
 import { prisma } from "@/lib/prisma";
@@ -45,6 +45,7 @@ export default async function JobsPage({ searchParams }: PageProps<"/jobs">) {
   return (
     <JobsScreen
       source={config.source}
+      sourceLabel={config.source === "MULTI" ? sourceNames(config.multi) : undefined}
       arbeitsagenturNote={config.source === "ARBEITSAGENTUR" && !config.arbeitsagentur.acceptedAt}
       scoreInClaude={scoreInClaude}
       // Named here: the browser's ICU can name a few countries differently from the server's.
