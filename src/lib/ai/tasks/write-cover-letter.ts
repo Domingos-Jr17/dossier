@@ -23,7 +23,7 @@ import {
   type Task,
 } from "./prompt-parts";
 
-export const WRITE_COVER_LETTER_VERSION = "write-cover-letter@5";
+export const WRITE_COVER_LETTER_VERSION = "write-cover-letter@6";
 
 const answerSchema = z.object({
   recipient: z.string(),
@@ -38,9 +38,22 @@ const INSTRUCTIONS = `You write a candidate's cover letter for one job, as JSON.
 - greeting: the salutation before the first paragraph, usual for a letter in its language, with its punctuation: the contact person by name when the posting names one, else the hiring team, e.g. "Dear Ledgerly team,".
 - paragraphs: 3–4 paragraphs, about 200–300 words together. Open with why this role and this company, then the problem the job is there to solve and where the candidate has solved it before, and close by inviting a conversation, with where the candidate is based if it matters for the job. No greeting, sign-off or name in them: those are separate.
 - label: a short English name for each paragraph's purpose, e.g. "Why this role", "The challenge", "Where I've solved it", "Closing".
-- Where the job asks for something the profile doesn't have ("gap"), don't claim it. If it matters, say so honestly in a sentence and show how the candidate would close the gap.
 - signOff: the closing line before the name, matching the tone, with its punctuation (e.g. "Warm regards,").
 - The sender's name, contact details and the date are added from the profile; don't write them.`;
+
+/**
+ * What the letter does with what the job asks and the profile doesn't have.
+ * Either way it never claims a gap is covered, and never announces a plan the
+ * profile doesn't state: a letter once promised a certification course the
+ * candidate had never mentioned.
+ */
+export function gapRule(gaps: "address" | "leave-out" = "address"): string {
+  const noPlans =
+    "Never announce plans, intentions or commitments the profile and the candidate's facts don't state, such as starting a course, a certification or a move.";
+  return gaps === "leave-out"
+    ? `Don't mention what the job asks and the profile doesn't have ("gaps"): build the letter on what the profile does cover, and never claim a gap is covered. ${noPlans}`
+    : `Where the job asks for something the profile doesn't have ("gap"), don't claim it. If it matters, say so honestly in a sentence and show what in the candidate's experience would help them close it. ${noPlans}`;
+}
 
 export type CoverLetterInput = {
   profile: ProfileData;
@@ -63,6 +76,7 @@ export const writeCoverLetter: Task<CoverLetterInput, Unit[]> = async (provider,
   const answer = await provider.complete({
     system: system(
       INSTRUCTIONS,
+      gapRule(options.letterGaps),
       COVER_LETTER_APPROACH,
       `Tone: ${TONES[tone].label}. ${TONES[tone].description}`,
       truthfulness(options.strict),

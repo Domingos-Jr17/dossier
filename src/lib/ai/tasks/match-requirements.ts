@@ -3,7 +3,7 @@ import { z } from "zod";
 import { matchSchema, type Extracted, type Match } from "@/lib/application-data";
 import { experienceMonths, formatMonthYear, languageLevelLabel, sameName, type ProfileData } from "@/lib/profile";
 
-import { system, UNTRUSTED_POSTING, type Task } from "./prompt-parts";
+import { system, UNTRUSTED_POSTING, type Task, type TaskOptions } from "./prompt-parts";
 
 export const MATCH_REQUIREMENTS_VERSION = "match-requirements@1";
 
@@ -30,7 +30,7 @@ For each numbered requirement, answer which ONE of the candidate's skills it is 
 export type MatchInput = { requirements: Extracted["requirements"]; profile: ProfileData; today?: Date };
 
 /** NEW-4: each requirement covered, partial or a gap, with its evidence. */
-export const matchRequirements: Task<MatchInput, Match> = async (provider, { requirements, profile, today = new Date() }, { signal }) => {
+export const matchRequirements: Task<MatchInput, Match> = async (provider, { requirements, profile, today = new Date() }, { signal, letterGaps }) => {
   const needsModel = requirements.some((requirement) => requirement.kind !== "years");
   const answer = needsModel
     ? await provider.complete({
@@ -60,7 +60,7 @@ export const matchRequirements: Task<MatchInput, Match> = async (provider, { req
   const mapped = new Map(answer.matches.map((match) => [match.requirement, match]));
   return {
     data: matchSchema.parse({
-      items: requirements.map((requirement, index) => classify(requirement, mapped.get(index), profile, today)),
+      items: requirements.map((requirement, index) => classify(requirement, mapped.get(index), profile, today, letterGaps)),
     }),
     promptVersion: MATCH_REQUIREMENTS_VERSION,
   };
@@ -73,6 +73,7 @@ function classify(
   mapped: { skill: string | null; language: string | null } | undefined,
   profile: ProfileData,
   today: Date,
+  letterGaps: TaskOptions["letterGaps"],
 ): Item {
   const base = { requirement: requirement.text, skill: null, experienceIds: [] as string[], note: null };
 
@@ -108,7 +109,7 @@ function classify(
     return {
       ...base,
       result: "gap",
-      note: requirement.kind === "skill" ? "Not in your profile yet" : "Nothing in your profile, so I'll address it honestly in the letter",
+      note: requirement.kind === "skill" ? "Not in your profile yet" : letterGaps === "leave-out" ? "Nothing in your profile; the letter leaves it out" : "Nothing in your profile, so I'll address it honestly in the letter",
     };
   }
   const roles = profile.experience.filter((entry) => entry.skillIds.includes(skill.id));

@@ -1,4 +1,5 @@
 import { act, render, screen, within } from "@testing-library/react";
+import type { ComponentProps } from "react";
 import userEvent from "@testing-library/user-event";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
@@ -233,8 +234,8 @@ describe("how you match (E7-4)", () => {
     matchedWith: "match-requirements@1",
   };
 
-  async function review() {
-    render(<NewApplication {...props} />);
+  async function review(extra: Partial<ComponentProps<typeof NewApplication>> = {}) {
+    render(<NewApplication {...props} {...extra} />);
     await userEvent.type(screen.getByLabelText("Job posting"), "Ledgerly is hiring.");
     await userEvent.click(screen.getByRole("button", { name: "Read the posting →" }));
     emit({ status: "DONE", result: read });
@@ -251,7 +252,12 @@ describe("how you match (E7-4)", () => {
       "~Partly covered: Strong prototyping in FigmaIn your skills, but not linked to a role yet",
       "–Not covered: Experience with paymentsNothing in your profile, so I'll address it honestly in the letter",
     ]);
-    expect(screen.getByText(/^Gaps aren't dealbreakers\./)).toBeInTheDocument();
+    expect(screen.getByText("Gaps aren't dealbreakers. I'll never invent experience. The important ones get addressed honestly in your cover letter.")).toBeInTheDocument();
+  });
+
+  it("says the letter leaves gaps out when Settings say so", async () => {
+    await review({ letterGaps: "leave-out" });
+    expect(screen.getByText("Gaps aren't dealbreakers. I'll never invent experience, and your cover letter leaves the gaps out.")).toBeInTheDocument();
   });
 
   it("adds a missing skill to the profile, which makes it partly covered (NEW-5)", async () => {

@@ -44,6 +44,10 @@ export const jobRetentionLabel = (hours: number) =>
   JOB_RETENTION_OPTIONS.find((option) => option.hours === hours)?.label ?? `${hours} hours`;
 
 const pageLimit = z.enum(["1", "2", "none"]);
+
+/** "Gaps in the cover letter": the important ones addressed honestly, or left out. */
+export const LETTER_GAPS = ["address", "leave-out"] as const;
+export type LetterGaps = (typeof LETTER_GAPS)[number];
 export type PageLimit = z.infer<typeof pageLimit>;
 
 /**
@@ -115,6 +119,8 @@ export const settingsSchema = z.object({
   paper: z.enum(PaperSize).catch(PaperSize.A4),
   dateFormat: z.enum(DateFormat).catch(DateFormat.DAY_MONTH_YEAR),
   defaultTone: z.enum(Tone).catch(Tone.WARM),
+  /** What a cover letter does with what the job asks and the profile doesn't have: say so honestly, or leave it out. */
+  letterGaps: z.enum(LETTER_GAPS).catch("address"),
   /** Language for generated documents; null means "the posting's language" (SET-7). */
   docLanguage: z.string().nullable().catch(null),
   /** The base resume's language, for its headings and dates; null means English, with the direction read from the profile. */

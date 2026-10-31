@@ -17,6 +17,8 @@ export type TaskOptions = {
   language: string | null;
   /** SET-9 "Resume length": the most pages a resume may have, or null for no limit (E10-10). */
   maxPages?: number | null;
+  /** What a cover letter does with gaps: addresses the important ones honestly (the default), or leaves them out. */
+  letterGaps?: "address" | "leave-out";
   signal?: AbortSignal;
 };
 

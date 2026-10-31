@@ -12,7 +12,7 @@ import { Toggle } from "@/components/ui/toggle";
 import { DocumentKind, type DateFormat, type PaperSize, type Tone } from "@/generated/prisma/enums";
 import { DOCUMENT_LANGUAGES } from "@/lib/document-language";
 import { FILE_NAME_TOKENS, resolveFileName } from "@/lib/file-name";
-import { DATE_FORMATS, PAGE_LIMITS, type PageLimit } from "@/lib/settings";
+import { DATE_FORMATS, PAGE_LIMITS, type LetterGaps, type PageLimit } from "@/lib/settings";
 import { PAPER_SIZES } from "@/lib/themes";
 import { TONES } from "@/lib/tones";
 import { useAutosave } from "@/hooks/use-autosave";
@@ -24,6 +24,7 @@ export type DocumentSettings = {
   paper: PaperSize;
   dateFormat: DateFormat;
   defaultTone: Tone;
+  letterGaps: LetterGaps;
   docLanguage: string | null;
   /** The base resume's language; null is English. */
   resumeLanguage: string | null;
@@ -119,6 +120,15 @@ export function DocumentsSection({
               {tone.label}
             </option>
           ))}
+        </Select>
+        <Select
+          label="Gaps in the cover letter"
+          value={settings.letterGaps}
+          hint="What the letter does with what the job asks and your profile doesn't have. It never claims you have it."
+          onChange={(event) => change({ letterGaps: event.target.value as LetterGaps })}
+        >
+          <option value="address">Address the important ones honestly</option>
+          <option value="leave-out">Leave them out</option>
         </Select>
         <div className="flex flex-col gap-2">
           <Select

@@ -24,7 +24,7 @@ import { prisma } from "@/lib/prisma";
 import { applySecretChange, JOB_SOURCE_KEY } from "@/lib/secrets";
 
 import { seedBuiltIns } from "../../../../prisma/seed/built-ins";
-import { isJobRetention } from "@/lib/settings";
+import { isJobRetention, LETTER_GAPS } from "@/lib/settings";
 import { loadSettings, saveSettings } from "@/lib/settings-data";
 
 // Settings → AI provider (E6-3). Every field saves on its own, so a test
@@ -183,6 +183,7 @@ export const updateSettings = action(
     paper: z.enum(PaperSize).optional(),
     dateFormat: z.enum(DateFormat).optional(),
     defaultTone: z.enum(Tone).optional(),
+    letterGaps: z.enum(LETTER_GAPS).optional(),
     /** A language name, or null for the posting's language. */
     docLanguage: z.string().trim().min(1).max(60).nullable().optional(),
     /** One of the built-in languages, or null for English. */

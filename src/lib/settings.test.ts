@@ -38,6 +38,7 @@ describe("stored settings", () => {
       paper: "A4",
       dateFormat: "DAY_MONTH_YEAR",
       defaultTone: "WARM",
+      letterGaps: "address",
       docLanguage: null,
       resumeLanguage: null,
       customLanguages: [],

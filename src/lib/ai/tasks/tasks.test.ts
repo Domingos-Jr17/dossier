@@ -11,7 +11,7 @@ import { MockProvider } from "../providers/mock";
 import { isoDate } from "./extract-posting";
 import { sameSkill } from "./match-requirements";
 import { COVER_LETTER_APPROACH } from "./prompt-parts";
-import { withoutFrame } from "./write-cover-letter";
+import { gapRule, withoutFrame } from "./write-cover-letter";
 import { recipient } from "./write-email";
 import {
   extractPosting,
@@ -139,6 +139,11 @@ describe("matchRequirements", () => {
       ["Dutch is a plus", "covered", "Dutch: Native"],
     ]);
     expect(data.items[1]).toMatchObject({ skill: "Design systems", experienceIds: ["e1"] });
+  });
+
+  it("says a gap is left out of the letter when Settings say so", async () => {
+    const { data } = await matchRequirements(model(answer), { requirements: extracted.requirements, profile, today }, { ...options, letterGaps: "leave-out" });
+    expect(data.items[5]).toMatchObject({ result: "gap", note: "Nothing in your profile; the letter leaves it out" });
   });
 
   it("calls a skill in the profile but in no role partial", async () => {
@@ -302,7 +307,7 @@ describe("writeCoverLetter", () => {
   it("returns the recipient, greeting, paragraphs and the tone's sign-off for an English letter (APP-10, E8-11)", async () => {
     const provider = model(answer);
     const { data, promptVersion } = await writeCoverLetter(provider, { profile, extracted, match, tone: "FORMAL", facts: [], posting }, options);
-    expect(promptVersion).toBe("write-cover-letter@5");
+    expect(promptVersion).toBe("write-cover-letter@6");
     expect(data).toEqual([
       { id: "recipient", label: "Recipient", text: "Ledgerly · Hiring team\nAmsterdam" },
       { id: "greeting", label: "Greeting", text: "Dear Ledgerly team," },
@@ -316,6 +321,16 @@ describe("writeCoverLetter", () => {
     expect(sent(provider).system).toContain(COVER_LETTER_APPROACH);
     // Gaps go along, so the letter can acknowledge them honestly.
     expect(prompt(provider)).toMatch(/"inProfile": "gap"/);
+    expect(sent(provider).system).toContain(gapRule("address"));
+    expect(sent(provider).system).toMatch(/Never announce plans, intentions or commitments the profile and the candidate's facts don't state/);
+  });
+
+  it("leaves gaps out of the letter when Settings say so", async () => {
+    const provider = model(answer);
+    await writeCoverLetter(provider, { profile, extracted, match, tone: "FORMAL", facts: [], posting }, { ...options, letterGaps: "leave-out" });
+    expect(sent(provider).system).toContain(gapRule("leave-out"));
+    expect(sent(provider).system).not.toContain("say so honestly in a sentence");
+    expect(gapRule("leave-out")).toMatch(/^Don't mention what the job asks and the profile doesn't have/);
   });
 
   it("leaves out a recipient or greeting the model left empty, for the English ones to fill in", async () => {

@@ -17,6 +17,7 @@ const initial: DocumentSettings = {
   paper: "A4",
   dateFormat: "DAY_MONTH_YEAR",
   defaultTone: "WARM",
+  letterGaps: "address",
   docLanguage: null,
   resumeLanguage: null,
   customLanguages: ["Farsi"],
@@ -41,6 +42,7 @@ describe("Documents settings (E10-3)", () => {
     expect(screen.getByLabelText("Paper size")).toHaveDisplayValue("A4");
     expect(screen.getByLabelText("Date format")).toHaveDisplayValue("27 September 2026");
     expect(screen.getByLabelText("Cover letter tone")).toHaveDisplayValue("Warm");
+    expect(screen.getByLabelText("Gaps in the cover letter")).toHaveDisplayValue("Address the important ones honestly");
     expect(screen.getByRole("switch", { name: "Include references" })).toHaveAttribute("aria-checked", "false");
     expect(screen.getByLabelText("Resume length")).toHaveDisplayValue("One page");
   });
@@ -64,6 +66,8 @@ describe("Documents settings (E10-3)", () => {
     expect(updateSettings).toHaveBeenLastCalledWith({ docLanguage: null });
     await user.click(screen.getByRole("switch", { name: "Include references" }));
     expect(updateSettings).toHaveBeenLastCalledWith({ includeRefs: true });
+    await user.selectOptions(screen.getByLabelText("Gaps in the cover letter"), "Leave them out");
+    expect(updateSettings).toHaveBeenLastCalledWith({ letterGaps: "leave-out" });
   });
 
   it("limits resumes to one page, two pages or no limit (SET-9)", async () => {
