@@ -36,7 +36,7 @@ const unwrap = (error: unknown) => (error instanceof ConnectionFailed ? (error.c
  * server now and then resets a connection, so one that fails before any
  * answer is tried once more.
  */
-async function requestText(url: URL, signal?: AbortSignal): Promise<string> {
+export async function requestText(url: URL, signal?: AbortSignal): Promise<string> {
   try {
     return await requestOnce(url, signal);
   } catch (error) {
@@ -77,6 +77,38 @@ async function requestOnce(url: URL, signal?: AbortSignal): Promise<string> {
       // Waiting as long again for a server that didn't answer in time helps no one.
       reject(error.code === "ETIMEDOUT" ? failure : new ConnectionFailed("no answer", { cause: failure }));
     });
+  });
+}
+
+/**
+ * POSTs a multipart form to Kukwira, once: a form sent twice is two
+ * applications, so a dropped connection is not retried. The answer is its
+ * text, which for the application form is "1" when it went through.
+ */
+export async function postForm(url: URL, body: Buffer, contentType: string): Promise<string> {
+  return new Promise((resolve, reject) => {
+    const client = url.protocol === "https:" ? https : http;
+    const request = client.request(
+      url,
+      { method: "POST", ...(url.protocol === "https:" ? { ca: CA } : {}), timeout: 60_000, headers: { "content-type": contentType, "content-length": body.length } },
+      (incoming) => {
+        const chunks: Buffer[] = [];
+        let size = 0;
+        incoming.on("data", (chunk: Buffer) => {
+          size += chunk.length;
+          if (size <= 64 * 1024) chunks.push(chunk);
+        });
+        incoming.on("end", () => {
+          const status = incoming.statusCode ?? 0;
+          if (status < 200 || status >= 300) reject(jobSearchError(status >= 500 ? "unavailable" : "changed", SOURCE, { detail: `${url.pathname}: HTTP ${status}` }));
+          else resolve(Buffer.concat(chunks).toString("utf8"));
+        });
+        incoming.on("error", (error) => reject(jobSearchError("unavailable", SOURCE, { detail: `${url.pathname}: ${error.message}` })));
+      },
+    );
+    request.on("timeout", () => request.destroy(Object.assign(new Error("timed out"), { code: "ETIMEDOUT" })));
+    request.on("error", (error: Error & { code?: string }) => reject(jobSearchError("unavailable", SOURCE, { detail: `${url.pathname}: ${error.code ?? error.message}` })));
+    request.end(body);
   });
 }
 

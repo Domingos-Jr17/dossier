@@ -114,6 +114,18 @@ let searches = 0;
 /** The usage pings the app sent here (DOSSIER_USAGE_PING_TEST_URL), so a spec can tell whether one went (#172). */
 const pings: unknown[] = [];
 
+/** The applications posted to the fake Kukwira form. */
+const kukwiraSent: { fields: Record<string, string[]>; file: string; pdf: boolean }[] = [];
+const options = (items: [string, string][]) => items.map(([value, text]) => `<option value="${value}">${text}</option>`).join("");
+const kukwiraForm = `<form name="formCandidatura">
+  <select name="gender"><option value="">Género</option>${options([["Masculino", "Masculino"], ["Feminino", "Feminino"]])}</select>
+  <select name="birth_place"><option value="">Local</option>${options([["10", "MAPUTO"], ["11", "CIDADE DE MAPUTO"]])}</select>
+  <select name="civil_state"><option value="">Estado</option>${options([["1", "Casado(a)"], ["2", "Solteiro(a)"]])}</select>
+  <select name="occupation_id"><option value=""></option>${options([["1", "Engenheiro/a de construção civil"], ["7", "Designer de produto"], ["8", "Gestor/a de projecto"]])}</select>
+  <select name="old_occupation_id"><option value=""></option>${options([["7", "Designer de produto"], ["9", "Analista"]])}</select>
+  <select name="course_id"><option value="">-</option>${options([["30", "Design"], ["31", "Economia"]])}</select>
+</form>`;
+
 createServer((request, response) => {
   const url = new URL(request.url ?? "/", `http://localhost:${port}`);
   if (url.pathname === "/health") return send(response, 200, { ok: true });
@@ -190,6 +202,22 @@ createServer((request, response) => {
     return sendHtml(response, 200, kukwiraOpenings);
   }
   if (url.pathname === "/kukwira/endpoints/info_endpoint.php" && url.searchParams.get("process_id") === "700") return sendHtml(response, 200, kukwiraInfo);
+
+  // Kukwira's application form: its lists, and what a POST to /send/email.php carried.
+  if (url.pathname === "/kukwira/partials/candidatura.php") return sendHtml(response, 200, kukwiraForm);
+  if (url.pathname === "/kukwira-sent") return send(response, 200, { sent: kukwiraSent });
+  if (url.pathname === "/kukwira/send/email.php" && request.method === "POST") {
+    const chunks: Buffer[] = [];
+    request.on("data", (chunk: Buffer) => chunks.push(chunk));
+    request.on("end", () => {
+      const text = Buffer.concat(chunks).toString("latin1");
+      const fields: Record<string, string[]> = {};
+      for (const match of text.matchAll(/name="([^"]+)"\r\n\r\n([^\r]*)\r\n/g)) (fields[match[1]] ??= []).push(Buffer.from(match[2], "latin1").toString("utf8"));
+      kukwiraSent.push({ fields, file: /name="file-0"; filename="([^"]*)"/.exec(text)?.[1] ?? "", pdf: text.includes("%PDF") });
+      response.writeHead(200, { "content-type": "text/plain" }).end("1");
+    });
+    return;
+  }
 
   send(response, 404, { error: "not found" });
 }).listen(port, "127.0.0.1", () => console.log(`Fake job sources on http://localhost:${port}`));

@@ -178,6 +178,17 @@ docker compose exec -e JOBS_LIVE=adzuna -e ADZUNA_TEST_APP_ID=… -e ADZUNA_TEST
 docker compose exec -e JOBS_LIVE=freehire app yarn vitest run src/lib/job-search/sources.live.test.ts
 ```
 
+## Application forms on other sites
+
+A posting that is applied for on a site's own form (`applyOnSite`, `src/lib/apply-on-site.ts`) gets a panel in the Email tab's "Apply on …" card, with three modes chosen by a switch (cookie `dossier_apply_mode`). `src/lib/apply-form/` has the parts:
+
+- `fields.ts`: a form's values from the profile (`formFields`): Kukwira's own form field by field, with its list codes (provinces, civil status, languages, levels), and a generic one for Workable found by name or label. What forms ask and the profile doesn't keep is `applyPersonal` in Settings (`personal.ts`).
+- `bookmarklet.ts`: the `javascript:` link of the bookmark mode, which fills the page it's opened on; the values are inside it.
+- `match-option.ts`: the closest of a site's own list (jobs, courses) to a value by shared words. The bookmarklet's script has its own copy of it, kept alike by the tests.
+- `kukwira-send.ts` and `src/app/(app)/applications/[id]/apply-form-actions.ts`: sending Kukwira's form from Dossier (`/send/email.php`, the CV as `file-0`, answer `1` when it went through). The action refuses without `acceptedPrivacy` and, for an application already sent, without `again`. Workable's form isn't sent: it checks that a person fills it in.
+
+The e2e fake (`e2e/fake-jobs.mts`) serves Kukwira's form and records what is posted.
+
 ## Interface language
 
 The screens are written in English. European Portuguese (`pt-PT`) is laid over them once the page has loaded: `src/components/interface-translator.tsx` looks each text, placeholder, label for screen readers and tooltip up in `src/lib/i18n/pt-PT.ts` and replaces it, and keeps doing so as the page changes. What the user or the AI wrote (the documents, the posting, fields, `[data-no-translate]`) stays as written. Texts with numbers or names in them are patterns (`pattern("{count} postings", "$1 vagas")`); dates and other hand-made cases are in `src/lib/i18n/pt-PT-patterns.ts`. A text the dictionary doesn't know shows in English, so a new screen works before it's translated.

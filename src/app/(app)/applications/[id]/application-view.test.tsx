@@ -56,6 +56,12 @@ vi.mock("./actions", () => ({
   startWritingEmail: vi.fn(async () => ({ ok: true, data: "email-1" })),
   undoEmailRewrite: vi.fn(async () => ({ ok: true, data: null })),
 }));
+vi.mock("./apply-form-actions", () => ({
+  loadApplyForm: vi.fn(async () => ({ ok: false, error: "No form in this test." })),
+  previewKukwiraSend: vi.fn(),
+  saveApplyPersonal: vi.fn(),
+  sendKukwiraApplication: vi.fn(),
+}));
 vi.mock("@/lib/copy-text", () => ({ copyText: vi.fn(async () => true) }));
 vi.mock("@/lib/jobs/actions", () => ({ retry: vi.fn(async () => ({ ok: true, data: null })) }));
 const router = vi.hoisted(() => ({ push: vi.fn(), refresh: vi.fn() }));

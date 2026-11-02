@@ -65,6 +65,7 @@ describe("stored settings", () => {
       arbeitsagenturAcceptedAt: null,
       showStartups: true,
       multiSources: null,
+      applyPersonal: null,
       agentEnabled: false,
       agentQuery: { keywords: "", place: "", country: "", radiusKm: 25, remoteOnly: false, postedWithin: "any" },
       agentHour: 7,

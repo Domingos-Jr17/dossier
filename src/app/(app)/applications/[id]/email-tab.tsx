@@ -12,6 +12,7 @@ import { emailParts, mailtoHref } from "@/lib/application-email";
 import { cn } from "@/lib/cn";
 import { copyText } from "@/lib/copy-text";
 
+import { ApplyFormPanel } from "./apply-form-panel";
 import { SendWithGmail, type GmailSender } from "./send-with-gmail";
 import { aboutWords } from "./tabs";
 
@@ -38,6 +39,7 @@ export function EmailTab({
   attachments,
   gmail,
   applyOnSite,
+  applyMode,
 }: {
   applicationId: string;
   /** The email's units; null until it's written. */
@@ -58,8 +60,10 @@ export function EmailTab({
   gmail?: { sender: GmailSender; sentBefore: boolean };
   /** Where the posting is applied for, when it's on a site rather than by email. */
   applyOnSite?: ApplyOnSite | null;
+  /** The way chosen to fill in a site's form last time: assist, bookmark or send. */
+  applyMode?: string;
 }) {
-  const onSite = applyOnSite && (!units || !emailParts(units).to) ? <ApplyOnSiteCard apply={applyOnSite} applicationId={applicationId} attachments={attachments} /> : null;
+  const onSite = applyOnSite && (!units || !emailParts(units).to) ? <ApplyOnSiteCard apply={applyOnSite} applicationId={applicationId} attachments={attachments} applyMode={applyMode} /> : null;
   if (!units) {
     return (
       <div className="flex flex-1 flex-col items-center gap-4 overflow-auto bg-canvas px-10 pt-11 pb-16">
@@ -159,7 +163,7 @@ export function EmailTab({
  * For a posting applied for on a site: where, how, and the steps, with the
  * PDFs to upload. The email below is then for a contact person, if any.
  */
-function ApplyOnSiteCard({ apply, applicationId, attachments }: { apply: ApplyOnSite; applicationId: string; attachments: Attachments }) {
+function ApplyOnSiteCard({ apply, applicationId, attachments, applyMode }: { apply: ApplyOnSite; applicationId: string; attachments: Attachments; applyMode?: string }) {
   return (
     <section aria-labelledby="apply-on-site" className="flex w-full max-w-[680px] flex-col gap-3 rounded-panel border border-line-card bg-card px-7 py-6">
       <h2 id="apply-on-site" className="font-serif text-section">
@@ -190,6 +194,7 @@ function ApplyOnSiteCard({ apply, applicationId, attachments }: { apply: ApplyOn
         <span aria-hidden>↗</span>
         <span className="sr-only"> (opens in a new tab)</span>
       </a>
+      {apply.how === "link" && <ApplyFormPanel applicationId={applicationId} site={apply.site} initialMode={applyMode} />}
     </section>
   );
 }

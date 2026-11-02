@@ -36,6 +36,8 @@ describe("PT_PT", () => {
     expect(pt("Search emprego.co.mz, Kukwira and CONTACT for postings near you, then start an application from the one you like.")).toContain("emprego.co.mz, Kukwira e CONTACT");
     expect(pt("Mozambique and South Africa")).toBe("Moçambique e África do Sul");
     expect(pt("terms and conditions")).toBeNull();
+    expect(pt("Copy Nome")).toBe("Copiar Nome");
+    expect(pt("Send to Kukwira")).toBe("Enviar ao Kukwira");
     expect(pt("9 of 31")).toBe("9 de 31");
     expect(pt(" of ")).toBe(" de ");
     expect(pt("Worth being ready to talk about “SAP”, “IFRS” and “FMCG”, since they aren't in your profile")).toBe(

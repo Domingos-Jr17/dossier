@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { cookies } from "next/headers";
 import { cache } from "react";
 
 import { activityTimeline } from "@/lib/activity";
@@ -17,6 +18,7 @@ import { loadConversation } from "@/lib/google/inbox-data";
 import { refineSuggestions } from "@/lib/refine-suggestions";
 import { loadThemes } from "@/lib/theme-data";
 import { userTimeZone } from "@/lib/time-zone";
+import { APPLY_MODE_COOKIE } from "@/lib/ui-preferences";
 
 import { ApplicationView } from "./application-view";
 import { metaLine } from "./meta";
@@ -94,6 +96,7 @@ export default async function ApplicationPage({ params, searchParams }: PageProp
         nextInterviewAt,
       }}
       timeZone={timeZone}
+      applyMode={(await cookies()).get(APPLY_MODE_COOKIE)?.value}
       posting={{
         text: application.postingText,
         // New applications only keep web links, but an imported file could carry any URL (E11-5).

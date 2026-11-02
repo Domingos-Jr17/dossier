@@ -1,6 +1,6 @@
 import { expect, test } from "@playwright/test";
 
-import { resetData, sql } from "./support";
+import { fakeKukwiraSent, resetData, sql } from "./support";
 
 // Mozambique's job sources against the fake ones in e2e/fake-jobs.mts:
 // emprego.co.mz and Kukwira have no API, so the app reads their pages, as
@@ -92,4 +92,71 @@ test("searches emprego.co.mz, Kukwira and CONTACT at once, each posting keeping 
   // Each one's whole text comes from its own source.
   await list.getByRole("button", { name: /^Técnico de Manutenção Industrial/ }).click();
   await expect(page.getByRole("region", { name: "Posting text" })).toContainText("Registo das intervenções no plano de manutenção");
+});
+
+test("applies to a Kukwira opening: the form's values to copy, the bookmark, and sending it after a review", async ({ page }) => {
+  await page.goto("/settings?section=jobs");
+  await page.getByRole("radio", { name: "Kukwira" }).click();
+  await chosen("KUKWIRA");
+  await page.goto("/jobs?q=manutencao&where=&country=mz");
+  await page.getByRole("search", { name: "Search postings" }).getByRole("button", { name: "Search" }).click();
+  await page.getByRole("button", { name: /^Técnico de Manutenção Industrial/ }).click();
+  await page.getByRole("button", { name: "Start application →" }).click();
+  await page.getByRole("button", { name: "Read the posting →" }).click();
+  await expect(page.getByRole("heading", { name: "How you match" })).toBeVisible();
+  await page.getByRole("button", { name: "Create application →" }).click();
+  await page.waitForURL(/\/applications\/c/, { timeout: 30_000 });
+  await page.getByRole("tab", { name: "Email" }).click();
+
+  // The card, with the assistant first: values from the profile, to copy.
+  const card = page.locator('section[aria-labelledby="apply-on-site"]');
+  await expect(card.getByRole("heading", { name: /^Apply on / })).toBeVisible();
+  const values = card.getByRole("list", { name: "Values for the form" });
+  await expect(values).toContainText("Nome");
+  await expect(values.getByRole("button", { name: /^Copy/ }).first()).toBeVisible();
+
+  // The bookmark carries the same values, in a link that runs in the browser.
+  await card.getByRole("radio", { name: "Bookmark" }).click();
+  await expect(card.getByText("Fill in form (Dossier)")).toHaveAttribute("href", /^javascript:/);
+
+  // Sending: what the form asks that the profile doesn't keep is given once.
+  await card.getByRole("radio", { name: "Send from here" }).click();
+  const details = card.getByRole("button", { name: "Details forms ask for" });
+  if ((await details.getAttribute("aria-expanded")) !== "true") await details.click();
+  await card.getByLabel("Gender").selectOption("Feminino");
+  await card.getByLabel("Civil status").selectOption("Solteiro(a)");
+  await card.getByLabel("Place of birth").selectOption("Cidade de Maputo");
+  await card.getByLabel("Postal code").fill("1100");
+  await card.getByRole("button", { name: "Save" }).click();
+  await expect(page.getByText("Saved. It stays on your server and is only used to fill in forms.")).toBeVisible();
+
+  await card.getByRole("button", { name: "Review before sending" }).click();
+  const goes = card.getByRole("list", { name: "What goes to Kukwira" });
+  await expect(goes).toBeVisible();
+  // Anything the profile can't answer for a required field is asked for here, and blocks the send until it's typed.
+  const send = card.getByRole("button", { name: "Send to Kukwira" });
+  await card.getByLabel("I have read and accept Kukwira's privacy policy.").check();
+  for (let round = 0; round < 6 && (await send.isDisabled()); round++) {
+    const needed = card.getByRole("alert").getByRole("textbox");
+    if ((await needed.count()) === 0) break;
+    for (const input of await needed.all()) await input.fill("Teste");
+    await card.getByRole("button", { name: "Check again" }).click();
+    await expect(goes).toBeVisible();
+  }
+  await expect(send).toBeEnabled();
+  expect(await fakeKukwiraSent()).toHaveLength(0);
+  await send.click();
+  await expect(page.getByText("Sent to Kukwira. The application is marked as sent.")).toBeVisible();
+
+  const [posted] = await fakeKukwiraSent();
+  expect(posted.pdf).toBe(true);
+  expect(posted.file).toMatch(/\.pdf$/);
+  expect(posted.fields.nameForm).toEqual(["candidatura"]);
+  expect(posted.fields.process_id).toEqual(["700"]);
+  expect(posted.fields.gender).toEqual(["Feminino"]);
+  expect(posted.fields.birth_place).toEqual(["11"]);
+  expect(posted.fields.postalcode).toEqual(["1100"]);
+  expect(posted.fields.observations?.[0]).toBeTruthy();
+  const [{ status }] = await sql<{ status: string }>(`SELECT status FROM "Application" ORDER BY "createdAt" DESC LIMIT 1`);
+  expect(status).toBe("SENT");
 });

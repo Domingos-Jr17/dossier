@@ -1,6 +1,7 @@
 import { z } from "zod";
 
 import { AiProvider, Creativity, DateFormat, PaperSize, Tone } from "@/generated/prisma/enums";
+import { applyPersonalSchema } from "@/lib/apply-form/personal";
 import { EMPTY_QUERY, JOB_SOURCES, JSEARCH_HOSTS, searchQuerySchema } from "@/lib/job-search/search";
 import { MULTI_SOURCES } from "@/lib/job-search/sources";
 import { startupsRefreshSchema } from "@/lib/startups/types";
@@ -166,6 +167,8 @@ export const settingsSchema = z.object({
   showStartups: flag(true),
   /** The sources "Several sources" asks; null means "not set in the app": DOSSIER_JOBS_SOURCES, else the default. */
   multiSources: json(z.array(z.enum(MULTI_SOURCES))).nullable().catch(null),
+  /** What application forms ask and the profile doesn't keep (gender, civil status…); null until it's filled in. */
+  applyPersonal: json(applyPersonalSchema).nullable().catch(null),
   // Job agent (E16): one search, run once a day. Off until it's turned on.
   // It asks the source in Settings → Job search, with its key.
   agentEnabled: flag(false),

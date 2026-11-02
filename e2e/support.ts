@@ -112,6 +112,12 @@ export async function fakeJobSearches(): Promise<number> {
   return ((await response.json()) as { searches: number }).searches;
 }
 
+/** What the fake Kukwira form has been sent (this fork's "Send from here"). */
+export async function fakeKukwiraSent(): Promise<{ fields: Record<string, string[]>; file: string; pdf: boolean }[]> {
+  const response = await fetch(`http://localhost:${FAKE_JOBS_PORT}/kukwira-sent`);
+  return ((await response.json()) as { sent: { fields: Record<string, string[]>; file: string; pdf: boolean }[] }).sent;
+}
+
 export type FakeEvent = {
   id: string;
   summary: string;

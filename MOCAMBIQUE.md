@@ -29,6 +29,20 @@ DOSSIER_INTERFACE_LANGUAGE=pt-PT
 
 Tudo isto também se escolhe nas Definições, que se sobrepõem ao `.env`.
 
+## Candidaturas por formulário (Kukwira, CONTACT)
+
+Quando a vaga se candidata num formulário do próprio site, o separador Email mostra "Candidatar-se em …" com um seletor de três modos (a escolha fica guardada):
+
+| Modo | O que faz | Onde |
+|---|---|---|
+| **Assistente** | Mostra cada valor do formulário, preenchido a partir do perfil, com um botão Copiar. | Kukwira e Workable (CONTACT) |
+| **Favorito** | Um favorito para a barra do navegador. Na página do formulário, escreve os valores nos campos e diz o que deixou por preencher. Os dados ficam dentro do favorito: nada vai para o Dossier nem para outro sítio. | Kukwira e Workable (CONTACT); no Workable preenche o que reconhece, porque os formulários mudam de vaga para vaga |
+| **Enviar daqui** | Rever o que vai, aceitar a política de privacidade do Kukwira e enviar. O Dossier envia o formulário como a página do Kukwira o faz, com o currículo adaptado como CV e a carta como mensagem, e marca a candidatura como enviada. | Só Kukwira |
+
+O formulário do Kukwira pede dados que o perfil não tem (género, estado civil, local de nascimento, código postal, nacionalidade): preenche-os uma vez em "Dados que os formulários pedem"; ficam no seu servidor. Os cargos e os cursos são listas do próprio Kukwira: o Dossier escolhe o mais próximo e mostra-lhe a escolha antes de enviar; se não encontrar, pede-lhe que o escreva.
+
+O envio automático não existe para o Workable (CONTACT): o formulário dele verifica que é uma pessoa a preenchê-lo. Nos dois modos que preenchem, o ficheiro do currículo, a política de privacidade e o botão Enviar ficam sempre consigo.
+
 ## JSearch (LinkedIn, Indeed e outros, através do Google for Jobs)
 
 O JSearch aceita Moçambique (`country=mz`), mas o número de vagas depende do que o Google for Jobs tem indexado para o país.

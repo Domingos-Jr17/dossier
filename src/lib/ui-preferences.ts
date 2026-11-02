@@ -5,6 +5,8 @@
 
 export const COLOR_SCHEME_COOKIE = "dossier_theme";
 export const SIDEBAR_COOKIE = "dossier_sidebar";
+/** How a site's application form was last filled in: assist, bookmark or send. */
+export const APPLY_MODE_COOKIE = "dossier_apply_mode";
 export const LANGUAGE_COOKIE = "dossier_language";
 
 /** The interface's language: English, as written, or European Portuguese through src/lib/i18n. */

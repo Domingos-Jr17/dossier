@@ -118,6 +118,8 @@ export type ApplicationViewProps = {
   };
   /** The browser's time zone as it last told the server, for the interview's time. */
   timeZone?: string;
+  /** How the form of a site that takes applications was last filled in: assist, bookmark or send. */
+  applyMode?: string;
   posting: PostingData;
   /** How the profile matches the posting (NEW-4), when it was read. */
   match: Match | null;
@@ -170,6 +172,7 @@ export type ApplicationViewProps = {
 export function ApplicationView({
   application,
   timeZone,
+  applyMode,
   meta,
   posting,
   match,
@@ -740,6 +743,7 @@ export function ApplicationView({
             attachments={attachments}
             gmail={gmail && { sender: gmail.sender, sentBefore: gmail.sentBefore }}
             applyOnSite={applyOnSite(posting.text, posting.url)}
+            applyMode={applyMode}
           />
         </TabsContent>
 
