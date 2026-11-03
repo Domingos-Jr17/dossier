@@ -71,7 +71,7 @@ Nada é enviado sem a sua confirmação.
 
 O fork traz `fly.toml` (a aplicação), `fly.db.toml` (o PostgreSQL 18, como aplicação à parte), `Dockerfile.fly` e `docker/fly-start.sh`. O Fly monta os volumes como `root` e a imagem corre como `node`; o último passo do `Dockerfile.fly` trata disso. Nada disto foi testado no Fly (nem a imagem foi construída): leia os avisos no fim.
 
-Custo aproximado, a confirmar em fly.io/docs/about/pricing: uma máquina de 2 GB, uma de 512 MB para a base de dados e dois volumes pequenos.
+Custo estimado em Joanesburgo, com os preços de fly.io/docs/about/pricing e fly.io/pricing consultados a 3 de novembro de 2026 (confirme-os antes de pagar): cerca de 22 USD por mês com a aplicação a 2 GB, ou cerca de 14 USD com 1 GB. A conta está explicada no relatório de custos que acompanha este guia: máquina da aplicação, máquina do PostgreSQL de 512 MB e dois volumes pequenos.
 
 ### 1. Instalar e entrar
 ```sh
