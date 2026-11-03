@@ -1,0 +1,65 @@
+# Dossier 1.11.0: skill groups (Profile → Skills)
+Keep a group's name under 60 characters.	Mantenha o nome do grupo abaixo dos 60 caracteres.
+A group's name can't have “:” or “·” in it.	O nome de um grupo não pode ter “:” nem “·”.
+Give the group a name.	Dê um nome ao grupo.
+Moved “{}” to {}.	“{}” passou para {}.
+Moved “{}” out of {}.	“{}” saiu de {}.
+Skills in {}	Competências em {}
+A skill for {}	Uma competência para {}
+There's a group called {} already.	Já existe um grupo chamado {}.
+(change its group)	(mudar o grupo)
+Group for	Grupo de
+No group	Sem grupo
+New name for {}	Novo nome para {}
+Rename	Mudar o nome
++ New group	+ Novo grupo
+Name of the new group	Nome do novo grupo
+e.g. Tools	p. ex. Ferramentas
+Resumes print each group as a line of its own, led by its name.	Os currículos mostram cada grupo numa linha própria, começada pelo nome do grupo.
+# Settings → Scoring (Jev by TypeSafe)
+Scoring	Pontuação
+How Score in Find jobs and the job agent judge how well a posting fits your profile. Drafts are always written by your AI model.	Como o Avaliar em Procurar vagas e o agente de emprego julgam se uma vaga se ajusta ao seu perfil. Os rascunhos são sempre escritos pelo seu modelo de IA.
+Score postings with	Pontuar as vagas com
+Each posting you score goes to TypeSafe with your profile, without your name or contact details. Jev reads English best: postings in other languages are judged less well.	Cada vaga que pontua vai para a TypeSafe com o seu perfil, sem o seu nome nem contactos. O Jev lê melhor em inglês: as vagas noutras línguas são avaliadas com menos rigor.
+TypeSafe key	Chave da TypeSafe
+Jev's scores and your AI model's aren't on the same scale. If the job agent queues too many postings or too few, change its minimum score in	As pontuações do Jev e as do seu modelo de IA não estão na mesma escala. Se o agente de emprego puser vagas a mais ou a menos na fila, mude a pontuação mínima em
+Asking Jev one short question…	A fazer uma pergunta curta ao Jev…
+Not tested since your last change · a test costs a few dozen tokens	Não testado desde a última alteração · um teste gasta algumas dezenas de tokens
+Dossier is checking that it can reach Jev.	O Dossier está a verificar se consegue chegar ao Jev.
+The agent scores postings with Jev, which needs your TypeSafe key in	O agente pontua as vagas com o Jev, que precisa da sua chave da TypeSafe em
+Settings →	Definições →
+# Settings → MCP connector
+MCP connector	Conector MCP
+Use Dossier from AI apps that speak MCP: Claude, in chats on claude.ai, in the Desktop and mobile apps and in its command-line app, or another app such as n8n. They can search for jobs, read your profile and applications, and save the applications and fit scores they write. They never send or delete anything.	Use o Dossier a partir de aplicações de IA que falam MCP: o Claude, nas conversas em claude.ai, nas aplicações para computador e telemóvel e na linha de comandos, ou outra aplicação como o n8n. Podem procurar vagas, ler o seu perfil e as candidaturas, e guardar as candidaturas e as pontuações que escrevem. Nunca enviam nem apagam nada.
+Let apps connect	Deixar as aplicações ligar-se
+On. Apps connect at the address below, once you've signed in to Dossier and allowed them.	Ligado. As aplicações ligam-se no endereço abaixo, depois de entrar no Dossier e as autorizar.
+Address to add in an app	Endereço a acrescentar numa aplicação
+In Claude	No Claude
+In Claude's command-line app:	Na linha de comandos do Claude:
+Claude on the web, Desktop and mobile, and apps in the cloud such as n8n Cloud, reach Dossier from their own servers, so they need a public HTTPS address (set	O Claude na web, no computador e no telemóvel, e as aplicações na cloud como o n8n Cloud, chegam ao Dossier a partir dos seus próprios servidores, por isso precisam de um endereço HTTPS público (defina
+Other apps	Outras aplicações
+After you allow an app, Dossier sends you back to the app's own address. Claude's are known; for any other app, add its address here exactly as the app shows it (n8n calls it the OAuth Redirect URL). Whoever uses an app you add can read and change your Dossier through it.	Depois de autorizar uma aplicação, o Dossier devolve-o ao endereço dessa aplicação. Os do Claude já são conhecidos; para qualquer outra, acrescente aqui o endereço exatamente como a aplicação o mostra (o n8n chama-lhe OAuth Redirect URL). Quem usar uma aplicação que acrescentou pode ler e alterar o seu Dossier através dela.
+Apps' callback addresses	Endereços de retorno das aplicações
+Callback address	Endereço de retorno
+What an app reads through the connector goes to whoever runs it. For Claude, that's Anthropic, with your Claude account, as anything in a chat: your profile without its contact details, the postings and applications it works on, and your searches. Private notes and the letter's sender and signature stay out.	O que uma aplicação lê através do conector vai para quem a gere. No caso do Claude, é a Anthropic, com a sua conta do Claude, como tudo o que está numa conversa: o seu perfil sem os contactos, as vagas e candidaturas em que trabalha e as suas pesquisas. As notas privadas e o remetente e a assinatura da carta ficam de fora.
+Disconnect all apps	Desligar todas as aplicações
+Signs Claude and every other app out. Changing your password or DOSSIER_SECRET does too.	Termina a sessão do Claude e de todas as outras aplicações. Mudar a palavra-passe ou o DOSSIER_SECRET também o faz.
+The MCP connector is off already.	O conector MCP já está desligado.
+Every app is disconnected. Connect again from an app to use Dossier there.	Todas as aplicações foram desligadas. Volte a ligar a partir de uma aplicação para usar o Dossier nela.
+Paste the app's callback address first.	Cole primeiro o endereço de retorno da aplicação.
+That's {} apps already. Remove one first.	Já são {} aplicações. Remova uma primeiro.
+# Signing an app in (/oauth/authorize)
+Connect an app	Ligar uma aplicação
+to Dossier	ao Dossier
+An app	Uma aplicação
+wants to use your Dossier. Once you allow it, it can:	quer usar o seu Dossier. Depois de a autorizar, pode:
+It can never send an application or an email, or delete anything. Allow it only if you've just added Dossier to	Nunca pode enviar uma candidatura nem um email, nem apagar nada. Autorize-a só se acabou de acrescentar o Dossier a
+yourself: it sends you back to	por si: devolve-o a
+. Disconnect every app in Settings → MCP connector at any time.	. Desligue todas as aplicações em Definições → Conector MCP a qualquer momento.
+The MCP connector is off. Turn it on in Settings → MCP connector, then connect again from the app.	O conector MCP está desligado. Ligue-o em Definições → Conector MCP e volte a ligar a partir da aplicação.
+This sign-in link isn't valid any more. Remove Dossier in the app and add it again.	Esta ligação de entrada já não é válida. Remova o Dossier na aplicação e acrescente-o de novo.
+This sign-in would send you to an address Dossier doesn't know, so it was stopped. Add the app's callback address in Settings → MCP connector first.	Esta entrada levá-lo-ia a um endereço que o Dossier não conhece, por isso foi interrompida. Acrescente primeiro o endereço de retorno da aplicação em Definições → Conector MCP.
+The app asked for a kind of sign-in Dossier doesn't offer.	A aplicação pediu um tipo de entrada que o Dossier não oferece.
+The app's sign-in request is missing its PKCE challenge.	O pedido de entrada da aplicação não tem o desafio PKCE.
+Connect Claude to Dossier first.	Ligue primeiro o Claude ao Dossier.
+Dossier couldn't answer that.	O Dossier não conseguiu responder a isso.
