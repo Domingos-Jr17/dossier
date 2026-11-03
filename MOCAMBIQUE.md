@@ -71,7 +71,7 @@ Nada é enviado sem a sua confirmação.
 
 O fork traz `fly.toml` (a aplicação), `fly.db.toml` (o PostgreSQL 18, como aplicação à parte), `Dockerfile.fly` e `docker/fly-start.sh`. O Fly monta os volumes como `root` e a imagem corre como `node`; o último passo do `Dockerfile.fly` trata disso. Nada disto foi testado no Fly (nem a imagem foi construída): leia os avisos no fim.
 
-Custo estimado em Joanesburgo, com os preços de fly.io/docs/about/pricing e fly.io/pricing consultados a 3 de novembro de 2026 (confirme-os antes de pagar): cerca de 22 USD por mês com a aplicação a 2 GB, ou cerca de 14 USD com 1 GB. A conta está explicada no relatório de custos que acompanha este guia: máquina da aplicação, máquina do PostgreSQL de 512 MB e dois volumes pequenos.
+Custo estimado em Joanesburgo, com os preços de fly.io/docs/about/pricing e fly.io/pricing consultados a 3 de novembro de 2026 (confirme-os antes de pagar): cerca de 22 USD por mês com a aplicação a 2 GB, ou cerca de 14 USD com 1 GB. A conta está explicada no relatório de custos que acompanha este guia: máquina da aplicação, máquina do PostgreSQL de 256 MB e dois volumes pequenos.
 
 ### 1. Instalar e entrar
 ```sh
@@ -124,6 +124,7 @@ O arranque aplica as migrações da base de dados sozinho. Se falhar, `fly logs 
 
 ### Avisos
 - Não construí a imagem nem usei o Fly: o ambiente onde trabalhei não tem Docker nem conta do Fly. Se o `fly deploy` falhar, o erro diz o passo; os suspeitos são o `Dockerfile.fly` e as permissões do volume.
+- O PostgreSQL corre com 256 MB e memória reduzida (`fly.db.toml`, secção `experimental`); não o testei no Fly. Se a base de dados for morta por falta de memória (`fly logs --app dossier-db-CHANGE-ME`), suba para 512 MB (`fly scale memory 512 --app dossier-db-CHANGE-ME`).
 - Confirme os preços, a região `jnb` e os comandos na documentação do Fly, que muda.
 - Um PostgreSQL gerido pelo Fly (`fly mpg`) poupa-lhe este passo, mas confirme que tem a versão 18.
 

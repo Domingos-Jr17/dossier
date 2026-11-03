@@ -18,7 +18,12 @@ primary_region = "jnb"
   source = "dossier_pg"
   destination = "/var/lib/postgresql"
 
+# 256 MB is tight for PostgreSQL's defaults (shared_buffers alone is 128 MB):
+# smaller buffers and few connections, enough for one person's Dossier.
+[experimental]
+  cmd = ["postgres", "-c", "shared_buffers=48MB", "-c", "max_connections=20", "-c", "work_mem=2MB", "-c", "maintenance_work_mem=32MB", "-c", "effective_cache_size=128MB"]
+
 [[vm]]
-  memory = "512mb"
+  memory = "256mb"
   cpu_kind = "shared"
   cpus = 1
