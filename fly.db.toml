@@ -1,0 +1,24 @@
+# Dossier's PostgreSQL on Fly.io, as an app of its own, at the version the
+# project asks for (18). Reached only from your other Fly apps, at
+# <name>.internal:5432. Step by step in MOCAMBIQUE.md.
+# Change the name: it must be unique on Fly.
+app = "dossier-db-CHANGE-ME"
+primary_region = "jnb"
+
+[build]
+  image = "postgres:18-alpine"
+
+[env]
+  POSTGRES_USER = "dossier"
+  POSTGRES_DB = "dossier"
+  # The password is a secret: POSTGRES_PASSWORD, set with `fly secrets set`.
+
+# Postgres 18 keeps its data in a versioned folder: mount the parent.
+[mounts]
+  source = "dossier_pg"
+  destination = "/var/lib/postgresql"
+
+[[vm]]
+  memory = "512mb"
+  cpu_kind = "shared"
+  cpus = 1

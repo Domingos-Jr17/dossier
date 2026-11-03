@@ -67,6 +67,66 @@ Precisam de um cliente OAuth Google seu; os passos também aparecem em Definiç�
 
 Nada é enviado sem a sua confirmação.
 
+## Alojar no Fly.io
+
+O fork traz `fly.toml` (a aplicação), `fly.db.toml` (o PostgreSQL 18, como aplicação à parte), `Dockerfile.fly` e `docker/fly-start.sh`. O Fly monta os volumes como `root` e a imagem corre como `node`; o último passo do `Dockerfile.fly` trata disso. Nada disto foi testado no Fly (nem a imagem foi construída): leia os avisos no fim.
+
+Custo aproximado, a confirmar em fly.io/docs/about/pricing: uma máquina de 2 GB, uma de 512 MB para a base de dados e dois volumes pequenos.
+
+### 1. Instalar e entrar
+```sh
+curl -L https://fly.io/install.sh | sh
+fly auth login
+```
+
+### 2. Escolher os nomes
+Os nomes são únicos no Fly. Em `fly.toml` troque `dossier-CHANGE-ME` (na linha `app` e em `DOSSIER_PUBLIC_URL`) e em `fly.db.toml` troque `dossier-db-CHANGE-ME`. Veja que `jnb` (Joanesburgo) existe com `fly platform regions`.
+
+### 3. Criar a base de dados
+```sh
+fly apps create dossier-db-CHANGE-ME
+fly volumes create dossier_pg --app dossier-db-CHANGE-ME --region jnb --size 3
+fly secrets set --app dossier-db-CHANGE-ME POSTGRES_PASSWORD="$(openssl rand -base64 24 | tr -d '/+=')"
+fly deploy --config fly.db.toml --app dossier-db-CHANGE-ME
+```
+A palavra-passe fica nos segredos do Fly. Para a usar no passo seguinte, gere outra vez e atualize os dois (ou defina uma sua nos dois comandos, em vez de `openssl`).
+
+### 4. Criar a aplicação
+```sh
+fly apps create dossier-CHANGE-ME
+fly volumes create dossier_data --app dossier-CHANGE-ME --region jnb --size 3
+```
+
+### 5. Os segredos
+O hash da palavra-passe (nunca a palavra-passe) faz-se com `yarn hash-password` no projeto, ou `docker run --rm -it ghcr.io/aientech/dossier hash-password`.
+```sh
+fly secrets set --app dossier-CHANGE-ME \
+  DATABASE_URL="postgresql://dossier:<palavra-passe-da-base>@dossier-db-CHANGE-ME.internal:5432/dossier" \
+  DOSSIER_PASSWORD='<o hash>' \
+  DOSSIER_SECRET="$(openssl rand -base64 32)" \
+  DOSSIER_AI_KEY='<a chave da DeepSeek>'
+```
+Guarde o `DOSSIER_SECRET`: se o trocar, sai da sessão e as chaves guardadas deixam de abrir. Opcionais: `DOSSIER_JSEARCH_KEY`, `DOSSIER_GOOGLE_CLIENT_ID` e `DOSSIER_GOOGLE_CLIENT_SECRET` (o redirecionamento no Google é `https://<nome>.fly.dev/api/google/callback`).
+
+### 6. Publicar e abrir
+```sh
+fly deploy --app dossier-CHANGE-ME
+fly status --app dossier-CHANGE-ME
+fly open --app dossier-CHANGE-ME
+```
+O arranque aplica as migrações da base de dados sozinho. Se falhar, `fly logs --app dossier-CHANGE-ME` diz porquê.
+
+### 7. Depois
+- **Uma só máquina** em cada aplicação: com mais, cada uma teria o seu volume.
+- **Cópias de segurança:** a cópia nocturna do Dossier fica em `/data`, no mesmo Fly. Faça também `fly volumes snapshots` ou um `pg_dump` para fora. Veja a retenção dos instantâneos em fly.io/docs.
+- **Atualizar:** `git merge upstream/main`, copie o `Dockerfile` outra vez para `Dockerfile.fly` (o último passo, `FROM production AS fly`, fica) e `fly deploy`.
+- **Memória:** `fly scale memory 1024 --app dossier-CHANGE-ME` desce para 1 GB, o mínimo. Veja a memória em `fly dashboard`.
+
+### Avisos
+- Não construí a imagem nem usei o Fly: o ambiente onde trabalhei não tem Docker nem conta do Fly. Se o `fly deploy` falhar, o erro diz o passo; os suspeitos são o `Dockerfile.fly` e as permissões do volume.
+- Confirme os preços, a região `jnb` e os comandos na documentação do Fly, que muda.
+- Um PostgreSQL gerido pelo Fly (`fly mpg`) poupa-lhe este passo, mas confirme que tem a versão 18.
+
 ## Verificar os sites reais
 
 O emprego.co.mz, o Kukwira e o CONTACT não têm API: o Dossier lê as páginas deles. Se um site mudar, a pesquisa deixa de encontrar vagas. Para verificar:

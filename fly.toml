@@ -1,0 +1,48 @@
+# Dossier on Fly.io (this fork). Step by step in MOCAMBIQUE.md.
+# Change the app's name: it must be unique on Fly, and becomes
+# https://<name>.fly.dev.
+app = "dossier-CHANGE-ME"
+# Johannesburg, the closest to Mozambique. See `fly platform regions`.
+primary_region = "jnb"
+
+[build]
+  dockerfile = "Dockerfile.fly"
+  build-target = "fly"
+
+[env]
+  TZ = "Africa/Maputo"
+  DOSSIER_AI_PROVIDER = "deepseek"
+  DOSSIER_AI_MODEL = "deepseek-flash"
+  DOSSIER_JOBS_SOURCE = "multi"
+  DOSSIER_INTERFACE_LANGUAGE = "pt-PT"
+  # Where it is reached, for Google's redirect. Same name as `app` above.
+  DOSSIER_PUBLIC_URL = "https://dossier-CHANGE-ME.fly.dev"
+  # Secrets, set with `fly secrets set`, not here: DATABASE_URL,
+  # DOSSIER_PASSWORD, DOSSIER_SECRET, DOSSIER_AI_KEY.
+
+# Backups and export files.
+[mounts]
+  source = "dossier_data"
+  destination = "/data"
+
+[http_service]
+  internal_port = 3000
+  force_https = true
+  # One person, one machine, always on: the daily job agent and the nightly
+  # backup run inside it.
+  auto_stop_machines = "off"
+  auto_start_machines = false
+  min_machines_running = 1
+
+  [[http_service.checks]]
+    method = "GET"
+    path = "/api/health"
+    interval = "30s"
+    timeout = "5s"
+    grace_period = "60s"
+
+# Chromium prints the PDFs: 2 GB leaves room (1 GB is the least).
+[[vm]]
+  memory = "2gb"
+  cpu_kind = "shared"
+  cpus = 1
