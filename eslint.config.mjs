@@ -21,6 +21,8 @@ const eslintConfig = defineConfig([
     // End-to-end test output.
     "playwright-report/**",
     "test-results/**",
+    // Node scripts for the translations and the real-site runs, not app code.
+    "tools/**",
   ]),
 ]);
 
