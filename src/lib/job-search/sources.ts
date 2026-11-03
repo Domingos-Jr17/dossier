@@ -16,8 +16,6 @@ export type JobSearchSettingsView = {
   multi: JobSource[];
 };
 
-export const JOB_KEY_UNREADABLE = "Your saved key can't be read. Please enter it again.";
-
 /** Where to get a JSearch key, by where it's from. */
 export const JSEARCH_KEY_URLS: Record<JSearchHost, string> = {
   openwebninja: "https://www.openwebninja.com/api/jsearch",

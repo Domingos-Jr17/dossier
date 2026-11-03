@@ -327,7 +327,7 @@ export function sampleProfile(sample: Sample): ProfileData {
       summary: sample.summary,
       showAge: false,
     },
-    skills: sample.skills.map((name, index) => ({ id: `skill-${index}`, name })),
+    skills: sample.skills.map((name, index) => ({ id: `skill-${index}`, name, group: "" })),
     languages: [],
     experience: [
       {

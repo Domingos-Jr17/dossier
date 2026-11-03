@@ -102,8 +102,9 @@ function classify(
     const counted = inField ?? profile.experience;
     const dated = counted.filter((entry) => entry.startYear !== null);
     if (dated.length === 0) return { ...base, result: "gap", note: "Add your experience to check this" };
-    const first = dated.reduce((earliest, entry) =>
-      entry.startYear! * 12 + (entry.startMonth ?? 1) < earliest.startYear! * 12 + (earliest.startMonth ?? 1) ? entry : earliest,
+    const first = dated.reduce(
+      (earliest, entry) => (entry.startYear! * 12 + (entry.startMonth ?? 1) < earliest.startYear! * 12 + (earliest.startMonth ?? 1) ? entry : earliest),
+      dated[0],
     );
     const count = counted.length;
     const where = inField ? "in this field" : "in your profile";

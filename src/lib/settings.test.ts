@@ -66,6 +66,8 @@ describe("stored settings", () => {
       showStartups: true,
       multiSources: null,
       applyPersonal: null,
+      scorer: null,
+      typesafeKeyEnc: null,
       agentEnabled: false,
       agentQuery: { keywords: "", place: "", country: "", radiusKm: 25, remoteOnly: false, postedWithin: "any" },
       agentHour: 7,
@@ -101,6 +103,7 @@ describe("stored settings", () => {
       usagePingChoiceAt: null,
       usagePingChoiceText: null,
       connectorEnabledAt: null,
+      connectorRedirects: [],
       browserTimeZone: null,
     });
   });
