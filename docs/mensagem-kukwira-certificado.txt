@@ -1,0 +1,33 @@
+Assunto: Certificado SSL incompleto em www.kukwira.co.mz
+
+Bom dia,
+
+Escrevo para avisar de um problema técnico no site www.kukwira.co.mz que impede algumas aplicações e serviços de o abrirem.
+
+O que acontece
+O certificado SSL do site (emitido pela Sectigo para *.kukwira.co.mz) está correto e válido, mas o servidor envia o certificado intermediário errado. Os navegadores como o Chrome ou o Firefox contornam o problema sozinhos, por isso no computador o site parece funcionar normalmente. Já outras aplicações recusam a ligação com o erro "unable to verify the first certificate". Isto afeta aplicações móveis, ferramentas de pesquisa de emprego, agregadores de vagas e alguns telemóveis mais antigos, o que pode significar menos candidatos a ver as vossas ofertas.
+
+Em detalhe
+- O certificado do site foi emitido por "Sectigo Public Server Authentication CA DV R36".
+- O servidor envia, em vez desse, o intermediário "Sectigo RSA Domain Validation Secure Server CA" (com a cadeia USERTrust / AAA Certificate Services), que não é o emissor do certificado atual.
+- Pode confirmar em https://www.ssllabs.com/ssltest/analyze.html?d=www.kukwira.co.mz : o relatório deverá assinalar problemas na cadeia de certificados ("Chain issues").
+
+Como corrigir
+1. Descarregar o intermediário correto:
+   http://crt.sectigo.com/SectigoPublicServerAuthenticationCADVR36.crt
+   (ou usar o ficheiro "CA bundle" que a Sectigo ou o revendedor enviou com o certificado).
+2. No servidor Apache (Apache/2.4.10, segundo a resposta do servidor), substituir o ficheiro indicado em SSLCertificateChainFile, ou juntar o intermediário ao ficheiro do certificado, pela ordem:
+   - certificado de *.kukwira.co.mz
+   - Sectigo Public Server Authentication CA DV R36
+3. Reiniciar o Apache e repetir o teste no SSL Labs.
+
+A correção demora poucos minutos e não exige um certificado novo.
+
+Aproveito para referir duas coisas menores:
+- O site não tem o ficheiro /robots.txt. Não é obrigatório, mas ajuda os motores de pesquisa a indexar as ofertas.
+- A versão do servidor (Apache 2.4.10, de 2014) e do sistema (Debian) aparece nas páginas de erro. Convém atualizá-la, porque já não recebe correções de segurança.
+
+Fico à disposição para qualquer esclarecimento.
+
+Com os melhores cumprimentos,
+Domingos

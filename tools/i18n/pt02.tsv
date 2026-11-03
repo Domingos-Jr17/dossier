@@ -1,0 +1,220 @@
+440	{}, fora das suas pesquisas
+441	Pesquisar outra vez
+442	{} vagas dispensadas ocultas
+443	A carregar mais…
+444	Mostrar mais
+445	A iniciar…
+446	Iniciar candidatura →
+447	-
+448	-
+449	Vagas
+450	Vaga sem título
+451	A avaliar…
+452	Avaliar
+453	Remoto
+454	via {}
+455	Candidatada
+456	de 100
+457	Publicada {}
+458	Ontem
+459	Já se candidatou a esta vaga.
+460	Abrir a candidatura
+461	Repor
+462	Em arbeitsagentur.de
+463	Avaliar outra vez
+464	Texto da vaga
+465	A obter a vaga completa…
+466	Isto é só o início da vaga. Quando iniciar uma candidatura, pode colar o resto a partir da página da vaga.
+467	A fonte não enviou uma descrição.
+468	{} não tem vagas em {}.
+469	O quê
+470	Opcional: cargo ou competência
+471	Cargo, competência ou empresa
+472	Onde
+473	Cidade ou região
+474	País
+475	Escolha um país
+476	Raio
+477	{} não tem filtro de distância
+478	Indique primeiro um local
+479	Publicada
+480	Só remoto
+481	O Adzuna não tem filtro de trabalho remoto, por isso isto acrescenta “remote” à pesquisa.
+482	Novo utilizador
+483	Saltar para o conteúdo
+484	A carregar o seu painel…
+485	Principal
+486	Cole primeiro uma vaga.
+487	Essa leitura da vaga já não está disponível. Leia a vaga outra vez.
+488	Indique primeiro a ligação para a vaga.
+489	A ligação para a vaga não parece um endereço web. Corrija-a ou deixe-a vazia.
+490	Esses documentos não estão prontos. Tente criar a candidatura outra vez.
+491	Empresa
+492	Não mencionado
+493	Modalidade
+494	Salário
+495	A candidatura
+496	Título
+497	Sugerido pela IA. Altere-o se quiser
+498	Sem prazo
+499	Nova candidatura não carregou
+500	Uma vaga que colou continua guardada neste separador, por isso estará lá quando isto voltar a funcionar.
+501	Isto pode demorar um pouco mais com um modelo local.
+502	A carregar…
+503	As lacunas não são eliminatórias. Nunca invento experiência, e a sua carta de apresentação deixa as lacunas de fora.
+504	As lacunas não são eliminatórias. Nunca invento experiência. As importantes são referidas com honestidade na sua carta de apresentação.
+505	Colar a vaga
+506	Verificar os detalhes
+507	Documentos adaptados
+508	Sair agora? Deixo de trabalhar nesta candidatura e nada será criado.
+509	Eis o que as Startups sabem sobre {}, sem os endereços. Acrescente o cargo que procura se não estiver indicado, e depois leia.
+510	Eis a vaga vinda de Procurar vagas. Verifique-a e depois leia-a.
+511	Só chegou o início desta vaga. Cole o resto a partir da página da vaga e depois leia-a.
+512	Cole primeiro uma vaga, ou experimente o exemplo.
+513	A escrevê-la no Claude. Aparece em Candidaturas como Rascunho quando o Claude a guardar.
+514	Obtive a vaga de {}. Verifique-a antes de a ler.
+515	A sua candidatura está pronta. Nada é enviado até o dizer.
+516	Nova candidatura
+517	Cole uma vaga. Eu extraio os detalhes, comparo-a com o seu perfil e preparo um currículo e uma carta de apresentação adaptados.
+518	Passos da nova candidatura
+519	O Dossier não tem um modelo de IA próprio, por isso é o Claude que a escreve:
+520	Escrever com o Claude
+521	abre uma conversa no Claude que usa o seu plano Claude e o conector do Dossier, e guarda aqui o currículo e a carta de apresentação como Rascunho. Para ser o Dossier a escrevê-la,
+522	escolha um modelo em Definições → Fornecedor de IA
+523	Ainda não está configurado nenhum fornecedor de IA, por isso nada pode ler a vaga.
+524	Escolha um em Definições → Fornecedor de IA
+525	Cole aqui a vaga completa: título, empresa, requisitos, tudo.
+526	Ligação para a vaga
+527	(opcional, guardada com a candidatura)
+528	A obter…
+529	Obter
+530	Obter pede a página ao site de emprego a partir do seu servidor, por isso precisa de acesso à internet. Verifique o que traz antes de a ler.
+531	Usar uma vaga de exemplo
+532	Escrever com o Claude →
+533	Ler a vaga →
+534	A ler a vaga…
+535	← Voltar à vaga
+536	Criar candidatura →
+537	A preparar a sua candidatura…
+538	Adaptação
+539	Tom da carta de apresentação
+540	Há alguma coisa que eu deva saber?
+541	Guardado com a candidatura como facto para a IA. Altere-o mais tarde no separador Vaga.
+542	p. ex. Vou mudar-me para Maputo em janeiro. Ou: dê destaque ao meu trabalho de investigação.
+543	Painel
+544	A mostrar
+545	Escreva primeiro uma competência.
+546	Escreva primeiro uma língua.
+547	A lista mudou entretanto. Recarregue a página e tente outra vez.
+548	Esse currículo ainda não foi lido, ou já não está lá. Escolha o ficheiro outra vez.
+549	O seu perfil tem agora
+550	Adicionado ao seu perfil
+551	Nome completo
+552	-
+553	Título profissional
+554	-
+555	Telefone
+556	Data de nascimento
+557	Site
+558	Morada
+559	Cidade
+560	-
+561	Estados Unidos
+562	LinkedIn
+563	Isso ainda não parece um endereço de email.
+564	Isso ainda não parece um endereço web, p. ex. joaosilva.exemplo.com.
+565	(opcional)
+566	Algumas linhas sobre si
+567	O que faz, em que é bom, o que procura.
+568	Mostrar a minha idade nos currículos
+569	(acrescente primeiro a sua data de nascimento)
+570	(tem {}; desligado por omissão, como muitos aconselham)
+571	Grau ou curso
+572	-
+573	Instituição
+574	-
+575	Concluído
+576	Ainda a estudar
+577	Tese, distinções, tudo o que valha a pena referir
+578	Acrescentar formação
+579	Nova entrada
+580	Arraste para reordenar
+581	Ainda não preenchido
+582	Mover “{}” para cima
+583	Mover “{}” para baixo
+584	Concluído
+585	Ainda não há nada aqui. Acrescente o primeiro abaixo.
+586	Removido “{}”.
+587	Reposto “{}”.
+588	“{}” movido para a posição {} de {}.
+589	Por data, do mais recente.
+590	Pela sua ordem. Arraste uma entrada ou use as setas para a mover.
+591	Pela sua ordem.
+592	Ordenar por data
+593	Do mais recente. Arraste uma entrada ou use as setas para definir a sua ordem.
+594	“{}” pegado.
+595	Sobre a posição {} de {}.
+596	Fora da lista.
+597	Largado na posição {} de {}.
+598	O seu perfil não carregou
+599	-
+600	-
+601	Sobre a empresa ou o cargo
+602	Uma fintech de 40 pessoas que faz pagamentos com cartão
+603	Opcional. Uma linha, em itálico por baixo do cargo no currículo.
+604	Terminou
+605	Ainda trabalho aqui
+606	O que fez
+607	Um ponto por linha. Pode ser em rascunho.
+608	Novo cargo
+609	Acrescentar um cargo
+610	p. ex. Estou a passar do ensino para a investigação em UX. Ou: tenho autorização de trabalho e posso começar em março.
+611	Importar de um currículo
+612	Sobre si
+613	Escolha primeiro o ficheiro do seu currículo.
+614	Comece o seu perfil a partir de um currículo que já tenha. Nada entra no seu perfil até ver o que foi encontrado. O texto do ficheiro é apagado quando escolher, ou ao fim de {} se não escolher.
+615	Voltar ao seu perfil
+616	Ainda não está configurado nenhum fornecedor de IA, por isso nada pode ler o currículo.
+617	O texto do currículo, incluindo os contactos, é enviado para
+618	para o organizar no seu perfil.
+619	O seu currículo, em PDF, Word (.docx) ou Markdown (.md)
+620	Ler o meu currículo →
+621	A ler o seu currículo…
+622	Juntar
+623	acrescenta tudo isto ao seu perfil; quando o perfil já tiver o mesmo dado, cargo, grau ou referência, vale o que diz o currículo.
+624	Substituir
+625	limpa primeiro o seu perfil.
+626	Juntar ao meu perfil
+627	Substituir o meu perfil…
+628	Escolher outro ficheiro
+629	Substituir o seu perfil?
+630	Primeiro são removidos os dados básicos, competências, línguas, cargos, projetos, formação, publicações e referências; depois o perfil fica exatamente com o que foi lido do currículo. As candidaturas e os seus documentos ficam como estão.
+631	Substituir o meu perfil
+632	Eis o que o seu currículo diz
+633	. O que estiver marcado “verificar” não está no ficheiro palavra por palavra.
+634	Dados básicos
+635	Competências
+636	não está no ficheiro
+637	Línguas
+638	(sem nível indicado; altere quando quiser)
+639	Experiência
+640	Competências:
+641	Projetos
+642	Formação
+643	Publicações
+644	Referências
+645	A carregar o seu perfil…
+646	{} mês
+647	Mês
+648	{} ano
+649	Ano
+650	Escreva um ano com quatro algarismos, como 2021.
+651	Perfil
+652	Esse ficheiro não é uma fotografia que este browser consiga abrir. Experimente um JPEG ou PNG.
+653	Fotografia removida.
+654	Fotografia reposta.
+655	A sua fotografia
+656	Para os currículos: cada tema mostra-a com a sua forma e no seu lugar. Fica neste servidor e nunca é enviada à IA.
+657	Mudar fotografia
+658	Acrescentar uma fotografia
+659	Ficheiro da fotografia

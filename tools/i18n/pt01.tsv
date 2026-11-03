@@ -1,0 +1,220 @@
+220	Peça alterações ao seu email. Só uso o que está no seu perfil.
+221	As respostas aos empregadores são redigidas diretamente na conversa.
+222	Mude para o currículo, a carta de apresentação ou o email para fazer alterações.
+223	Refinar com IA
+224	A pensar…
+225	Refinar precisa de um fornecedor de IA.
+226	Escolha um nas Definições
+227	Sobre:
+228	Deixar de perguntar sobre {}
+229	Pedir uma alteração
+230	Que alteração quer para {}?
+231	Peça uma alteração, p. ex. “soar mais confiante”
+232	Enter para enviar
+233	Enviar
+234	Permitir enviar com o Gmail
+235	Ligar o Gmail para enviar
+236	Indique primeiro o destinatário: a vaga não indica um endereço.
+237	Escreva primeiro um assunto.
+238	A enviar…
+239	Enviar outra vez com o Gmail
+240	Enviar com o Gmail
+241	Enviar esta candidatura?
+242	De
+243	Anexos
+244	Nada
+245	Já foi enviada uma vez; isto envia-a outra vez.
+246	Passa para Enviadas, e
+247	vou acompanhar a conversa à espera de respostas. O envio não pode ser desfeito.
+248	Enviar agora
+249	Estado: {}
+250	Mover esta candidatura para
+251	Marcar como enviada
+252	cerca de {} {}
+253	Tema deste currículo e desta carta
+254	tema base
+255	{} {} de {}
+256	Deixado de fora para caber no limite de páginas:
+257	Deixado de fora deste currículo:
+258	· para caber no limite de páginas
+259	Repor {}
+260	Repor
+261	Gerar de novo
+262	Pedir à IA
+263	Deixar de fora
+264	Editar {}
+265	Um ponto por linha
+266	A guardar…
+267	Verifique isto: {}
+268	Verifique isto
+269	Não encontrei
+270	no seu perfil nem na vaga. Se
+271	estiver certo, edite esta parte antes de enviar.
+272	Escrito pela IA
+273	Encurtado para caber no limite de páginas
+274	Reescrevi “{}”
+275	Reescrevi uma parte
+276	Alterado a partir da conversa: “{}”
+277	Alterado a partir da conversa
+278	Anulei uma alteração da IA
+279	Como estava antes de uma reposição
+280	Repus a versão de {}
+281	Repus uma versão anterior
+282	Histórico de
+283	É guardada uma versão em cada alteração da IA e antes de cada reposição. As suas próprias edições estão na versão atual.
+284	Fechar
+285	A carregar o histórico…
+286	Ainda não há versões. A próxima alteração da IA guarda a primeira.
+287	Versões
+288	Ver a versão de {}
+289	A abrir…
+290	Ver
+291	Arraste um cartão para mudar o estado
+292	Clique numa linha para a abrir
+293	Hoje
+294	Vista
+295	Quadro
+296	Tabela
+297	+ Nova candidatura
+298	Pesquisar candidaturas
+299	Pesquisar empresa ou cargo
+300	Mostrar arquivadas
+301	Nenhuma candidatura corresponde a “{}”.
+302	Ainda não há nada nesta vista.
+303	A sua primeira candidatura
+304	Cole uma vaga e eu leio-a, comparo-a com o seu perfil e preparo um currículo e uma carta de apresentação adaptados. Tudo é construído a partir do seu perfil, por isso vale a pena preenchê-lo primeiro.
+305	Preencher o seu perfil
+306	{} pegado.
+307	Sobre {}.
+308	Fora de uma coluna.
+309	Largado em {}.
+310	Largado de volta onde estava.
+311	Movimento cancelado.
+312	Ainda não há nada aqui
+313	Sem empresa
+314	Candidatar até
+315	{}/{} cobertos
+316	Sem comparação
+317	As suas candidaturas não carregaram
+318	A carregar as suas candidaturas…
+319	Ações para {}
+320	Mover para
+321	Cargo
+322	Estado
+323	Correspondência
+324	Local
+325	Atualizada
+326	Ações
+327	Estado de {}
+328	Não indicado
+329	Não enviada
+330	Calendário
+331	Mês anterior
+332	Mês seguinte
+333	Nada nos próximos {} dias.
+334	Nada de {} a {}.
+335	No seu fuso horário (
+336	Hoje · {}
+337	Amanhã · {}
+338	O seu Google Calendar não carregou: {}
+339	O Dossier ainda não pode usar o seu calendário. Permita-o em Definições → Google para ver aqui os seus outros eventos.
+340	Ligue o Google Calendar em Definições → Google para ver aqui os seus outros eventos e manter as entrevistas sincronizadas.
+341	Definições → Google
+342	Todo o dia
+343	(abre o Google Calendar num novo separador)
+344	A carregar o seu calendário…
+345	{} enviou {} e teve resposta de {}. Bom ritmo. Continue assim.
+346	Nos {} já
+347	Já
+348	Nada enviado nos {}. A sua próxima candidatura está a um colar de distância.
+349	Ainda nada enviado. A sua primeira candidatura está a um colar de distância.
+350	O seu funil
+351	Até onde chegou cada candidatura enviada, e onde estão agora as que pararam.
+352	Ainda nenhuma
+353	com resposta
+354	chegaram a entrevista
+355	Ponto da situação
+356	Abrir quadro
+357	Vale a pena ver
+358	Está tudo em dia.
+359	Em breve
+360	Bem-vindo ao Dossier
+361	Comece pelo seu perfil: os seus cargos, competências e formação são a base de cada currículo e carta de apresentação adaptados. Depois cole uma vaga, e o seu funil e os próximos passos aparecem aqui.
+362	Este ecrã não carregou
+363	Abrir as suas candidaturas
+364	Tudo o que enviou
+365	chegaram a {}
+366	{} avançaram para {}{}
+367	, {} pararam aqui
+368	-
+369	Até onde chegaram as candidaturas enviadas, e onde estão agora as que pararam em cada fase
+370	Fase
+371	Chegaram
+372	Da fase anterior
+373	Ainda em aberto
+374	Rejeitadas
+375	Recusadas
+376	-
+377	Bom
+378	Caixa de entrada
+379	Respostas dos empregadores no seu Gmail, associadas às candidaturas. Abra uma para ver o que pedem e redigir a sua resposta.
+380	Ligue o Gmail em Definições → Google e as respostas dos empregadores aparecem aqui, associadas às candidaturas.
+381	Verificado {}
+382	Ainda não verificado
+383	A verificar…
+384	Verificar agora
+385	Ligar o Gmail
+386	Configurar o Google
+387	Ainda nada. As respostas às suas candidaturas aparecem aqui.
+388	Ainda não há nada aqui.
+389	Precisa de resposta
+390	Tudo respondido.
+391	Precisa de atenção
+392	Não consegui perceber a que candidatura se referem.
+393	Atualizações
+394	Associar a uma candidatura
+395	Escolher candidatura…
+396	Associar
+397	Não é sobre emprego
+398	A Bundesagentur für Arbeit não está disponível neste servidor.
+399	Pesquisa removida. As vagas guardadas dela continuam em Guardadas.
+400	Guardada para mais tarde.
+401	Removida das Guardadas.
+402	Escolha primeiro um fornecedor de IA em Definições → Fornecedor de IA.
+403	Procurar vagas não carregou
+404	Procurar vagas
+405	Procure vagas perto de si em {} e inicie uma candidatura a partir da que lhe agradar.
+406	A pesquisar…
+407	{} vagas encontradas.
+408	Essa pesquisa já não está guardada. Pesquise outra vez, ou abra uma a partir das Pesquisas anteriores.
+409	Procure um cargo, uma competência ou uma empresa. Cada pesquisa fica guardada com o que encontrou, para lá voltar sem gastar outra pesquisa.
+410	Escreva o que procura.
+411	Escolha um país.
+412	Pesquisar vagas
+413	Pesquisar
+414	Pesquisas anteriores
+415	Guardadas
+416	Dispensadas
+417	Vistas de Procurar vagas
+418	Escolha onde pesquisar
+419	Procurar vagas pesquisa numa fonte de vagas por si, como o JSearch (LinkedIn, Indeed e outras) ou o Adzuna. Escolha uma nas Definições. Até lá, nada é enviado para lado nenhum.
+420	Configurar a pesquisa de emprego
+421	Abrir Definições → Pesquisa de emprego
+422	Tentar outra vez
+423	À procura de vagas…
+424	Ainda não há pesquisas. Cada pesquisa que fizer fica aqui guardada com o que encontrou, para a abrir outra vez sem gastar outra pesquisa.
+425	{} vagas
+426	Remover a pesquisa “{}” de {}
+427	-
+428	Reposta. Volta a aparecer nas suas pesquisas.
+429	Dispensada. Não volta a aparecer nas suas pesquisas.
+430	A avaliá-la no Claude. Recarregue esta página quando o Claude tiver guardado a pontuação.
+431	Não foi possível avaliar a vaga. Tente outra vez.
+432	Ainda nada guardado. Guarde uma vaga dos resultados da pesquisa para a manter aqui.
+433	Nada dispensado. As vagas que dispensar ficam fora das pesquisas e esperam aqui.
+434	Dispensou todas as vagas daqui.
+435	Nenhuma vaga aberta{} neste momento.
+436	Nenhuma vaga para “{}”{}. Experimente um raio maior ou menos palavras.
+437	num raio de {} km de {}
+438	Nenhuma vaga para “{}”{}. Experimente menos palavras.
+439	{} de {}{} · pesquisa de {}

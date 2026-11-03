@@ -1,0 +1,220 @@
+0	DOSSIER_TELEMETRY={} está definido no servidor, por isso é ele que decide. Altere-o lá.
+1	Iniciadas
+2	Enviadas
+3	Semana a semana
+4	Ainda não há nada para mostrar.
+5	Iniciou {} e enviou {} neste período.
+6	Legenda
+7	Semana de
+8	iniciadas ·
+9	Mostrar os números
+10	Candidaturas iniciadas e enviadas por semana
+11	Escolha um país para a pesquisa antes de ligar o agente.
+12	Escreva o que o agente deve procurar antes de o ligar.
+13	Ligue primeiro o agente em Definições → Agente de emprego.
+14	Essa vaga já não está na fila do agente.
+15	Essa vaga já não está à espera de um rascunho.
+16	Adicionada às Candidaturas como rascunho. Nada foi enviado.
+17	Definições → Agente de emprego
+18	Definições → Fornecedor de IA
+19	Definições → Pesquisa de emprego
+20	A execução terminou.
+21	A execução não terminou.
+22	Dispensada, com o seu rascunho. Não volta a aparecer.
+23	Dispensada. Não volta a aparecer.
+24	Anular
+25	Agente de emprego
+26	Uma vez por dia procura vagas novas, avalia-as face ao seu perfil e guarda aqui as melhores. Os rascunhos esperam pela sua revisão e nunca nada é enviado.
+27	A executar…
+28	Executar agora
+29	Procura
+30	Ainda nada
+31	Última execução
+32	Ainda não
+33	Próxima execução
+34	Desligado
+35	A iniciar a execução…
+36	Rascunhos para rever
+37	Ainda não há rascunhos. Depois de uma execução, as melhores vagas novas recebem aqui um rascunho.
+38	Ainda não há rascunhos. Prepare um a partir de uma vaga avaliada, ou deixe o agente prepará-los em Definições → Agente de emprego.
+39	Rever rascunho
+40	Aprovar
+41	Dispensar
+42	Vagas avaliadas
+43	Ainda nada à espera. Uma execução coloca aqui as vagas que melhor se ajustam a si.
+44	Nenhuma vaga à espera de um rascunho.
+45	abaixo da sua pontuação mínima de
+46	Ocultar
+47	Mostrar
+48	Dispensar este rascunho?
+49	O currículo, a carta de apresentação e a conversa são apagados, e a vaga não volta a aparecer.
+50	Dispensar rascunho
+51	O agente de emprego está desligado.
+52	Ligue-o em Definições → Agente de emprego
+53	Ir para
+54	O agente já foi executado 3 vezes nas últimas 24 horas, o máximo permitido. Volta a ser executado quando passar um dia desde a primeira.
+55	Abrir vaga
+56	(abre num novo separador)
+57	Porque se ajusta
+58	A saber
+59	O rascunho está pronto para a sua revisão.
+60	Não foi possível preparar o rascunho.
+61	A preparar o rascunho…
+62	Preparar rascunho
+63	O agente de emprego não carregou
+64	A carregar o que o agente encontrou…
+65	Essa candidatura já não existe.
+66	Essa parte do documento já não existe. Recarregue a página para ver o que lá está agora.
+67	Esse tema já não existe. Recarregue a página para ver os seus temas.
+68	Data da entrevista guardada, também no seu calendário.
+69	Data da entrevista removida, também do seu calendário.
+70	Data da entrevista guardada. Vai aparecer no seu painel.
+71	Data da entrevista removida.
+72	{}, mas o seu calendário não foi alterado: {}
+73	Data da entrevista guardada
+74	Data da entrevista removida
+75	Escreva algo primeiro, ou cancele para manter como estava.
+76	Esta parte mudou enquanto a editava. Copie o seu texto, cancele e edite a nova versão.
+77	Esta parte não é escrita pela IA. Edite-a.
+78	Uma publicação fica tal como a escreveu. Edite-a.
+79	Foi alterado outra vez desde então, por isso isto não pode ser anulado.
+80	Posso alterar o currículo, a carta de apresentação ou o email. Mude para um deles, ou passe o rato por uma secção e escolha “Pedir à IA”.
+81	Escreva primeiro o que deve mudar.
+82	Isso precisa de um fornecedor de IA. Escolha um em Definições → Fornecedor de IA.
+83	Ainda estou a tratar da sua última mensagem. Envie esta quando eu terminar.
+84	{} e {}
+85	Não há nada a anular nessa mensagem.
+86	Isso já foi anulado.
+87	o {}
+88	Alterou {} desde então, por isso anular isto apagaria essa alteração. Edite {} à mão.
+89	Esse requisito não pode ser adicionado ao seu perfil. Recarregue a página para ver o que lá está agora.
+90	Escreva algo primeiro.
+91	Essa nota já não existe.
+92	Isso já foi reposto. Recarregue a página para ver o currículo como está.
+93	Essa versão já não existe. Abra o histórico outra vez para ver o que lá está.
+94	Essa é a versão que tem agora.
+95	Repus {} como estava nessa altura. A versão que tinha também fica no histórico.
+96	Não há nada a anular.
+97	O email foi alterado desde então, por isso isto não pode ser anulado. As versões anteriores estão no histórico.
+98	Candidatura sem título
+99	Navegação
+100	Candidaturas
+101	Mais ações
+102	Desarquivar
+103	Arquivar
+104	Apagar…
+105	Abrir Definições
+106	Isso não funcionou. Tente outra vez.
+107	Tentar outra vez
+108	{} mudou enquanto eu o reescrevia, por isso mantive a sua versão.
+109	Reescrevi {}.
+110	Repus {}.
+111	Reescrevi o email.
+112	Repus o email.
+113	Adicionei “{}” às suas competências. Associe-a a um cargo em Experiência para contar.
+114	Reposto. O currículo pode agora passar do limite de páginas.
+115	Reposto.
+116	Deixado de fora: {}.
+117	Passe o rato por uma secção para a editar ou gerar de novo
+118	Histórico
+119	Está a ver a versão de
+120	Repor esta versão
+121	Voltar à atual
+122	Arquivada
+123	Do agente de emprego · à espera de revisão
+124	A gerar {} em PDF…
+125	Descarregar PDF
+126	Candidatura
+127	Currículo
+128	Carta de apresentação
+129	Email
+130	Conversa · {} novas
+131	Conversa · {}
+132	Conversa
+133	Vaga · {}/{} cobertos
+134	Vaga
+135	Notas · {}
+136	Notas
+137	Currículo adaptado ·
+138	Disposição com barra lateral
+139	Fotografia
+140	Esta candidatura não tem currículo adaptado.
+141	Carta de apresentação ·
+142	Esta candidatura não tem carta de apresentação.
+143	Passe o rato por uma parte para a editar ou gerar de novo
+144	Anulado
+145	Do seu Gmail · verificado a cada poucos minutos
+146	A leitura de respostas está desligada em Definições → Google
+147	Ainda não há correio. Envie a candidatura com o Gmail no separador Email e as respostas aparecem aqui.
+148	Um email para a enviar
+149	Escrevo um email curto para acompanhar o seu currículo e a carta de apresentação, para quem a vaga indicar. Copie-o para a sua aplicação de email ou abra-o lá, e anexe os PDF.
+150	A escrever o email…
+151	Escrever o email
+152	Copiado: {}.
+153	Não foi possível copiar. Selecione o texto e copie-o.
+154	Email ·
+155	Para
+156	A vaga não indica um endereço. Edite para acrescentar um.
+157	Assunto
+158	Anexar
+159	Copiar mensagem
+160	Abrir na aplicação de email
+161	A reescrever…
+162	Reescrever
+163	Candidatar-se em
+164	Esta vaga recebe candidaturas através de uma conta no emprego.co.mz, com o CV que lá tem, e não por email.
+165	Esta vaga recebe candidaturas em {}, e não por email.
+166	Descarregue o seu currículo adaptado e a carta de apresentação.
+167	Entre no emprego.co.mz, ou crie uma conta, e atualize lá o CV a partir do seu currículo adaptado. Depois candidate-se a partir da página da vaga.
+168	Abra a página de candidatura e preencha-a. Carregue os PDF, ou cole a carta onde a pedirem.
+169	Quando estiver enviada, marque aqui a candidatura como enviada, para o quadro e o painel a acompanharem.
+170	Abrir
+171	Copiar {}
+172	Copiar
+173	PDF
+174	Descarregar
+175	Esta candidatura não carregou
+176	Voltar às Candidaturas
+177	Próxima entrevista: {}. Alterar
+178	Acrescentar a data da entrevista
+179	Entrevista
+180	+ Data da entrevista
+181	Quando é a entrevista?
+182	Próxima entrevista
+183	Opcional.
+184	Aparece no seu painel, assinalada na véspera.
+185	Data e hora
+186	Remover
+187	Saltar
+188	Cancelar
+189	Guardar
+190	A carregar a candidatura…
+191	Candidatar até {}
+192	Criada a {}
+193	Não encontrámos essa candidatura
+194	Pode ter sido apagada, ou a ligação está incompleta. As suas outras candidaturas continuam lá.
+195	Nota apagada.
+196	Notas e atividade
+197	Privadas e nunca enviadas à IA
+198	Acrescentar uma nota
+199	Com quem falou, o que disseram, o que vem a seguir…
+200	Enter
+201	Acrescentar nota
+202	Editar nota
+203	Escape
+204	Editar a nota de {}
+205	Editar
+206	Apagar a nota de {}
+207	Apagar
+208	Movida para {}
+209	Criada
+210	Factos para esta candidatura
+211	O que a IA deve saber só para esta vaga, além do que está no seu perfil
+212	Factos sobre mim
+213	. Usa-os da próxima vez que escrever ou reescrever algo aqui.
+214	p. ex. Conheci a diretora de design deles na Config no ano passado. Ou: dê destaque ao meu trabalho de investigação.
+215	Colada
+216	Vaga original
+217	Não foi guardada nenhuma vaga com esta candidatura.
+218	Peça alterações ao seu currículo adaptado. Só uso o que está no seu perfil.
+219	Peça alterações à sua carta de apresentação. Só uso o que está no seu perfil.

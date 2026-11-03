@@ -1,0 +1,220 @@
+660	Mostrar nos currículos
+661	Cada candidatura pode ainda deixá-la de fora, ou incluí-la, no separador Currículo.
+662	Recortar a fotografia
+663	Arraste-a, ou use as setas, para a mover. Os temas com fotografia redonda ou quadrada mostram o que está dentro do círculo.
+664	Recorte da fotografia: as setas movem a fotografia, mais e menos aproximam
+665	-
+666	Zoom
+667	Usar fotografia
+668	O seu perfil
+669	Tudo aqui alimenta os seus currículos e cartas de apresentação. Preencha o que quiser. Pode sempre voltar a isto.
+670	Ver o currículo base →
+671	Secções do perfil
+672	A seguir:
+673	Está bem. Ver o meu currículo →
+674	Projeto
+675	-
+676	Ainda a trabalhar nele
+677	Um ponto por linha: o que construiu, como, e o que daí resultou.
+678	Acrescentar um projeto
+679	Novo projeto
+680	Citação
+681	Formatação
+682	Negrito (Ctrl+B)
+683	Negrito
+684	Itálico (Ctrl+I)
+685	Itálico
+686	-
+687	Em qualquer estilo de citação. Selecione palavras e carregue em B ou I para as pôr a negrito ou itálico, como o seu nome ou a revista: aqui aparecem como **negrito** e *itálico*.
+688	Como fica:
+689	doi.org/10.1000/xyz123, ou só o DOI
+690	Um DOI sozinho passa a ser a sua ligação doi.org. Num PDF, a ligação pode ser clicada.
+691	Desligado mantém-na no seu perfil, mas fora de todos os currículos e do que a IA lê.
+692	Acrescentar uma publicação
+693	Nova publicação
+694	Sem ligação
+695	Fora dos currículos
+696	Nome
+697	-
+698	De onde se conhecem
+699	Antigo chefe
+700	Acrescentar uma referência
+701	Nova referência
+702	Dados básicos
+703	Como os empregadores o podem contactar. Só o que escolher mostrar entra num currículo.
+704	Competências e línguas
+705	Escreva uma e carregue em Enter. A seguir, associe-as a cada cargo em Experiência para a IA saber onde as usou.
+706	Experiência profissional
+707	Acrescente os cargos de que se orgulha. Pontos em rascunho estão perfeitamente bem: cada candidatura recebe a sua versão cuidada.
+708	Projetos pessoais, código aberto, trabalhos de curso ou uma tese: coisas que construiu e que mostram o que sabe fazer, sobretudo quando os seus cargos ainda não o dizem.
+709	Graus, cursos, certificados: tudo o que ajude a contar a sua história.
+710	Artigos, livros ou capítulos, citados à sua maneira. Entram nos currículos palavra por palavra, pela ordem que definir aqui.
+711	Pessoas que respondem por si. Ficam privadas a menos que as inclua.
+712	O que a IA deve saber sobre si e que o resto do perfil não diz. Lê-o quando escreve os seus currículos e cartas, e nunca o copia para um currículo em forma de lista.
+713	“{}” já está nas suas competências.
+714	As suas competências
+715	Remover {}
+716	Acrescentar uma competência
+717	p. ex. Acessibilidade
+718	{} atualizado para {}.
+719	As suas línguas
+720	Nível de {}
+721	Língua
+722	Língua, p. ex. Francês
+723	Nível
+724	Acrescentar
+725	Competências usadas aqui
+726	{} de {} associadas
+727	Acrescente competências em Competências e línguas, ou escreva uma abaixo
+728	Acrescentar uma nova competência a este {}
+729	Competência nova? Escreva-a e carregue em Enter para a acrescentar também ao seu perfil
+730	A IA usa estas associações para mostrar onde aplicou de facto uma competência quando adapta um currículo.
+731	Força do perfil
+732	Sugerir um seguimento após
+733	sem notícias
+734	Estrela no GitHub
+735	Os temas incluídos não podem ser alterados. Guarde-o como um tema novo.
+736	“{}” guardado. É agora o tema do seu currículo base.
+737	Cópia de {}
+738	“{}” criado. É agora o tema do seu currículo base.
+739	Os temas incluídos não podem ser apagados.
+740	“{}” apagado.
+741	“{}” importado. É agora o tema do seu currículo base.
+742	O seu currículo base não carregou
+743	A carregar o seu currículo base…
+744	Currículo base
+745	Esse ficheiro é demasiado grande para ser um tema do Dossier.
+746	Esse ficheiro não é um tema do Dossier.
+747	Construído diretamente a partir do seu perfil. Cada nova candidatura parte deste, e depois é adaptada à vaga.
+748	Editar perfil
+749	O seu currículo preenche-se a partir do perfil. Acrescente o seu nome e um ou dois cargos, e ganha forma aqui.
+750	Ir para o seu perfil
+751	O seu currículo base passa de
+752	. Os currículos adaptados são encurtados para caber, a começar pelos cargos mais antigos.
+753	Mudar o tamanho do currículo
+754	Tema
+755	Temas
+756	Personalizar
+757	O seu nome
+758	Apagar “{}”?
+759	Apagar tema
+760	Nenhuma candidatura o usa.
+761	{}; os seus documentos passam a usar o tema base.
+762	Uma candidatura usa
+763	{} candidaturas usam
+764	{} O Editorial passa a ser o seu tema base. Isto não pode ser desfeito, mas pode exportar o tema primeiro.
+765	O meu tema
+766	Nome do tema
+767	Letra dos títulos
+768	Letra do texto
+769	Cor de destaque
+770	Esta cor é clara, por isso o texto nela é difícil de ler. Uma mais escura funciona melhor.
+771	Disposição
+772	Barra lateral
+773	Cabeçalho
+774	As disposições com barra lateral alinham sempre o cabeçalho à esquerda.
+775	Estilo do cabeçalho
+776	A sua fotografia de Perfil → Dados básicos, enquanto for mostrada nos currículos.
+777	Posição da fotografia
+778	Títulos das secções
+779	Datas
+780	Espaçamento
+781	Guardar tema
+782	Cor personalizada
+783	Cor hexadecimal
+784	Incluídos
+785	Os seus temas
+786	Em uso
+787	+ Criar o seu tema
+788	Parta do atual e mude a letra, a cor e a disposição.
+789	Em uso:
+790	Duplicar {}
+791	Duplicar
+792	Exportar {}
+793	Exportar
+794	Apagar {}…
+795	Importar um tema…
+796	-
+797	Os servidores de desenvolvimento nunca o enviam.
+798	Definido com DOSSIER_TELEMETRY={} no servidor, que decide enquanto estiver definido. Altere-o lá.
+799	Ligado. Uma vez em cada dia em que o Dossier é usado, o servidor envia {} {} e o número da versão. Mais nada.
+800	o ID desta instalação ({})
+801	Desligado. Nada é enviado, e o ID desta instalação é esquecido.
+802	Ainda sem resposta, por isso nada é enviado.
+803	Sobre esta instalação
+804	Livre e de código aberto. Sem contas, sem subscrições.
+805	Enviar o sinal de utilização diário
+806	Procurar atualizações diariamente
+807	Uma vez em cada dia em que o Dossier é usado, o servidor pergunta ao GitHub qual é a versão mais recente, e a barra lateral avisa quando sair uma nova.
+808	Desligado. O Dossier só verifica quando carregar em Procurar atualizações.
+809	Procurar atualizações
+810	Tem a versão mais recente.
+811	Não foi possível procurar atualizações agora.
+812	Versão
+813	está disponível.
+814	Ver as novidades
+815	Como atualizar
+816	A verificação pergunta ao GitHub pela versão mais recente e não envia nada sobre si nem sobre esta instalação, diariamente ou quando carregar no botão.
+817	O sinal de utilização só é enviado depois de concordar. Diz ao responsável do projeto Dossier, no servidor do próprio projeto, quantas instalações estão em uso e com que frequência. O ID é aleatório e não diz nada sobre si, e o que é guardado é apagado ao fim de um ano. Para que os registos já guardados desta instalação sejam removidos mais cedo, anote o ID, desligue o sinal e envie o ID para
+818	; recebe uma confirmação quando forem apagados.
+819	Mais em Privacidade
+820	Marque primeiro “Compreendo” na nota sobre a Bundesagentur für Arbeit.
+821	Escolha primeiro uma fonte.
+822	Escolha uma língua da lista.
+823	Ainda não há documentos adaptados para descarregar.
+824	O conector Claude já está desligado.
+825	O Claude está desligado. Ligue-o outra vez a partir do Claude para usar lá o Dossier.
+826	Escreva o que o agente deve procurar.
+827	Uma vez por dia faz uma pesquisa, avalia as vagas novas face ao seu perfil e guarda as melhores no ecrã Agente. Nunca envia nem se candidata.
+828	O agente não pesquisa na Bundesagentur für Arbeit. Escolha o JSearch, o Adzuna ou o FreeHire em
+829	para ele.
+830	O agente pesquisa na fonte que escolher em
+831	O agente avalia as vagas com o fornecedor de IA em
+832	Executar o agente de emprego
+833	Ligado. É executado uma vez por dia depois das {} na sua hora ({}), e pode executá-lo quando quiser no ecrã Agente.
+834	Desligado. Nada é pesquisado nem avaliado até o ligar.
+835	O que procura
+836	A mesma pesquisa que em
+837	, através da fonte em Definições → Pesquisa de emprego. As vagas que lá guardou, dispensou ou a que se candidatou ficam de fora.
+838	Executar depois das
+839	A sua hora ({})
+840	Pontuação mínima
+841	As vagas com pontuação mais baixa ficam fora da fila.
+842	Vagas avaliadas por execução
+843	Rascunhos por execução, no máximo
+844	Ligue primeiro Preparar rascunhos sozinho
+845	Preparar rascunhos sozinho
+846	Para as melhores vagas novas de cada execução, até {}: um currículo e uma carta de apresentação adaptados, à espera da sua revisão.
+847	Desligado. Escolhe que vagas recebem rascunho com Preparar rascunho.
+848	Uma pesquisa por dia, e no máximo três em 24 horas. Cada execução avalia até
+849	e prepara até {}
+850	. A avaliação e os rascunhos vão para o seu fornecedor de IA com o seu perfil, como numa nova candidatura; a fonte de vagas só recebe a pesquisa.
+851	Fiel
+852	Equilibrada
+853	Expressiva
+854	Criatividade
+855	Mais baixa mantém os rascunhos perto das suas próprias palavras. Mais alta toma mais liberdades na redação, mas nunca com os factos.
+856	Nunca inventar experiência
+857	Os rascunhos só podem usar factos do seu perfil. Se uma vaga pedir algo que não tem, digo-o em vez de o inventar.
+858	Atenção: os rascunhos podem agora ir além do seu perfil. Verifique antes de enviar.
+859	Mostrar o que mudou
+860	Depois de cada rascunho, listar o que foi adaptado face ao seu currículo base.
+861	Fornecedor de IA
+862	É o que lê as vagas e escreve os seus rascunhos. Um modelo local mantém tudo na sua máquina.
+863	Fornecedor
+864	{} recebe o que cada tarefa precisa: {} Quanto tempo fica guardado e onde é processado depende da sua conta em {}.
+865	Este servidor recebe o que cada tarefa precisa: {} Se não estiver na sua própria rede, tudo isto sai do seu servidor, e quanto tempo fica guardado depende de quem o gere.
+866	Endereço do servidor
+867	Comece o endereço com http:// ou https://.
+868	Modelo
+869	Não foi possível listar os modelos: {}
+870	A carregar os modelos…
+871	Escolha um modelo
+872	Outro modelo…
+873	Nome do modelo
+874	p. ex. llama3.1:8b
+875	Guardada · escreva uma chave nova para a substituir
+876	A usar DOSSIER_AI_KEY · escreva uma para a guardar aqui
+877	Guardada encriptada no seu servidor
+878	Remover chave guardada
+879	Chave de API

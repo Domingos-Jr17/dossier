@@ -1,0 +1,112 @@
+# Statuses: a column on the board and one application's status
+Draft	Rascunho
+Sent	Enviada
+Screening	Triagem
+Offer	Proposta
+Accepted	Aceite
+Rejected	Rejeitada
+Declined	Recusada
+All	Todas
+Closed	Fechadas
+Agent	Agente
+optional	opcional
+theme	tema
+theme, in use	tema, em uso
+{} · {} page	{} · {} página
+{} · {} pages	{} · {} páginas
+# The dashboard and the list
+Good morning	Bom dia
+Good afternoon	Boa tarde
+Good evening	Boa noite
+Good morning, {}	Bom dia, {}
+Good afternoon, {}	Boa tarde, {}
+Good evening, {}	Boa noite, {}
+{} applications	{} candidaturas
+1 application	1 candidatura
+applications	candidaturas
+application	candidatura
+{}: {} waiting to hear back, {} in conversation.	{}: {} à espera de resposta, {} em conversa.
+{}: {} waiting to hear back, {} in conversation. Nice momentum.	{}: {} à espera de resposta, {} em conversa. Bom ritmo.
+sent	enviadas
+waiting	à espera
+in screening	em triagem
+interviewing	em entrevistas
+deciding	a decidir
+still in screening	ainda em triagem
+still interviewing	ainda em entrevistas
+offer you're deciding on	proposta a decidir
+offers you're deciding on	propostas a decidir
+days	dias
+To pick up a draggable item, press the space bar. While dragging, use the arrow keys to move the item. Press space again to drop the item in its new position, or press escape to cancel.	Para pegar num cartão, prima a barra de espaços. Enquanto o arrasta, use as setas para o mover. Prima espaço outra vez para o largar na nova posição, ou Escape para cancelar.
+# The profile's examples, for Mozambique
+Senior Product Designer	Contabilista Sénior
+12 Main Street	Av. 24 de Julho, 1234
+Springfield	Maputo
+Springfield University	Universidade Eduardo Mondlane
+# AI providers
+Local model	Modelo local
+Runs on your own hardware through Ollama or llama.cpp.	Corre no seu próprio equipamento, através do Ollama ou do llama.cpp.
+Private · free · slower	Privado · gratuito · mais lento
+Models you run in LM Studio, on this computer or your network.	Modelos que corre no LM Studio, neste computador ou na sua rede.
+Private · free · your hardware	Privado · gratuito · o seu equipamento
+API token	Token da API
+Only needed if you've turned on authentication in LM Studio's server settings.	Só é preciso se ativou a autenticação nas definições do servidor do LM Studio.
+OpenAI-compatible	Compatível com OpenAI
+Any server that speaks the OpenAI API, hosted or on your network.	Qualquer servidor que fale a API da OpenAI, alojado ou na sua rede.
+Bring your own endpoint	Use o seu próprio endereço
+Claude models through your own API key.	Modelos Claude com a sua própria chave de API.
+Hosted · pay per use	Alojado · paga o que usar
+Mistral's models through your own API key.	Modelos da Mistral com a sua própria chave de API.
+Hosted · free tier to start	Alojado · escalão gratuito para começar
+Your saved API key can't be read. Please enter it again.	Não é possível ler a chave de API guardada. Introduza-a de novo.
+# What was tailored (the first message of an application's chat)
+Here's what I tailored for {}:	Eis o que adaptei para {}:
+Your tailored resume and cover letter for {} are ready.	O currículo e a carta de apresentação adaptados para {} estão prontos.
+this job	esta vaga
+for this job	para esta vaga
+for the {} role	para a função de {}
+Wrote a summary {}	Escrevi um resumo {}
+Rewrote your summary {}	Reescrevi o seu resumo {}
+Reworded all {} roles to lead with what {} asks for	Reescrevi as {} funções para destacar o que {} pede
+Reworded your {} role for this job	Adaptei a função em {} a esta vaga
+Reworded your {} roles for this job	Adaptei as funções em {} a esta vaga
+Reworded your {} project for this job	Adaptei o projeto {} a esta vaga
+Reworded your {} projects for this job	Adaptei os projetos {} a esta vaga
+Kept your publication word for word	Mantive a sua publicação tal como está
+Kept your {} publications word for word	Mantive as suas {} publicações tal como estão
+Ordered your skills by what {} asks for	Ordenei as suas competências pelo que {} pede
+Left out {}, which this job isn't about	Deixei de fora {}, que não são o foco desta vaga
+Left out {} skills that don't help here	Deixei de fora {} competências que não ajudam aqui
+Included your references, since the posting asks for them	Incluí as suas referências, porque a vaga as pede
+Left out references, since the posting doesn't ask for them	Deixei de fora as referências, porque a vaga não as pede
+Left out references, as set in Settings	Deixei de fora as referências, como definido nas Definições
+Wrote a {} cover letter	Escrevi uma carta de apresentação em tom {}
+warm	caloroso
+direct	direto
+formal	formal
+Warm	Caloroso
+Direct	Direto
+Worth being ready to talk about {}, since it isn't in your profile	Convém estar preparado para falar de {}, porque não está no seu perfil
+Worth being ready to talk about {}, since they aren't in your profile	Convém estar preparado para falar de {}, porque não estão no seu perfil
+Took your note into account: “{}”	Tive em conta a sua nota: “{}”
+Marked one detail to check (not in your profile or the posting)	Assinalei um detalhe a verificar (não está no seu perfil nem na vaga)
+Marked {} details to check (not in your profile or the posting)	Assinalei {} detalhes a verificar (não estão no seu perfil nem na vaga)
+“Never invent experience” is off, so check the facts before you send anything.	“Nunca inventar experiência” está desligado, por isso verifique os factos antes de enviar.
+Double-check the marked details before you send anything.	Verifique os detalhes assinalados antes de enviar.
+Nothing invented: every line comes from your profile.	Nada inventado: cada linha vem do seu perfil.
+# Startups
+Posted today	Publicada hoje
+Posted yesterday	Publicada ontem
+Remote from anywhere	Remoto, de qualquer lugar
+Remote (where from isn't said)	Remoto (não diz de onde)
+Remote only for {}	Remoto só para {}
+Remote, open to {}	Remoto, aberto a {}
+Mentions {} from your skills	Menciona {} das suas competências
+Hires for {} work, like yours	Contrata para trabalho de {}, como o seu
+Publishes an address for applications	Publica um endereço para candidaturas
+Asking Y Combinator and Hacker News	A consultar a Y Combinator e o Hacker News
+Looking for application addresses on their own sites	A procurar endereços de candidatura nos próprios sites
+Who is hiring?	Quem está a contratar?
+You	Pessoal
+theme	(tema)
+theme, in use	(tema, em uso)

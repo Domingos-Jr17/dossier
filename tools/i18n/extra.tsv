@@ -1,0 +1,233 @@
+# Built in code with an optional part left empty
+No open postings right now.	Nenhuma vaga aberta neste momento.
+Posted {} days ago	Publicada há {} dias
+Present	Presente
+# Names that go inside sentences ("Rewrote the {}.", "Stop asking about the {}")
+resume	o currículo
+cover letter	a carta de apresentação
+email	o email
+summary	o resumo
+skills	as competências
+languages	as línguas
+certifications	as certificações
+headline	o título
+paragraph	o parágrafo
+opening paragraph	o parágrafo de abertura
+closing paragraph	o parágrafo final
+part	a parte
+entry	a entrada
+subject	o assunto
+greeting	a saudação
+sign-off	a despedida
+bullet	ponto
+bullets	pontos
+# Countries (Intl)
+United Arab Emirates	Emirados Árabes Unidos
+Afghanistan	Afeganistão
+Antigua & Barbuda	Antígua e Barbuda
+Anguilla	Anguila
+Albania	Albânia
+Armenia	Arménia
+Antarctica	Antártida
+American Samoa	Samoa Americana
+Austria	Áustria
+Australia	Austrália
+Åland Islands	Alanda
+Azerbaijan	Azerbaijão
+Bosnia & Herzegovina	Bósnia e Herzegovina
+Bangladesh	Bangladeche
+Belgium	Bélgica
+Burkina Faso	Burquina Faso
+Bulgaria	Bulgária
+Bahrain	Barém
+Benin	Benim
+St. Barthélemy	São Bartolomeu
+Bermuda	Bermudas
+Bolivia	Bolívia
+Caribbean Netherlands	Países Baixos Caribenhos
+Brazil	Brasil
+Bahamas	Baamas
+Bhutan	Butão
+Bouvet Island	Ilha Bouvet
+Botswana	Botsuana
+Belarus	Bielorrússia
+Canada	Canadá
+Cocos (Keeling) Islands	Ilhas dos Cocos (Keeling)
+Congo - Kinshasa	Congo-Kinshasa
+Central African Republic	República Centro-Africana
+Congo - Brazzaville	Congo-Brazzaville
+Switzerland	Suíça
+Côte d’Ivoire	Côte d’Ivoire (Costa do Marfim)
+Cook Islands	Ilhas Cook
+Cameroon	Camarões
+Colombia	Colômbia
+Cape Verde	Cabo Verde
+Curaçao	Curaçau
+Christmas Island	Ilha do Natal
+Cyprus	Chipre
+Czechia	Chéquia
+Germany	Alemanha
+Djibouti	Jibuti
+Denmark	Dinamarca
+Dominica	Domínica
+Dominican Republic	República Dominicana
+Algeria	Argélia
+Ecuador	Equador
+Estonia	Estónia
+Egypt	Egito
+Western Sahara	Sara Ocidental
+Eritrea	Eritreia
+Spain	Espanha
+Ethiopia	Etiópia
+Finland	Finlândia
+Falkland Islands	Ilhas Falkland
+Micronesia	Micronésia
+Faroe Islands	Ilhas Faroé
+France	França
+Gabon	Gabão
+United Kingdom	Reino Unido
+Grenada	Granada
+Georgia	Geórgia
+French Guiana	Guiana Francesa
+Guernsey	Guernesey
+Ghana	Gana
+Greenland	Gronelândia
+Gambia	Gâmbia
+Guinea	Guiné
+Guadeloupe	Guadalupe
+Equatorial Guinea	Guiné Equatorial
+Greece	Grécia
+South Georgia & South Sandwich Islands	Ilhas Geórgia do Sul e Sandwich do Sul
+Guam	Guame
+Guinea-Bissau	Guiné-Bissau
+Guyana	Guiana
+Hong Kong SAR China	Hong Kong, RAE da China
+Heard & McDonald Islands	Ilhas Heard e McDonald
+Croatia	Croácia
+Hungary	Hungria
+Indonesia	Indonésia
+Ireland	Irlanda
+Isle of Man	Ilha de Man
+India	Índia
+British Indian Ocean Territory	Território Britânico do Oceano Índico
+Iraq	Iraque
+Iran	Irão
+Iceland	Islândia
+Italy	Itália
+Jordan	Jordânia
+Japan	Japão
+Kenya	Quénia
+Kyrgyzstan	Quirguistão
+Cambodia	Camboja
+Kiribati	Quiribáti
+Comoros	Comores
+St. Kitts & Nevis	São Cristóvão e Neves
+North Korea	Coreia do Norte
+South Korea	Coreia do Sul
+Kuwait	Koweit
+Cayman Islands	Ilhas Caimão
+Kazakhstan	Cazaquistão
+Lebanon	Líbano
+St. Lucia	Santa Lúcia
+Liechtenstein	Listenstaine
+Sri Lanka	Sri Lanca
+Liberia	Libéria
+Lesotho	Lesoto
+Lithuania	Lituânia
+Luxembourg	Luxemburgo
+Latvia	Letónia
+Libya	Líbia
+Morocco	Marrocos
+Monaco	Mónaco
+Moldova	Moldávia
+St. Martin	São Martinho (Saint-Martin)
+Madagascar	Madagáscar
+Marshall Islands	Ilhas Marshall
+North Macedonia	Macedónia do Norte
+Myanmar (Burma)	Mianmar (Birmânia)
+Mongolia	Mongólia
+Macao SAR China	Macau, RAE da China
+Northern Mariana Islands	Ilhas Marianas do Norte
+Martinique	Martinica
+Mauritania	Mauritânia
+Montserrat	Monserrate
+Mauritius	Maurícia
+Maldives	Maldivas
+Malawi	Maláui
+Mexico	México
+Malaysia	Malásia
+Mozambique	Moçambique
+Namibia	Namíbia
+New Caledonia	Nova Caledónia
+Niger	Níger
+Norfolk Island	Ilha Norfolk
+Nigeria	Nigéria
+Nicaragua	Nicarágua
+Netherlands	Países Baixos
+Norway	Noruega
+Niue	Niuê
+New Zealand	Nova Zelândia
+Oman	Omã
+Panama	Panamá
+French Polynesia	Polinésia Francesa
+Papua New Guinea	Papua-Nova Guiné
+Philippines	Filipinas
+Pakistan	Paquistão
+Poland	Polónia
+St. Pierre & Miquelon	São Pedro e Miquelão
+Pitcairn Islands	Ilhas Pitcairn
+Puerto Rico	Porto Rico
+Palestinian Territories	Territórios palestinianos
+Paraguay	Paraguai
+Qatar	Catar
+Réunion	Reunião
+Romania	Roménia
+Serbia	Sérvia
+Russia	Rússia
+Rwanda	Ruanda
+Saudi Arabia	Arábia Saudita
+Solomon Islands	Ilhas Salomão
+Seychelles	Seicheles
+Sudan	Sudão
+Sweden	Suécia
+Singapore	Singapura
+St. Helena	Santa Helena
+Slovenia	Eslovénia
+Svalbard & Jan Mayen	Svalbard e Jan Mayen
+Slovakia	Eslováquia
+Sierra Leone	Serra Leoa
+San Marino	São Marinho
+Somalia	Somália
+South Sudan	Sudão do Sul
+São Tomé & Príncipe	São Tomé e Príncipe
+El Salvador	Salvador
+Sint Maarten	São Martinho (Sint Maarten)
+Syria	Síria
+Eswatini	Essuatíni
+Turks & Caicos Islands	Ilhas Turcas e Caicos
+Chad	Chade
+French Southern Territories	Territórios Austrais Franceses
+Thailand	Tailândia
+Tajikistan	Tajiquistão
+Tokelau	Toquelau
+Turkmenistan	Turquemenistão
+Tunisia	Tunísia
+Türkiye	Turquia
+Trinidad & Tobago	Trindade e Tobago
+Tanzania	Tanzânia
+Ukraine	Ucrânia
+U.S. Outlying Islands	Ilhas Menores Afastadas dos EUA
+United States	Estados Unidos
+Uruguay	Uruguai
+Uzbekistan	Usbequistão
+Vatican City	Cidade do Vaticano
+St. Vincent & Grenadines	São Vicente e Granadinas
+British Virgin Islands	Ilhas Virgens Britânicas
+U.S. Virgin Islands	Ilhas Virgens dos EUA
+Vietnam	Vietname
+Wallis & Futuna	Wallis e Futuna
+Yemen	Iémen
+Mayotte	Maiote
+South Africa	África do Sul
+Zambia	Zâmbia
+Zimbabwe	Zimbabué

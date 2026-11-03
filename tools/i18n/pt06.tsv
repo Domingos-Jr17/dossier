@@ -1,0 +1,220 @@
+1320	{}: {} à espera de resposta, {} em conversa.{}
+1321	há {} dias
+1322	há {} semanas
+1323	-
+1324	-
+1325	Demasiadas tentativas. Tente outra vez daqui a {}.
+1326	Não foi possível escrever a cópia de segurança.
+1327	Publicação “{}”
+1328	Essa pesquisa já não está guardada. Pesquise outra vez.
+1329	-
+1330	Últimos 30 dias
+1331	Últimos 90 dias
+1332	Desde sempre
+1333	Uma oferta está à espera da sua decisão.
+1334	Ainda é um rascunho. Pronta quando quiser.
+1335	Ainda é um rascunho, e o prazo era {}.
+1336	Ainda é um rascunho, e as candidaturas fecham {}.
+1337	Sem notícias há {} dias. Um seguimento curto e cordial pode ajudar.
+1338	amanhã às {}
+1339	Entrevista {}. Vale a pena reler primeiro a carta adaptada.
+1340	A sua entrevista foi {}. Como correu? Avance-a, ou acrescente a data da próxima fase.
+1341	Está em entrevistas. Acrescente a data da próxima entrevista e ela aparece aqui.
+1342	Há uma resposta à espera: {}
+1343	Há {} respostas à espera. {}
+1344	Esse ficheiro não é uma exportação do Dossier: não é JSON.
+1345	Esse ficheiro não é uma exportação do Dossier.
+1346	Essa exportação não tem versão de esquema, por isso não pode ser lida.
+1347	Essa exportação vem de uma versão mais recente do Dossier (esquema {}). Atualize primeiro este servidor.
+1348	A versão de esquema dessa exportação ({}) não é uma que esta versão do Dossier consiga ler.
+1349	Essa exportação está danificada ou incompleta ({}: {}).
+1350	Iniciante (A1)
+1351	Português (europeu)
+1352	Chinês (simplificado)
+1353	Curdo (sorani)
+1354	Esta candidatura já não existe.
+1355	Já são {} factos. Remova primeiro um de que já não precise.
+1356	O seu nome completo
+1357	Primeiro nome
+1358	Cargo
+1359	Currículo ou Carta de apresentação
+1360	Data de descarga
+1361	-
+1362	Excelente correspondência
+1363	Boa correspondência
+1364	Possível correspondência
+1365	Fraca correspondência
+1366	A Google não deu ao Dossier acesso duradouro. Remova o Dossier em myaccount.google.com/permissions e volte a ligar.
+1367	Ligue primeiro a sua conta Google em Definições → Google.
+1368	O Dossier ainda não tem essa permissão. Permita-a em Definições → Google.
+1369	O acesso à Google guardado não pode ser lido, provavelmente porque o DOSSIER_SECRET mudou. Volte a ligar a sua conta Google.
+1370	Não foi possível contactar a Google. Tente outra vez daqui a pouco.
+1371	A Google já não aceita o acesso do Dossier. Volte a ligar a sua conta Google.
+1372	A Google recusou isso. Verifique as permissões em Definições → Google.
+1373	A Google pede ao Dossier que abrande. Tente outra vez daqui a alguns minutos.
+1374	A Google não encontrou isso. Pode ter sido apagado.
+1375	A Google teve um problema com isso. Tente outra vez daqui a pouco.
+1376	-
+1377	A resposta da Google era demasiado grande.
+1378	-
+1379	Isso não é um fuso horário.
+1380	O dia de trabalho tem de acabar depois de começar.
+1381	Desligado da Google.
+1382	Já está a verificar. Fica pronto num momento.
+1383	Nada de novo sobre as suas candidaturas.
+1384	{} {} novas sobre as suas candidaturas.
+1385	Enviado. {}
+1386	Enviado. Vou acompanhar as respostas.
+1387	Esse email já não está no Dossier.
+1388	Resposta enviada.
+1389	Associado. As respostas nesta conversa vão também para lá.
+1390	Desassociado.
+1391	Oculto da sua caixa de entrada.
+1392	Associe primeiro este email a uma candidatura.
+1393	Entrevista acrescentada ao seu calendário e ao painel.
+1394	Entrevista acrescentada ao seu painel.
+1395	Entrevista · {}
+1396	Acrescentado pelo Dossier para a sua candidatura{}.
+1397	(Sem título)
+1398	{} respondeu.
+1399	-
+1400	-
+1401	-
+1402	-
+1403	-
+1404	-
+1405	-
+1406	-
+1407	-
+1408	-
+1409	-
+1410	-
+1411	Não foi possível contactar a Google. Verifique a ligação do servidor e tente outra vez.
+1412	A Google recusou a entrada. Verifique o ID e o segredo do cliente em Definições → Google.
+1413	A Google enviou uma resposta que o Dossier não percebe.
+1414	A Google ainda não está configurada. Introduza o ID e o segredo do cliente OAuth em Definições → Google.
+1415	Escreva primeiro o email.
+1416	O email precisa de um assunto e de uma mensagem.
+1417	Escreva primeiro a resposta.
+1418	A verificação da caixa de entrada falhou. Volta a tentar sozinha.
+1419	Esse ficheiro tem mais de 10 MB, mais do que este servidor aceita. Veja “Troubleshooting” na wiki.
+1420	{} remoto
+1421	-
+1422	-
+1423	-
+1424	A sua chave {} guardada não pode ser lida. Introduza-a outra vez em Definições → Pesquisa de emprego.
+1425	Marque pelo menos uma fonte em Várias fontes, em Definições → Pesquisa de emprego.
+1426	-
+1427	-
+1428	-
+1429	-
+1430	{} não está disponível neste servidor. Escolha outra fonte em Definições → Pesquisa de emprego.
+1431	Leia a nota sobre {} e marque “Compreendo” antes de o Dossier pesquisar lá.
+1432	Acrescente primeiro a sua {} {} em Definições → Pesquisa de emprego.
+1433	{} não aceitou a sua chave. Verifique-a em Definições → Pesquisa de emprego.
+1434	Esgotou as pesquisas de {} para {}. Tente outra vez nessa altura, ou mude para um plano maior.
+1435	{} está a limitar as pesquisas neste momento. Espere um minuto e tente outra vez.
+1436	{} não tem vagas em {}. Escolha outro país, ou outra fonte em Definições → Pesquisa de emprego.
+1437	{} não está a responder neste momento. Tente outra vez daqui a um minuto.
+1438	A pesquisa de emprego da Arbeitsagentur mudou ou não está a responder. Experimente outra fonte em Definições → Pesquisa de emprego.
+1439	{} respondeu de uma forma que o Dossier não percebe; o serviço pode ter mudado. Tente outra vez mais tarde.
+1440	Escolha primeiro onde pesquisar em Definições → Pesquisa de emprego.
+1441	Escolha um país onde pesquisar.
+1442	-
+1443	-
+1444	-
+1445	-
+1446	-
+1447	-
+1448	-
+1449	Nenhuma das suas fontes pesquisa sem palavras-chave. Escreva o que procura.
+1450	Qualquer altura
+1451	Último dia
+1452	Últimos 3 dias
+1453	Última semana
+1454	Último mês
+1455	Não é um endereço web.
+1456	A sua chave guardada não pode ser lida. Introduza-a outra vez.
+1457	Vagas do LinkedIn, do Indeed, do Glassdoor e de sites de empresas, através do Google for Jobs.
+1458	A maioria dos países · chave gratuita com 200 pesquisas por mês
+1459	O índice de vagas do próprio Adzuna em 19 países. Só partilha o início de cada vaga.
+1460	-
+1461	-
+1462	O portal federal de emprego da Alemanha, com vagas completas. Não oficial: escolhe-o por sua conta e risco.
+1463	Só Alemanha · gratuito, sem chave · não oficial
+1464	-
+1465	Sobretudo vagas de tecnologia, lidas diretamente das páginas de carreiras das empresas (Greenhouse, Lever, Workday e outras), com vagas completas.
+1466	A maioria dos países · gratuito, sem chave · sem filtro de distância
+1467	-
+1468	O principal portal de emprego de Moçambique, com vagas completas. Lido a partir das páginas, como um visitante as vê; as vagas expiradas ficam de fora.
+1469	Só Moçambique · gratuito, sem chave · sem filtro de distância
+1470	-
+1471	As ofertas de uma agência de recrutamento moçambicana, com vagas completas. Poucas de cada vez; as palavras-chave são procuradas no texto.
+1472	Só Moçambique · gratuito, sem chave · sem filtro de local
+1473	-
+1474	As ofertas de uma empresa moçambicana de recrutamento e trabalho temporário, de call centers a engenharia, com vagas completas. As palavras-chave são procuradas nos títulos.
+1475	-
+1476	Várias fontes
+1477	As fontes que marcar abaixo, pesquisadas ao mesmo tempo. Cada vaga mantém a sua fonte, e uma fonte que falhe não impede as outras.
+1478	Qualquer das outras · aplicam-se as chaves e limites de cada uma
+1479	A Bundesagentur für Arbeit não tem API oficial. O Dossier pesquisa-a através do acesso usado pela pesquisa do próprio site, sem a sua autorização,
+1480	Isto não pode ser repetido: ainda está a correr ou já terminou.
+1481	A adaptar o seu currículo
+1482	A escrever a sua carta de apresentação
+1483	A guardar a candidatura
+1484	A verificar o seu calendário
+1485	A escrever a sua resposta
+1486	{} escreveu: {}
+1487	O candidato
+1488	Deixei {} como estava porque {} mudou enquanto eu trabalhava.
+1489	A obter a vaga completa
+1490	A avaliar face ao seu perfil
+1491	A escrever o email
+1492	-
+1493	A gerar {} documentos
+1494	Gerados {} de {}
+1495	-
+1496	A sua sessão terminou. Entre outra vez para continuar.
+1497	Alguns dados não são válidos. Verifique os campos assinalados.
+1498	Algo correu mal no servidor. Tente outra vez.
+1499	Este pedido não veio das páginas do próprio Dossier, por isso foi bloqueado.
+1500	Não foi possível chegar ao Dossier. Verifique a ligação e tente outra vez.
+1501	Encurtei {} em {} {} para caber em {}
+1502	Deixei de fora o projeto {} para caber em {}
+1503	Deixei de fora a publicação “{}” para caber em {}
+1504	Deixei de fora {}{} para caber em {}
+1505	Continua a passar de {}, por isso encurte-o à mão se tiver de caber
+1506	A página de impressão {} respondeu {}.
+1507	Essa ligação não parece um endereço web.
+1508	O Dossier não obtém endereços da sua própria rede. Cole a vaga.
+1509	Não foi possível chegar ao site de emprego. Sem acesso à internet, ou se o site o bloquear, cole a vaga.
+1510	O site de emprego respondeu com um erro ({}). Cole a vaga.
+1511	Essa página é demasiado grande para ser uma vaga. Cole a vaga.
+1512	Essa ligação não é uma página web. Cole a vaga.
+1513	Não há nessa página texto de vaga que o Dossier consiga ler: o site provavelmente constrói-o no browser. Cole a vaga.
+1514	-
+1515	por {}
+1516	A ler o seu currículo
+1517	A organizá-lo no seu perfil
+1518	Fluente (C2)
+1519	Avançado (C1)
+1520	Intermédio superior (B2)
+1521	Intermédio (B1)
+1522	Elementar (A2)
+1523	Está completo. As secções opcionais estão lá se ajudarem.
+1524	Excelente. A IA tem muito com que trabalhar.
+1525	Bom progresso. Um pouco mais de detalhe torna a adaptação mais certeira.
+1526	Um bom começo. A experiência é o que mais conta.
+1527	Encurtar o resumo
+1528	Destacar {}
+1529	Destacar a liderança
+1530	Mencionar {}
+1531	Mencionar a acessibilidade
+1532	Torná-la mais calorosa
+1533	Torná-la mais formal
+1534	Mais curta, com menos de 200 palavras
+1535	Tratar a lacuna de {} de outra forma
+1536	Mais curto, com menos de 100 palavras
+1537	Começar por {}
+1538	Destacar mais o assunto
+1539	Esse ficheiro tem mais de 5 MB. Um currículo costuma ser muito menor: exporte-o outra vez sem imagens.

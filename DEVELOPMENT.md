@@ -195,6 +195,8 @@ The screens are written in English. European Portuguese (`pt-PT`) is laid over t
 
 This keeps the screens themselves untouched, so changes from upstream Dossier merge cleanly. The language is the `dossier_language` cookie, set by the button in the sidebar, or `DOSSIER_INTERFACE_LANGUAGE` before that; `<html lang>` follows it. The dictionary is only downloaded when Portuguese is on.
 
+The dictionary is generated: the sources and the generator are in `tools/i18n/` (see its README); add new translations to an `extra*.tsv` there, and run `python3 tools/i18n/build.py src/lib/i18n/pt-PT.ts`. The real-site, real-AI scripts used for the Mozambique report are in `tools/real-cases/`.
+
 To add a translation, put the English text exactly as the screen shows it (whitespace aside) in `pt-PT.ts`. A new text built from parts needs the same parts in English, in one text node: `Good ${period}, ${name}` translates, `Good {period}` split over two nodes doesn't.
 
 ## Your data

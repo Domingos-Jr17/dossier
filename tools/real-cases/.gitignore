@@ -1,0 +1,10 @@
+shots/
+state.json
+results.jsonl
+stage*.json
+app.log
+fetched*.txt
+leftovers*.txt
+import-preview.txt
+3-*.pdf
+4*-download

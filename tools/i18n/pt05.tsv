@@ -1,0 +1,220 @@
+1100	-
+1101	Servidor
+1102	Base de dados
+1103	PostgreSQL · {}
+1104	Entrada
+1105	Sobre
+1106	O servidor é seu, por isso a decisão é sua. Escolha que IA escreve por si, defina os valores por omissão dos documentos e leve os seus dados consigo quando quiser.
+1107	Secções das definições
+1108	Expandir a barra lateral
+1109	Recolher a barra lateral
+1110	A sua procura de emprego, no seu servidor
+1111	Alojado por si · v
+1112	Sair
+1113	Essa startup já não está na lista. Atualize a página.
+1114	Removida. As atualizações não a trazem de volta.
+1115	As Startups não carregaram
+1116	A carregar as startups…
+1117	Startups
+1118	Para ver
+1119	Contactadas
+1120	A atualização não terminou. Tente outra vez.
+1121	Encontradas {} novas {}.
+1122	Nenhuma startup nova desta vez.
+1123	Startups que estão a contratar, das ofertas das startups da YC e do “Who is hiring?” do Hacker News, ordenadas face ao seu perfil, com o endereço que cada uma publica para candidaturas. É o próprio a escrever a cada uma.
+1124	A atualizar…
+1125	Atualizar
+1126	As melhores {} de {}
+1127	Isto demora um ou dois minutos.
+1128	Carregue em
+1129	para procurar startups. O Dossier lê as ofertas das startups da YC e a conversa “Who is hiring?” deste mês no Hacker News, fica com as que contratam onde vive ou à distância, e procura nos sites das melhores o endereço que publicam para candidaturas, respeitando o robots.txt.
+1130	Depois disso atualiza uma vez por dia enquanto usar este ecrã. Nada é enviado a ninguém: decide a quem escrever.
+1131	Última atualização
+1132	A outra funcionou.
+1133	A próxima atualização tenta outra vez.
+1134	Vistas das Startups
+1135	Filtrar startups
+1136	p. ex. android, fintech, Maputo
+1137	Qualquer lugar
+1138	, aberta a {}
+1139	Fonte
+1140	As duas fontes
+1141	Qualquer
+1142	50 ou mais
+1143	70 ou mais
+1144	85 ou mais
+1145	Ordenar
+1146	Melhor correspondência
+1147	Mais recentes
+1148	Só as que têm um endereço para escrever
+1149	Nenhuma corresponde a estes filtros. Experimente menos.
+1150	Nada de novo para ver. A próxima atualização pode trazer mais.
+1151	Ainda nenhuma aqui.
+1152	{}, interessado em juntar-me à {}
+1153	Interessado em juntar-me à {}
+1154	O site diz que não aceitam candidaturas espontâneas.
+1155	Encontrados {} {} no site.
+1156	O site não publica o endereço de ninguém.
+1157	O site não publica um endereço para candidaturas. Experimente a página de carreiras.
+1158	Cargos
+1159	O site diz que não aceitam candidaturas espontâneas:
+1160	. Candidate-se a uma vaga publicada.
+1161	Escrever-lhes
+1162	Escolha um fornecedor de IA para escrever uma candidatura
+1163	À procura…
+1164	Procurar outra vez no site
+1165	Procurar endereços no site
+1166	Procurar endereços de pessoas
+1167	{} guardado.
+1168	{} marcada como contactada.
+1169	Marcar como contactada
+1170	{} voltou para Para ver.
+1171	Voltar a mover
+1172	{} dispensada.
+1173	Ocultar detalhes
+1174	Detalhes e notas
+1175	Remover de vez
+1176	Remover {} de vez?
+1177	O Dossier apaga o que guarda sobre esta startup, os seus endereços e as suas notas, e as atualizações deixam-na de fora daqui em diante. Uma candidatura que tenha iniciado fica.
+1178	{} copiado.
+1179	Não foi possível copiar. Selecione o endereço.
+1180	Endereços que publicam
+1181	onde está publicado ↗
+1182	Os endereços pessoais são apagados ao fim de 14 dias, a menos que escreva a esta startup.
+1183	-
+1184	Modo escuro
+1185	Modo claro
+1186	Saiu o Dossier {}
+1187	saiu
+1188	Tem
+1189	. Atualize para ter as correções e novidades.
+1190	Novidades
+1191	Agora não
+1192	Enviar um sinal de utilização diário?
+1193	Uma vez em cada dia em que usar o Dossier, o seu servidor enviaria
+1194	um ID de instalação aleatório e o número da versão, para o projeto saber quantas instalações estão em uso e com que frequência.
+1195	Mais nada: nem perfil, documentos, candidaturas, definições ou o endereço do servidor. O destinatário não guarda o endereço de onde vem o sinal.
+1196	Vai para o responsável do projeto Dossier, no servidor do próprio projeto, na Alemanha. Nenhum outro serviço o trata pelo caminho.
+1197	O que é guardado é apagado ao fim de um ano.
+1198	Nada é enviado a menos que escolha Enviar sinal de utilização. Pode mudar de ideias em Definições → Sobre, ou com DOSSIER_TELEMETRY no servidor. Para apagar o que foi guardado, envie o ID da instalação para
+1199	Não enviar
+1200	Enviar sinal de utilização
+1201	Letter (EUA)
+1202	A ler a vaga
+1203	A identificar o cargo, a empresa e os requisitos
+1204	A comparar com o seu perfil
+1205	-
+1206	-
+1207	Manter a sessão iniciada durante 30 dias
+1208	Uma entrevista! Vai correr bem.
+1209	O Dossier não carregou
+1210	-
+1211	A sua procura de emprego, no seu servidor.
+1212	Bem-vindo de volta, {}.
+1213	Bem-vindo de volta
+1214	Entre para continuar onde ficou.
+1215	Palavra-passe
+1216	Ocultar a palavra-passe
+1217	Mostrar a palavra-passe
+1218	A entrar…
+1219	Entrar
+1220	Introduza a sua palavra-passe.
+1221	Essa não é a palavra-passe definida no servidor. Tente outra vez.
+1222	A sua palavra-passe está definida no servidor, como um hash em
+1223	-
+1224	. Esqueceu-a? Crie um hash novo com
+1225	e reinicie.
+1226	Esta página não existe
+1227	Ir para o painel
+1228	A ligação pode ser antiga ou ter um erro. Tudo o que guardou está onde o deixou.
+1229	A ligar…
+1230	Recusar
+1231	Ligar o Claude
+1232	Ligar o Claude ao Dossier
+1233	quer usar o seu Dossier. Depois de autorizar, o Claude pode:
+1234	procurar vagas com a sua fonte de vagas, e avaliá-las face ao seu perfil
+1235	ler o seu perfil e as suas candidaturas, com os currículos e cartas, mas não os seus contactos nem notas
+1236	guardar como rascunhos as candidaturas que escreve por si, e mudar o estado delas
+1237	Nunca pode enviar uma candidatura ou um email, nem apagar nada. Autorize só se acabou de acrescentar o Dossier como conector no Claude: volta a enviá-lo para
+1238	. Desligue o Claude em Definições → Conector Claude a qualquer momento.
+1239	O conector Claude está desligado. Ligue-o em Definições → Conector Claude e volte a ligar a partir do Claude.
+1240	A ligação de entrada do Claude já não é válida. Remova o conector no Claude e acrescente-o outra vez.
+1241	Esta entrada enviá-lo-ia para outro lugar que não o Claude, por isso foi parada.
+1242	O Claude pediu um tipo de entrada que o Dossier não oferece.
+1243	O pedido de entrada do Claude não tem o desafio PKCE.
+1244	Documento adaptado
+1245	Arquivada. Saiu do seu quadro, e continua a contar no painel.
+1246	De volta ao seu quadro.
+1247	Apagar esta candidatura?
+1248	O currículo e a carta adaptados, a conversa, as suas notas, o histórico e o correio do Gmail vão com ela. Isto não pode ser desfeito. Arquive-a para a pôr de lado.
+1249	Apagar candidatura
+1250	Candidatura apagada.
+1251	Os termos de utilização da BA
+1252	(em alemão, abre num novo separador)
+1253	Compreendo, e escolho esta fonte por minha conta
+1254	-
+1255	A gerar o PDF no servidor. Vai ser descarregado num momento.
+1256	A gerar…
+1257	Preencha primeiro as partes marcadas […].
+1258	Facto removido.
+1259	Factos
+1260	+ Acrescentar um facto
+1261	Facto {}
+1262	Remover facto {}
+1263	Coberto
+1264	Parcialmente coberto
+1265	Não coberto
+1266	Como corresponde
+1267	cobertos pelo seu perfil
+1268	Requisitos
+1269	+ Acrescentar ao perfil
+1270	Guardado agora mesmo
+1271	Guardado há {} min
+1272	Guardado às {}
+1273	Não foi possível guardar
+1274	Todas as alterações guardadas
+1275	Todas as alterações guardadas.
+1276	Não foi possível guardar as suas alterações.
+1277	Pontuação {} de 100
+1278	Algo correu mal no servidor. Nada do que guardou se perdeu, e tentar outra vez costuma resolver.
+1279	Se continuar a acontecer, o registo do servidor tem os detalhes em
+1280	Concluído.
+1281	(concluído)
+1282	Progresso
+1283	-
+1284	Não foi possível guardar as suas alterações. Continuam nesta página, e guardar volta a tentar quando editar ou sair do campo.
+1285	Essa vaga não tem texto para escrever. Abra-a e inicie uma candidatura à mão.
+1286	A ler a vaga de {}
+1287	A escrever o rascunho para {}
+1288	Cancelado.
+1289	Não foi possível preparar o rascunho. Tente outra vez.
+1290	Esse rascunho não está pronto para aprovar.
+1291	Esse rascunho foi aprovado: está agora em Candidaturas.
+1292	-
+1293	Indique primeiro o que procurar em Definições → Agente de emprego.
+1294	Escolha primeiro um país para a pesquisa em Definições → Agente de emprego.
+1295	Escolha primeiro uma fonte de vagas em Definições → Pesquisa de emprego.
+1296	O agente de emprego não pesquisa na Bundesagentur für Arbeit. Escolha o JSearch, o Adzuna ou o FreeHire em Definições → Pesquisa de emprego para ele.
+1297	À procura de vagas novas
+1298	A pesquisa não encontrou vagas desta vez.
+1299	Nenhuma vaga nova desta vez.
+1300	A avaliar {} {}
+1301	{} novas {} à espera de atenção.
+1302	Nenhuma vaga pôde ser avaliada desta vez.
+1303	{} novas {} avaliadas; nenhuma chegou à sua pontuação mínima de {}.
+1304	{} A preparar {}.
+1305	rascunhos para as melhores {}
+1306	O agente já foi executado {} vezes nas últimas 24 horas, o máximo permitido. {}
+1307	O agente foi executado há menos de uma hora. {}
+1308	Tente outra vez daqui a {} {}.
+1309	A redação foi interrompida. Tente outra vez.
+1310	· via {}
+1311	-
+1312	Nas suas competências, mas ainda não associada a um cargo
+1313	Sobre {}: {}
+1314	{} cargo
+1315	{} projeto
+1316	Esta candidatura já está a ser criada.
+1317	-
+1318	Em curso
+1319	Ainda não há candidaturas. Cole uma vaga e eu adapto-lhe o seu currículo e a carta de apresentação.

@@ -1,0 +1,320 @@
+<title>Dossier em Moçambique</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;800&family=Source+Sans+3:ital,wght@0,400;0,600;1,400&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+/* Layout: one reading column (~72ch) with wide tables that scroll in place; a status chip encodes pass / fixed / open everywhere. */
+:root {
+  --bg: #f6f7f5;
+  --surface: #ffffff;
+  --ink: #1c2421;
+  --muted: #5b6863;
+  --line: #d9dfdc;
+  --accent: #0d6b55;
+  --accent-soft: #e2f0eb;
+  --pass: #1f7a3f;
+  --pass-bg: #e3f3e8;
+  --fixed: #1d5fa8;
+  --fixed-bg: #e2ecf8;
+  --open: #9a5b00;
+  --open-bg: #fbefd9;
+  --fail: #b3261e;
+  --fail-bg: #fbe4e1;
+  --font-display: "Archivo", "Helvetica Neue", Arial, sans-serif;
+  --font-body: "Source Sans 3", "Segoe UI", Roboto, Arial, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, Menlo, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #121816; --surface: #1a2220; --ink: #e5ece9; --muted: #9aa8a2; --line: #2e3a36;
+    --accent: #5cc4a4; --accent-soft: #183a31;
+    --pass: #73d39a; --pass-bg: #173322; --fixed: #8cb8f0; --fixed-bg: #18283d;
+    --open: #f0b85c; --open-bg: #3a2b12; --fail: #f19a92; --fail-bg: #3d1c19;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #121816; --surface: #1a2220; --ink: #e5ece9; --muted: #9aa8a2; --line: #2e3a36;
+  --accent: #5cc4a4; --accent-soft: #183a31;
+  --pass: #73d39a; --pass-bg: #173322; --fixed: #8cb8f0; --fixed-bg: #18283d;
+  --open: #f0b85c; --open-bg: #3a2b12; --fail: #f19a92; --fail-bg: #3d1c19;
+  color-scheme: dark;
+}
+body { background: var(--bg); color: var(--ink); font-family: var(--font-body); font-size: 17px; line-height: 1.6; }
+.wrap { max-width: 980px; margin: 0 auto; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); padding-block: 40px 72px; display: grid; gap: 56px; }
+header { display: grid; gap: 14px; }
+.eyebrow { font-family: var(--font-mono); font-size: 12.5px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent); }
+h1 { font-family: var(--font-display); font-weight: 800; font-size: clamp(34px, 6vw, 52px); line-height: 1.05; margin: 0; letter-spacing: -0.01em; text-wrap: balance; }
+h2 { font-family: var(--font-display); font-weight: 700; font-size: 27px; line-height: 1.2; margin: 0; text-wrap: balance; }
+h3 { font-family: var(--font-display); font-weight: 700; font-size: 19px; margin: 0; }
+p { margin: 0; max-width: 72ch; }
+.lede { font-size: 19px; color: var(--muted); max-width: 66ch; }
+section { display: grid; gap: 18px; }
+.meta { display: flex; flex-wrap: wrap; gap: 8px 22px; font-family: var(--font-mono); font-size: 13px; color: var(--muted); }
+.meta b { color: var(--ink); font-weight: 600; }
+.figures { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 14px; }
+.figure { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 16px 18px; display: grid; gap: 4px; }
+.figure .n { font-family: var(--font-display); font-weight: 800; font-size: 30px; font-variant-numeric: tabular-nums; }
+.figure .l { color: var(--muted); font-size: 14.5px; line-height: 1.4; }
+.verdict { background: var(--accent-soft); padding: 18px 22px; border-radius: 10px; display: grid; gap: 10px; }
+ul.plain { margin: 0; padding-left: 20px; display: grid; gap: 6px; max-width: 72ch; }
+.chip { display: inline-block; font-family: var(--font-mono); font-size: 11.5px; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; padding: 2px 8px; border-radius: 999px; white-space: nowrap; }
+.chip.pass { color: var(--pass); background: var(--pass-bg); }
+.chip.fixed { color: var(--fixed); background: var(--fixed-bg); }
+.chip.open { color: var(--open); background: var(--open-bg); }
+.chip.fail { color: var(--fail); background: var(--fail-bg); }
+.chip.env { color: var(--muted); background: var(--line); }
+.table-scroll { overflow-x: auto; border: 1px solid var(--line); border-radius: 10px; background: var(--surface); }
+table { border-collapse: collapse; width: 100%; font-size: 15px; }
+th, td { text-align: left; vertical-align: top; padding: 10px 14px; border-bottom: 1px solid var(--line); }
+th { font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.05em; text-transform: uppercase; color: var(--muted); font-weight: 600; background: var(--bg); }
+tr:last-child td { border-bottom: 0; }
+td.num { font-family: var(--font-mono); font-variant-numeric: tabular-nums; white-space: nowrap; }
+td code, p code, li code { font-family: var(--font-mono); font-size: 0.86em; background: var(--bg); border: 1px solid var(--line); padding: 0 4px; border-radius: 4px; }
+.group td { background: var(--accent-soft); font-family: var(--font-display); font-weight: 700; font-size: 15px; }
+.shots { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 18px; }
+figure { margin: 0; display: grid; gap: 8px; min-width: 0; }
+figure img { border: 1px solid var(--line); border-radius: 8px; background: var(--surface); width: 100%; height: auto; }
+figcaption { font-size: 14px; color: var(--muted); line-height: 1.45; }
+.docs { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 18px; }
+.cards { display: grid; gap: 12px; }
+.card { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 16px 18px; display: grid; gap: 8px; }
+.card .head { display: flex; flex-wrap: wrap; align-items: baseline; gap: 8px 12px; }
+.card p { font-size: 16px; }
+.small { font-size: 14.5px; color: var(--muted); }
+.prio { font-family: var(--font-mono); font-weight: 600; }
+a { color: var(--accent); }
+a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+footer { font-size: 14px; color: var(--muted); border-top: 1px solid var(--line); padding-top: 18px; display: grid; gap: 6px; }
+@media (max-width: 560px) { body { font-size: 16px; } th, td { padding: 8px 10px; } }
+</style>
+
+<div class="wrap">
+  <header>
+    <div class="eyebrow">Fork Domingos-Jr17/dossier · ramo mz · 30 e 31 de outubro de 2026</div>
+    <h1>Dossier em Moçambique</h1>
+    <p class="lede">O que o Dossier entrega para procurar emprego em Moçambique: o teste com vagas reais e IA real, o que foi corrigido, as recomendações que foram implementadas a seguir e o que ainda depende de si.</p>
+    <div class="meta">
+      <span>Base: <b>Dossier 1.10.0</b></span>
+      <span>IA: <b>DeepSeek, modelo deepseek-flash</b></span>
+      <span>Fontes: <b>emprego.co.mz, Kukwira e CONTACT, em simultâneo</b></span>
+      <span>Perfil: <b>fictício (Marta Sitoe, gestora financeira, Maputo)</b></span>
+    </div>
+  </header>
+
+  <section aria-labelledby="veredito">
+    <h2 id="veredito">Veredito</h2>
+    <div class="verdict">
+      <p><b>O Dossier funciona de ponta a ponta com vagas moçambicanas reais, e as recomendações da primeira versão deste relatório estão feitas.</b> Pesquisa o emprego.co.mz, o Kukwira e a CONTACT ao mesmo tempo, pontua as vagas com razões em português, reconhece cursos e conta a experiência por área. Escreve currículo e carta em português europeu, sem lacunas nem planos inventados quando assim escolher, e diz onde se candidatar quando a vaga não aceita email. A interface pode estar toda em português.</p>
+      <p>Depois dos 7 defeitos da primeira ronda, foram 14 commits novos no ramo <code>mz</code>, todos testados e enviados. Ficam três coisas que só o utilizador pode fazer:</p>
+      <ul class="plain">
+        <li>criar uma chave do JSearch, para medir quantas vagas do LinkedIn e de outros sites aparecem para Moçambique (o teste já está pronto);</li>
+        <li>criar um cliente OAuth Google, para o Gmail e o Calendar (o guia está em <code>MOCAMBIQUE.md</code>);</li>
+        <li>decidir se propõe ao projeto original as cinco melhorias que estão em ramos próprios.</li>
+      </ul>
+    </div>
+    <div class="figures">
+      <div class="figure"><span class="n">60/60</span><span class="l">passos com vagas, sites e IA reais a passar: 47 na primeira ronda e 13 na segunda</span></div>
+      <div class="figure"><span class="n" id="e2e-figure">144/144</span><span class="l">testes de ponta a ponta a passar, incluindo os de Moçambique, das várias fontes e da troca de língua</span></div>
+      <div class="figure"><span class="n">1 812</span><span class="l">testes unitários, de interface e de base de dados a passar</span></div>
+      <div class="figure"><span class="n">80</span><span class="l">vagas abertas numa só pesquisa sem palavras-chave: 55 do emprego.co.mz, 24 da CONTACT e 1 do Kukwira</span></div>
+    </div>
+  </section>
+
+  <section aria-labelledby="implementado">
+    <h2 id="implementado">O que foi implementado depois do teste</h2>
+    <p>Todas as recomendações da primeira versão deste relatório foram feitas no ramo <code>mz</code>, cada uma com os seus testes. As três que dependem de contas suas ficaram preparadas: falta só a chave ou a decisão.</p>
+    <div class="table-scroll">
+      <table>
+        <thead><tr><th>Commit</th><th>Recomendação</th><th>O que ficou</th><th>Estado</th></tr></thead>
+        <tbody>
+          <tr><td class="num">beecb7d</td><td>Pesquisa em várias fontes ao mesmo tempo</td><td>Nova fonte "Várias fontes": junta emprego.co.mz, Kukwira e CONTACT (e, se quiser, JSearch, Adzuna e FreeHire). Cada vaga guarda a sua fonte. O agente diário também a usa.</td><td><span class="chip pass">feito</span></td></tr>
+          <tr><td class="num">c5d4003</td><td>Formação e experiência por área</td><td>Os requisitos de formação comparam-se com os cursos do perfil ("Licenciatura em Economia · Universidade Eduardo Mondlane"). Os anos de experiência contam só as funções da área pedida.</td><td><span class="chip pass">feito</span></td></tr>
+          <tr><td class="num">d00c602</td><td>Lacunas na carta e guarda de factos</td><td>Definições → Documentos → "Lacunas na carta de apresentação": referir as importantes com honestidade, ou deixá-las de fora. A carta nunca anuncia planos ("estou a concluir…"). O guarda de factos apanha planos, credenciais e números por extenso em português.</td><td><span class="chip pass">feito</span></td></tr>
+          <tr><td class="num">f28f346</td><td>Razões da pontuação na língua dos documentos</td><td>As razões saem sempre na língua escolhida para os documentos.</td><td><span class="chip pass">feito</span></td></tr>
+          <tr><td class="num">a7cec7b</td><td>"Candidatar no site"</td><td>Quando a vaga não dá email, o separador Email mostra "Candidatar-se em emprego.co.mz" (ou no site do formulário), com os passos, os PDF a anexar e o link.</td><td><span class="chip pass">feito</span></td></tr>
+          <tr><td class="num">0f4bbd5</td><td>Adaptador para o contact.co.mz</td><td>Fonte "CONTACT": lista as ofertas, filtra por palavras e local, lê o texto completo. Ignora a "Candidatura Espontânea".</td><td><span class="chip pass">feito</span></td></tr>
+          <tr><td class="num">0fd7b8e</td><td>Interface e datas em português</td><td>Botão "Português" na barra lateral. Cerca de 1 800 textos e padrões em português europeu, com datas ("sáb. 31 out., 13:14"), países e plurais. Os ecrãs originais não foram tocados, por isso as novidades do projeto original continuam a entrar sem conflitos.</td><td><span class="chip pass">feito</span></td></tr>
+          <tr><td class="num">beecb7d<br>c8db36f</td><td>Aviso do Kukwira e esconder Startups</td><td>O aviso diz que as palavras-chave ficam no servidor (o filtro é local). "Mostrar Startups no menu" desliga o separador.</td><td><span class="chip pass">feito</span></td></tr>
+          <tr><td class="num">42ff732</td><td>Preencher os formulários do Kukwira e da CONTACT</td><td>Seletor no cartão "Candidatar-se em …" com três modos: <b>Assistente</b> (cada valor do formulário a partir do perfil, com Copiar), <b>Favorito</b> (escreve os valores na página do formulário, no navegador, sem enviar nada ao Dossier) e <b>Enviar daqui</b>, só para o Kukwira: mostra tudo o que vai, exige aceitar a política de privacidade, envia o formulário com o currículo adaptado como CV e a carta como mensagem, e marca a candidatura como enviada. A CONTACT (Workable) não tem envio automático: o formulário verifica que é uma pessoa a preencher. Os dados que os formulários pedem e o perfil não tem (género, estado civil, local de nascimento, código postal, nacionalidade) guardam-se uma vez, no seu servidor.</td><td><span class="chip pass">feito</span> <span class="chip open">não testado com o Kukwira real</span></td></tr>
+          <tr><td class="num">48060a7<br>48c742e<br>90d0ea3</td><td>Afinações da tradução</td><td>Listas de nomes ("emprego.co.mz, Kukwira e CONTACT"), notas da correspondência ("2 funções nesta área, desde fev. 2015"), níveis de língua e contagens ("9 de 31"), encontrados ao rever as páginas em português.</td><td><span class="chip pass">feito</span></td></tr>
+          <tr><td class="num">3000cd6</td><td>Teste instável encontrado na verificação</td><td>"Mover um cartão com o teclado" falhava 1 vez em 3 a 6: o teste carregava Enter antes de o React estar pronto. Agora espera por ele e passou 10 vezes em 10. O tradutor também deixou de carregar quando a interface está em inglês.</td><td><span class="chip fixed">corrigido</span></td></tr>
+          <tr><td class="num">6e16141</td><td>JSearch em Moçambique</td><td>Teste ao vivo pronto (<code>JOBS_LIVE=jsearch-mz</code>), mais testes ao vivo dos três sites moçambicanos, que já passam. Guia em <code>MOCAMBIQUE.md</code>.</td><td><span class="chip open">falta a chave</span></td></tr>
+          <tr><td class="num">6e16141</td><td>Gmail e Calendar</td><td>Passo a passo em português em <code>MOCAMBIQUE.md</code>. O código já existia no Dossier.</td><td><span class="chip open">falta o cliente OAuth</span></td></tr>
+          <tr><td class="num">5 ramos</td><td>Contribuições ao projeto original</td><td>Cinco ramos <code>upstream/…</code> no seu fork, cada um a partir do <code>main</code>, a passar tipagem, lint e testes. Os pull requests para o AienTech/dossier ficam à sua decisão.</td><td><span class="chip open">falta a sua decisão</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+
+
+  <section aria-labelledby="ronda2">
+    <h2 id="ronda2">Segunda ronda: as novidades com casos reais</h2>
+    <p>A 31 de outubro, a mesma aplicação de produção correu com as novidades, contra os três sites reais e a DeepSeek, com o mesmo perfil fictício.</p>
+    <div class="table-scroll">
+      <table>
+        <thead><tr><th>Passo</th><th>Resultado</th><th>Tempo</th></tr></thead>
+        <tbody>
+          <tr class="group"><td colspan="3">Várias fontes ao mesmo tempo</td></tr>
+          <tr><td>Escolher "Várias fontes" e testar a ligação</td><td><span class="chip pass">passa</span> emprego.co.mz, Kukwira e CONTACT responderam em 5,2 s</td><td class="num">6,1 s</td></tr>
+          <tr><td>Pesquisar Moçambique sem palavras-chave</td><td><span class="chip pass">passa</span> 80 vagas abertas: 55 do emprego.co.mz, 24 da CONTACT e 1 do Kukwira, cada uma com a sua fonte</td><td class="num">2,2 s</td></tr>
+          <tr><td>Abrir uma oferta real da CONTACT</td><td><span class="chip pass">passa</span> "Medidor orçamentista (m/f)", em Pemba: 4 119 caracteres de texto</td><td class="num">2,1 s</td></tr>
+          <tr><td>Agente diário com "Várias fontes"</td><td><span class="chip pass">passa</span> 7 vagas de "financeiro" encontradas, todas já pontuadas na véspera, por isso nenhuma repetida</td><td class="num">3,5 s</td></tr>
+          <tr class="group"><td colspan="3">Pontuação e correspondência</td></tr>
+          <tr><td>Pontuar uma vaga do emprego.co.mz</td><td><span class="chip pass">passa</span> 52 em 100, com as razões em português: "A função exige 12 a 15 anos de experiência…"</td><td class="num">4,2 s</td></tr>
+          <tr><td>Requisito de formação</td><td><span class="chip pass">passa</span> "Licenciatura em Contabilidade… ou área afim" coberto pela "Pós-graduação em Gestão Financeira · ISCTEM"</td><td class="num">10,8 s</td></tr>
+          <tr><td>Anos de experiência numa área</td><td><span class="chip pass">passa</span> contados só nas funções da área: "2 funções nesta área, desde fev. 2015 (cerca de 6 anos)"</td><td class="num">—</td></tr>
+          <tr class="group"><td colspan="3">Carta e candidatura</td></tr>
+          <tr><td>Definições: lacunas deixadas de fora</td><td><span class="chip pass">passa</span> e cada lacuna diz "a carta deixa-a de fora"</td><td class="num">2,6 s</td></tr>
+          <tr><td>Carta para a Olam Agri</td><td><span class="chip pass">passa</span> sem parágrafo de lacunas e sem planos ("estou a concluir…"); números do perfil intactos</td><td class="num">9,2 s</td></tr>
+          <tr><td>Guarda de factos</td><td><span class="chip open">1 aviso a mais</span> assinalou "Óleo", a tradução de "Edible Oil" do título da vaga</td><td class="num">—</td></tr>
+          <tr><td>Separador Email de uma vaga do emprego.co.mz</td><td><span class="chip pass">passa</span> "Candidatar-se em emprego.co.mz", com os 3 passos, os 2 PDF e o link</td><td class="num">0,7 s</td></tr>
+          <tr class="group"><td colspan="3">Interface em português</td></tr>
+          <tr><td>Painel, Procurar vagas, Agente, Candidatura</td><td><span class="chip pass">passa</span> "Boa tarde, Marta", "Já enviou 3 candidaturas", "Criada a 31 out. 2026"; só ficam em inglês nomes próprios e o que o utilizador escreveu</td><td class="num">≈3 s cada</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="small">Dois passos falharam à primeira por erro do meu script, não do Dossier: um lia a dica da página em vez do resultado do teste de ligação, outro lia a lista da pesquisa anterior. O agente recusou correr à mão porque já tinha corrido nessa hora, como deve; recuei a hora na base de testes para o poder ver.</p>
+    <div class="shots">
+      <figure><img src="img/6.2-multi.png" alt="Procurar vagas com 80 vagas de várias fontes, cada cartão com a sua fonte: emprego.co.mz, Kukwira e CONTACT" loading="lazy"><figcaption>Várias fontes: 80 vagas numa pesquisa, cada uma com a sua origem, e a pontuação com razões em português.</figcaption></figure>
+      <figure><img src="img/6.6-match.png" alt="Correspondência: a licenciatura pedida coberta pela pós-graduação do perfil" loading="lazy"><figcaption>O requisito de formação, agora coberto por um curso do perfil.</figcaption></figure>
+      <figure><img src="img/6.8-apply.png" alt="Separador Email com o cartão Candidatar-se em emprego.co.mz, passos, PDF e link" loading="lazy"><figcaption>A vaga candidata-se no site: o Dossier diz como, com os PDF prontos.</figcaption></figure>
+      <figure><img src="img/6.10-pt.png" alt="Candidatura com a interface em português europeu" loading="lazy"><figcaption>A mesma candidatura com a interface em português.</figcaption></figure>
+    </div>
+  </section>
+
+  <section aria-labelledby="teste">
+    <h2 id="teste">Primeira ronda: o teste com casos reais</h2>
+    <p>A versão de produção do Dossier correu nesta sessão com uma base de dados própria, ligada à DeepSeek e aos sites reais. Um navegador automático fez o percurso de um candidato, a partir do CV em PDF de uma gestora financeira fictícia. O perfil foi escolhido para encaixar em vagas abertas hoje: Director de Finanças (WCS), Gestor Financeiro Nacional (Olam Agri) e a oferta de banca transaccional do Kukwira.</p>
+    <p class="small">A coluna "1.ª vez" diz o que aconteceu antes das correções. "Guião" é um erro do meu script de teste, não do Dossier.</p>
+    <div class="table-scroll">
+      <table>
+        <thead><tr><th>Passo</th><th>Resultado</th><th>Tempo</th><th>1.ª vez</th></tr></thead>
+        <tbody>
+          <tr class="group"><td colspan="4">1 · Configuração e perfil</td></tr>
+          <tr><td>IA a partir das variáveis do ambiente (DeepSeek)</td><td><span class="chip pass">passa</span> responde em 1 s</td><td class="num">2,3 s</td><td><span class="chip fixed">corrigido</span> o servidor recusava <code>deepseek</code></td></tr>
+          <tr><td>Documentos em "Portuguese (European)"</td><td><span class="chip pass">passa</span></td><td class="num">1,9 s</td><td><span class="chip fixed">novo</span> só havia português do Brasil</td></tr>
+          <tr><td>Ligação ao emprego.co.mz real</td><td><span class="chip pass">passa</span> responde em 1,3 s</td><td class="num">2,7 s</td><td><span class="chip env">guião</span></td></tr>
+          <tr><td>Importar o CV em PDF</td><td><span class="chip pass">passa</span> 3 cargos, 2 formações, 9 competências, 3 línguas; nada inventado</td><td class="num">4,7 s</td><td>—</td></tr>
+          <tr><td>Formulário preenchido a partir do perfil (país "Moçambique")</td><td><span class="chip pass">passa</span></td><td class="num">0,3 s</td><td>—</td></tr>
+          <tr><td>Primeira visita: Maputo e Moçambique, sem cargo</td><td><span class="chip pass">passa</span> 13 vagas à primeira</td><td class="num">2,2 s</td><td><span class="chip fixed">corrigido</span> o cargo do perfil dava 0 vagas</td></tr>
+          <tr class="group"><td colspan="4">2 · Procurar vagas no emprego.co.mz</td></tr>
+          <tr><td>Maputo, sem palavras-chave (página da cidade)</td><td><span class="chip pass">passa</span> 13 vagas abertas, com mais páginas</td><td class="num">2,6 s</td><td><span class="chip fixed">corrigido</span> o campo "What" era obrigatório</td></tr>
+          <tr><td>Sem nada (página principal)</td><td><span class="chip pass">passa</span> 67 vagas</td><td class="num">1,6 s</td><td><span class="chip fixed">corrigido</span></td></tr>
+          <tr><td>Palavra "financeiro" / "finanças" / "engenheiro"</td><td><span class="chip pass">passa</span> 7 / 4 / 0 vagas abertas (as de "engenheiro" estavam todas expiradas)</td><td class="num">≈2 s</td><td>—</td></tr>
+          <tr><td>Texto completo de uma vaga, lido da página dela</td><td><span class="chip pass">passa</span> 4 684 caracteres</td><td class="num">0,9 s</td><td>—</td></tr>
+          <tr><td>Pontuar 3 vagas reais com a IA</td><td><span class="chip pass">passa</span> 38, 42 e 58 em 100, com razões coerentes</td><td class="num">3–5 s</td><td>—</td></tr>
+          <tr class="group"><td colspan="4">3 · Candidatura a uma vaga real: Gestor Financeiro Nacional, Olam Agri</td></tr>
+          <tr><td>Iniciar a partir da vaga</td><td><span class="chip pass">passa</span> 14 757 caracteres de vaga e o link</td><td class="num">2,6 s</td><td>—</td></tr>
+          <tr><td>Ler a vaga e comparar com o perfil</td><td><span class="chip pass">passa</span> 12 de 31 requisitos cobertos</td><td class="num">7,4 s</td><td>—</td></tr>
+          <tr><td>Currículo e carta adaptados</td><td><span class="chip pass">passa</span> currículo de 2 páginas, carta de 1</td><td class="num">9 s</td><td>—</td></tr>
+          <tr><td>Português europeu, sem marcas do Brasil</td><td><span class="chip pass">passa</span> "equipa", "contacto", "gestão"; "Exmos. Senhores,"</td><td class="num">—</td><td>—</td></tr>
+          <tr><td>Guarda de factos</td><td><span class="chip pass">passa</span> 0 avisos; ver "Qualidade" abaixo</td><td class="num">—</td><td>—</td></tr>
+          <tr><td>Pedir no chat um resumo mais curto</td><td><span class="chip pass">passa</span></td><td class="num">2,4 s</td><td>—</td></tr>
+          <tr><td>Pedir no chat uma certificação ACCA que não existe</td><td><span class="chip pass">passa</span> recusou e explicou porquê</td><td class="num">4,9 s</td><td>—</td></tr>
+          <tr><td>PDF do currículo e da carta</td><td><span class="chip pass">passa</span> 107 KB e 63 KB</td><td class="num">≈1 s</td><td><span class="chip env">ambiente</span> faltava o Chromium do servidor</td></tr>
+          <tr><td>Email da candidatura</td><td><span class="chip pass">passa</span> sem destinatário: a vaga não dá endereço, e o Dossier não inventa um</td><td class="num">4,9 s</td><td>—</td></tr>
+          <tr><td>Mudar o estado para "Sent"</td><td><span class="chip pass">passa</span></td><td class="num">1,9 s</td><td>—</td></tr>
+          <tr class="group"><td colspan="4">4 · Kukwira: oferta real de banca transaccional</td></tr>
+          <tr><td>Ligação ao site real, com o certificado em falta incluído</td><td><span class="chip pass">passa</span> responde em 1,5 s</td><td class="num">3,4 s</td><td><span class="chip env">guião</span></td></tr>
+          <tr><td>Listar as ofertas e iniciar a candidatura</td><td><span class="chip pass">passa</span> 1 oferta aberta</td><td class="num">3,8 s</td><td><span class="chip fixed">corrigido</span> o servidor cortou a ligação (<code>ECONNRESET</code>)</td></tr>
+          <tr><td>Correspondência, currículo, carta, chat, PDF, email, estado</td><td><span class="chip pass">passa</span> os 9 passos</td><td class="num">≈30 s</td><td><span class="chip fixed">corrigido</span> a carta tratava o Kukwira como o banco</td></tr>
+          <tr class="group"><td colspan="4">5 a 7 · Links colados, agente diário e erros</td></tr>
+          <tr><td>Colar o link de uma vaga do emprego.co.mz</td><td><span class="chip pass">passa</span> 14 697 caracteres, sem menus do site</td><td class="num">2,3 s</td><td><span class="chip fixed">corrigido</span> trazia só 200 caracteres</td></tr>
+          <tr><td>Colar o link de uma oferta do Kukwira</td><td><span class="chip pass">passa</span> 1 743 caracteres</td><td class="num">3,2 s</td><td><span class="chip fixed">corrigido</span> o link é o da aplicação, não o da oferta</td></tr>
+          <tr><td>Agente diário: "financeiro" em Moçambique</td><td><span class="chip pass">passa</span> 6 vagas pontuadas com o texto completo (3,5 a 11 mil caracteres); máximo 62, abaixo do mínimo de 70</td><td class="num">22,9 s</td><td><span class="chip fixed">corrigido</span> pontuava só o excerto</td></tr>
+          <tr><td>País que a fonte não cobre (Portugal)</td><td><span class="chip pass">passa</span> "emprego.co.mz doesn't list jobs in Portugal."</td><td class="num">0,3 s</td><td>—</td></tr>
+          <tr><td>Cidade sem página no emprego.co.mz</td><td><span class="chip pass">passa</span> "No open postings in Cidade Inexistente right now."</td><td class="num">0,7 s</td><td><span class="chip env">guião</span></td></tr>
+          <tr><td>JSearch (LinkedIn via Google) sem chave</td><td><span class="chip pass">passa</span> "Add your JSearch key in Settings → Job search first."</td><td class="num">2 s</td><td>—</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section aria-labelledby="ecras">
+    <h2 id="ecras">O que se viu na primeira ronda</h2>
+    <div class="shots">
+      <figure><img src="img/2.1-maputo.png" alt="Find jobs com 13 vagas de Maputo do emprego.co.mz, o campo What opcional e o texto completo de uma vaga" loading="lazy"><figcaption>Maputo sem palavras-chave: 13 vagas abertas do emprego.co.mz, com o texto completo da vaga escolhida.</figcaption></figure>
+      <figure><img src="img/2.7-score-3.png" alt="Pontuação de 58 em 100 para Director de Finanças, com razões em português" loading="lazy"><figcaption>Pontuação de uma vaga real (Director de Finanças, WCS): 58 em 100, com razões e alertas.</figcaption></figure>
+      <figure><img src="img/3.7-invent.png" alt="Candidatura com currículo adaptado e o chat a recusar acrescentar a certificação ACCA" loading="lazy"><figcaption>Candidatura à Olam Agri: currículo adaptado e a IA a recusar inventar a certificação ACCA.</figcaption></figure>
+      <figure><img src="img/4.0-crop.png" alt="Definições de pesquisa: ligado ao Kukwira, respondeu em 1,5 segundos" loading="lazy"><figcaption>Kukwira ligado, apesar do certificado mal configurado no servidor deles.</figcaption></figure>
+    </div>
+    <h3>Os documentos gerados (PDF, primeira página)</h3>
+    <div class="docs">
+      <figure><img src="img/3-curriculo-1.png" alt="Primeira página do currículo adaptado em português europeu" loading="lazy"><figcaption>Currículo: números do perfil intactos, títulos em português europeu ("Formação académica", "Presente").</figcaption></figure>
+      <figure><img src="img/3-carta-1.png" alt="Carta de apresentação em português europeu, com saudação Exmos. Senhores" loading="lazy"><figcaption>Carta: "Exmos. Senhores,", data em português. O último parágrafo enumera lacunas e promete uma certificação que o perfil não menciona.</figcaption></figure>
+    </div>
+  </section>
+
+  <section aria-labelledby="corrigido">
+    <h2 id="corrigido">O que a primeira ronda corrigiu</h2>
+    <p>Cada correção é um commit com os seus testes, e todas estão no ramo <code>mz</code> do fork (<code>git pull origin mz</code>). Os commits marcados como candidatos a proposta ao autor também servem o projeto original. Propô-los ajuda a que o fork não se afaste demasiado.</p>
+    <div class="table-scroll">
+      <table>
+        <thead><tr><th>Commit</th><th>O que muda</th><th>Proposta ao autor?</th></tr></thead>
+        <tbody>
+          <tr><td class="num">90b3643</td><td>O agente diário pontua as vagas com o texto completo. Antes pontuava só o excerto, que no emprego.co.mz é uma frase e no Adzuna o início da vaga.</td><td>Sim, afeta o Adzuna</td></tr>
+          <tr><td class="num">0ece0b1</td><td>Nova língua de documentos "Portuguese (European)": Contacto, Equipa, Intermédio, "Exmos. Senhores,". O "Portuguese" existente continua a ser o do Brasil.</td><td>Sim</td></tr>
+          <tr><td class="num">28a5ee9</td><td><code>DOSSIER_AI_PROVIDER=deepseek</code> é aceite e aponta para <code>https://api.deepseek.com</code>.</td><td>Sim</td></tr>
+          <tr><td class="num">014cb34</td><td>O emprego.co.mz e o Kukwira pesquisam sem palavras-chave: a página de uma cidade ou as vagas mais recentes. O formulário exigia sempre o campo "What".</td><td>Em parte (a opção <code>browses</code>)</td></tr>
+          <tr><td class="num">117ba26</td><td>Colar um link do emprego.co.mz ou do Kukwira usa o leitor do adaptador: 14 697 caracteres em vez de 200.</td><td>Não, é específico</td></tr>
+          <tr><td class="num">6b58d6e</td><td>O Kukwira volta a tentar uma vez quando o servidor corta a ligação; com tempo esgotado não repete.</td><td>Não</td></tr>
+          <tr><td class="num">1d14680</td><td>Testes de ponta a ponta das duas fontes, com páginas falsas no formato real.</td><td>Não</td></tr>
+          <tr><td class="num">657da4e</td><td>As ofertas do Kukwira deixam de ter "Kukwira" como empresa e dizem à IA que é uma agência de recrutamento e que o cliente não é identificado.</td><td>Não</td></tr>
+          <tr><td class="num">54df4f7</td><td>Com o emprego.co.mz ou o Kukwira, a primeira pesquisa parte da cidade e do país do perfil, sem o cargo: 13 vagas em vez de 0.</td><td>Em parte</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section aria-labelledby="qualidade">
+    <h2 id="qualidade">Qualidade do que a IA escreveu</h2>
+    <div class="cards">
+      <div class="card"><div class="head"><span class="chip pass">bom</span><h3>Factos e números</h3></div><p>Os números do CV (60 clientes, 25 empresas, 18% em 2023, 12 clientes, 6 analistas) chegaram intactos ao currículo e à carta, e nenhum cargo ou formação foi inventado. Com o pedido explícito de acrescentar a certificação ACCA, a IA recusou e explicou que não consta do perfil.</p></div>
+      <div class="card"><div class="head"><span class="chip pass">bom</span><h3>Português europeu</h3></div><p>Com a língua nova, currículos e cartas saíram na norma europeia ("equipa", "contacto", "gestão", "adoptado"), sem marcas do português do Brasil. O chat responde no mesmo registo.</p></div>
+      <div class="card"><div class="head"><span class="chip fixed">resolvido</span><h3>Lacunas expostas na carta</h3></div><p>Na primeira ronda, a carta para a Olam Agri enumerava o que falta ("não tenho certificação ACCA, CIMA… nem experiência em SAP") e anunciava "Estou a planear iniciar uma certificação", uma intenção que não está no perfil. Agora pode escolher "Deixá-las de fora": na segunda ronda a carta para a mesma vaga não tem parágrafo de lacunas nem planos. Em qualquer modo, a IA é instruída a nunca anunciar planos, e o guarda de factos passou a apanhá-los.</p></div>
+      <div class="card"><div class="head"><span class="chip fixed">resolvido</span><h3>Correspondência de requisitos</h3></div><p>Na primeira ronda só se comparavam competências e línguas: "Licenciatura em Gestão, Finanças, Economia ou áreas afins" aparecia como não coberta, e "5 anos em banca transaccional" contava toda a experiência desde 2015. Agora a formação compara-se com os cursos do perfil, e os anos contam só as funções da área pedida. Na segunda ronda, a licenciatura pedida ficou coberta pela pós-graduação do perfil, e os "dez anos em finanças com supervisão" contaram cerca de 6 anos em 2 funções, em vez de 11.</p></div>
+      <div class="card"><div class="head"><span class="chip fixed">resolvido</span><h3>Língua das pontuações e da interface</h3></div><p>As razões das pontuações saem agora sempre na língua dos documentos, e a interface pode estar toda em português europeu, datas incluídas. Os textos que o Dossier original acrescentar no futuro aparecem em inglês até serem acrescentados ao dicionário.</p></div>
+      <div class="card"><div class="head"><span class="chip open">a rever</span><h3>Um aviso a mais do guarda de factos</h3></div><p>Na segunda ronda, a carta traduziu "Edible Oil" do título da vaga para "Óleo Alimentar", e o guarda de factos assinalou "Óleo" porque não está escrito assim na vaga. É inofensivo: basta confirmar e seguir.</p></div>
+    </div>
+  </section>
+
+  <section aria-labelledby="falta">
+    <h2 id="falta">O que ainda falta</h2>
+    <p>As recomendações estão feitas. O que fica depende sobretudo de contas e decisões suas.</p>
+    <div class="table-scroll">
+      <table>
+        <thead><tr><th>Prio.</th><th>O quê</th><th>Quem</th><th>Como</th></tr></thead>
+        <tbody>
+          <tr><td class="prio">P1</td><td>Chave do JSearch, para ver quantas vagas do LinkedIn e de outros sites aparecem em Moçambique</td><td>Você</td><td>Plano gratuito da OpenWeb Ninja (200 pesquisas por mês). Depois, <code>JOBS_LIVE=jsearch-mz</code> mede Maputo; se valer a pena, junte-o às Várias fontes.</td></tr>
+          <tr><td class="prio">P1</td><td>Experimentar "Enviar daqui" com uma vaga real do Kukwira</td><td>Você</td><td>Foi testado só com um servidor falso do formato do Kukwira (144 testes de ponta a ponta). Se o site real recusar, a mensagem vem dele e ajusta-se. O favorito no Workable da CONTACT também não foi visto num formulário real.</td></tr>
+          <tr><td class="prio">P1</td><td>Cliente OAuth Google, para Gmail e Calendar</td><td>Você</td><td>Passos em <code>MOCAMBIQUE.md</code> e em Definições → Google.</td></tr>
+          <tr><td class="prio">P1</td><td>Propor ao projeto original as 5 melhorias genéricas</td><td>Você decide; eu abro os pull requests</td><td>Ramos <code>upstream/agent-whole-text</code>, <code>pt-pt-documents</code>, <code>score-reasons-language</code>, <code>letter-gaps</code> e <code>apply-on-site</code>, já no seu fork.</td></tr>
+          <tr><td class="prio">P2</td><td>Alojamento</td><td>Você</td><td>Servidor com HTTPS (o Google exige-o fora de <code>localhost</code>), PostgreSQL 18 e cópias de segurança. O <code>compose.production.yml</code> já traz o essencial.</td></tr>
+          <tr><td class="prio">P2</td><td>Enviar ao Kukwira a mensagem sobre o certificado</td><td>Você</td><td>O texto está pronto. O Dossier já contorna o problema.</td></tr>
+          <tr><td class="prio">P3</td><td>Verificar os sites moçambicanos de vez em quando</td><td>Você ou uma tarefa agendada</td><td><code>JOBS_LIVE=mozambique</code>: se um site mudar as páginas, este teste falha antes de a pesquisa ficar vazia.</td></tr>
+          <tr><td class="prio">P3</td><td>Traduzir os textos novos do original</td><td>Fork</td><td>Ao trazer novidades do original, acrescentar os textos novos a <code>src/lib/i18n/pt-PT.ts</code>.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section aria-labelledby="pratica">
+    <h2 id="pratica">Para usar no dia a dia</h2>
+    <ul class="plain">
+      <li><b>Guia em português:</b> <code>MOCAMBIQUE.md</code>, na raiz do ramo <code>mz</code>, explica o que o fork acrescenta e como configurar tudo.</li>
+      <li><b>Configuração mínima no <code>.env</code>:</b> <code>DOSSIER_AI_PROVIDER=deepseek</code>, <code>DOSSIER_AI_MODEL=deepseek-flash</code>, a chave em <code>DOSSIER_AI_KEY</code>, <code>DOSSIER_JOBS_SOURCE=multi</code> e <code>DOSSIER_INTERFACE_LANGUAGE=pt-PT</code>. Nas Definições → Documentos, escolha "Português (europeu)" e o que a carta faz com as lacunas.</li>
+      <li><b>Modelo DeepSeek:</b> a API só aceita <code>deepseek-flash</code> ou <code>deepseek-v4-pro</code>. O valor que está no ambiente, "DeepSeek V4.1-Flash-1017", é recusado.</li>
+      <li><b>Base de dados:</b> o projeto pede PostgreSQL 18 (o <code>compose.yml</code> já o traz). Os testes correram sem problemas em PostgreSQL 16.</li>
+      <li><b>Kukwira:</b> o servidor deles envia um certificado incompleto, e o Dossier inclui o que falta (válido até 2036).</li>
+      <li><b>Manter o fork em dia:</b> <code>git fetch upstream</code> e <code>git merge upstream/main</code> no ramo <code>mz</code>. Como o ramo já está publicado, juntar é mais seguro do que reescrever o histórico.</li>
+    </ul>
+  </section>
+
+  <footer>
+    <p>O perfil, as empresas do CV e os contactos são fictícios. As vagas, os sites e a IA são reais, consultados a 30 e 31 de outubro de 2026.</p>
+    <p>Não testado com contas reais: Gmail e Calendar, JSearch, conector Claude e alojamento num servidor público. Os testes automáticos do projeto cobrem-nos com serviços falsos.</p>
+  </footer>
+</div>

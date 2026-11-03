@@ -1,0 +1,220 @@
+880	Não é preciso para um modelo local
+881	A testar…
+882	Testar ligação
+883	Ligado · {} respondeu em {} s
+884	A enviar um pequeno pedido de teste…
+885	Não testado desde a última alteração
+886	Endereço copiado.
+887	Não foi possível copiar. Selecione o endereço e copie-o.
+888	Conector Claude
+889	Use o Dossier a partir do Claude: em conversas no claude.ai, nas aplicações para computador e telemóvel, e na aplicação de linha de comandos do Claude. O Claude pode procurar vagas, ler o seu perfil e as suas candidaturas, e guardar as candidaturas e as pontuações que escreve, com o seu próprio plano Claude. Nunca envia nem apaga nada.
+890	Deixar o Claude ligar-se
+891	Ligado. O Claude liga-se no endereço abaixo, depois de entrar no Dossier e o autorizar.
+892	Desligado. Os endereços do conector não estão abertos neste servidor.
+893	Endereço a acrescentar no Claude
+894	No Claude, abra
+895	Definições → Conectores
+896	e escolha
+897	Acrescentar conector personalizado
+898	Dê-lhe o nome
+899	-
+900	, cole o endereço e carregue em
+901	, depois
+902	Ligar
+903	O Claude abre o Dossier: entre se pedir, veja o que o Claude pode fazer e carregue em
+904	Permitir
+905	-
+906	para entrar.
+907	Este é um endereço local.
+908	Este endereço não é HTTPS.
+909	O Claude na web, no computador e no telemóvel chega ao Dossier a partir dos servidores da Anthropic, por isso precisa de um endereço HTTPS público (defina
+910	-
+911	se o Dossier for acedido por outro). A aplicação de linha de comandos do Claude no computador onde o Dossier corre pode usar este.
+912	O que o Claude lê através do conector vai para a Anthropic com a sua conta Claude, como tudo numa conversa: o seu perfil sem os contactos, as vagas e candidaturas em que trabalha, e as suas pesquisas. As notas privadas e o remetente e assinatura da carta ficam de fora.
+913	Ligar o Claude
+914	tem os detalhes.
+915	Sem um modelo de IA próprio do Dossier, Nova candidatura e Avaliar em Procurar vagas passam o trabalho a uma nova conversa no Claude, que o guarda aqui através do conector.
+916	Desligar o Claude
+917	Termina a sessão de todos os Claude. Mudar a palavra-passe ou o DOSSIER_SECRET também o faz.
+918	Esse ficheiro é demasiado grande para este servidor aceitar.
+919	A importação não funcionou. Tente outra vez.
+920	Parece estar sem ligação. Tente outra vez quando estiver ligado.
+921	Não foi possível criar o zip. Tente outra vez.
+922	{} está pronto.
+923	A fazer cópia de segurança dos seus dados, e depois a importar…
+924	Importado. Os seus dados anteriores ficaram guardados em {}.
+925	A compactar {} documentos. Isto demora um momento.
+926	Os seus dados
+927	Tudo o que introduz fica numa base de dados no seu servidor, e nada é vendido: não há a quem vender. O que sai vai para o fornecedor de IA e a fonte de vagas que escolher, para a Google se ligar o Gmail, e para o sinal de utilização diário e a verificação de atualizações (ver Sobre).
+928	Exportar tudo
+929	Perfil, candidaturas, documentos e temas num ficheiro JSON. Útil para cópias de segurança ou para mudar de servidor.
+930	A preparar {}…
+931	Incluir as minhas chaves de API
+932	As suas chaves de API (fornecedor de IA e pesquisa de emprego) vão para o ficheiro em texto simples, por isso quem tiver o ficheiro pode usá-las. Guarde-o em lugar seguro.
+933	Deixadas de fora por omissão: outro servidor não conseguiria ler a cópia encriptada.
+934	Descarregar todos os PDF
+935	Todos os currículos e cartas adaptados, compactados e ordenados por empresa.
+936	A compactar…
+937	Importar
+938	Restaurar a partir de um ficheiro exportado. Os seus dados atuais são guardados primeiro.
+939	A importar…
+940	Escolher ficheiro
+941	Manter os dados das tarefas durante
+942	O que a IA recebeu e escreveu numa tarefa: uma vaga, o texto do seu currículo, rascunhos que não passaram a candidatura. Fica guardado para recarregar e anular, e depois é apagado. As candidaturas mantêm os seus documentos até as apagar.
+943	Cópias de segurança noturnas
+944	Guardadas durante {} dias em {}. {}
+945	A última foi feita {}.
+946	A primeira é feita esta noite às 03:00.
+947	Desligado. Só terá o que exportar.
+948	A última cópia de segurança falhou:
+949	Substituir tudo por esta exportação?
+950	O ficheiro, exportado
+951	, tem
+952	. Substitui o seu perfil, as definições e
+953	. Os seus dados atuais são guardados primeiro.
+954	Importar e substituir
+955	Escreva DELETE em maiúsculas para confirmar.
+956	Apagar tudo
+957	Remove deste servidor o seu perfil, todas as candidaturas e documentos, as definições e as cópias de segurança. Isto não pode ser desfeito, por isso exporte primeiro se o puder querer de volta.
+958	Escreva DELETE para confirmar
+959	A apagar…
+960	Apagar de vez
+961	Apagar tudo…
+962	{} acrescentado. A qualidade depende de quão bem o seu modelo conhece a língua.
+963	Documentos
+964	Valores por omissão para cada nova candidatura. Pode ainda alterá-los em cada vaga.
+965	Tamanho do papel
+966	Formato da data
+967	Lacunas na carta de apresentação
+968	O que a carta faz com o que a vaga pede e o seu perfil não tem. Nunca afirma que o tem.
+969	Referir as importantes com honestidade
+970	Deixá-las de fora
+971	Escrever os documentos em
+972	A língua da vaga
+973	Outra língua…
+974	Outra língua
+975	p. ex. Persa
+976	Língua do currículo base
+977	Para os títulos e as datas. Os documentos adaptados usam a língua da sua candidatura.
+978	Inglês
+979	Tamanho do currículo
+980	Um currículo adaptado mais longo é encurtado, a começar pelos cargos mais antigos, e digo-lhe o que foi cortado.
+981	Nome do ficheiro PDF
+982	Clique para inserir
+983	Pré-visualização
+984	Incluir referências
+985	Acrescentar as suas referências aos currículos quando a vaga as pedir. Caso contrário, ficam de fora.
+986	As definições não carregaram
+987	Seg
+988	Ter
+989	Qua
+990	Qui
+991	Sex
+992	Sáb
+993	Dom
+994	Ligado à Google.
+995	A Google não recebeu acesso, por isso nada mudou.
+996	Demorou demasiado ou não começou aqui. Tente ligar outra vez.
+997	A Google recusou a entrada. Verifique o ID e o segredo do cliente abaixo.
+998	A ligação à Google não funcionou. Tente outra vez.
+999	A Google ainda não está configurada neste servidor. Veja os passos abaixo.
+1000	Google
+1001	Envie candidaturas a partir do seu Gmail, veja as respostas dos empregadores junto de cada candidatura e proponha horários de entrevista a partir do seu calendário. O Dossier pergunta sempre antes de enviar.
+1002	Ligado como
+1003	Desligar
+1004	Enviar email a partir do seu endereço
+1005	Ler o seu correio, para encontrar respostas às suas candidaturas
+1006	Ver quando está livre e acrescentar entrevistas ao seu calendário
+1007	Entra na própria página da Google e escolhe o que o Dossier pode fazer. As credenciais ficam encriptadas no seu servidor e nunca saem dele, a não ser para falar com a Google.
+1008	Ligar a conta Google
+1009	Ler respostas
+1010	Procurar no Gmail as respostas dos empregadores, associá-las às candidaturas e deixar a IA lê-las.
+1011	Que correio
+1012	Conversas que iniciei e domínios das empresas
+1013	Todos os emails novos
+1014	Só o correio que corresponde a uma candidatura é guardado e enviado à IA.
+1015	O correio que não corresponde a uma candidatura espera em Precisa de atenção. Com uma IA alojada, é enviado ao fornecedor para ser lido.
+1016	Verificar a cada
+1017	Última verificação {}
+1018	Propor horários do meu calendário
+1019	Quando um empregador pede uma reunião, a resposta redigida propõe horários em que está livre.
+1020	Acrescentar entrevistas ao meu calendário
+1021	Quando se acordar um horário, acrescentá-lo com uma ligação para a candidatura e mantê-lo sincronizado: um horário mudado aqui ou na Google muda dos dois lados.
+1022	Dias úteis
+1023	Até
+1024	Duração da entrevista
+1025	Tempo livre à volta das reuniões
+1026	Sem intervalo
+1027	{} minutos
+1028	Fuso horário
+1029	-
+1030	Vazio usa o do seu browser: {}
+1031	Vazio usa o do seu browser
+1032	primary é o seu calendário principal; ou o ID de um calendário, nas definições do Google Calendar
+1033	Desligar a Google?
+1034	O acesso do Dossier é revogado na Google. O correio que já está no Dossier fica; nada de novo entra até voltar a ligar.
+1035	(permitido)
+1036	(não permitido)
+1037	URI de redirecionamento copiado.
+1038	Não foi possível copiar. Selecione-o e copie-o.
+1039	Ligue o Gmail e o Google Calendar para enviar candidaturas, ler respostas e propor horários de entrevista. Primeiro, dê a este servidor um cliente OAuth da Google.
+1040	Na
+1041	Google Cloud Console
+1042	, crie um projeto e ative a
+1043	Gmail API
+1044	e a
+1045	Google Calendar API
+1046	Configure o
+1047	ecrã de consentimento OAuth
+1048	como Externo, acrescente-se como utilizador de teste, e depois
+1049	-o (Em produção). Sem publicar, a Google corta o acesso ao fim de 7 dias.
+1050	Crie um
+1051	ID de cliente OAuth
+1052	do tipo Aplicação web, com este URI de redirecionamento autorizado:
+1053	Cole abaixo o ID e o segredo do cliente.
+1054	Guardado · escreva um segredo novo para o substituir
+1055	A usar DOSSIER_GOOGLE_CLIENT_SECRET · escreva um para o guardar aqui
+1056	Cliente OAuth
+1057	Mudar o ID do cliente desliga a sua conta Google; volte a ligá-la depois.
+1058	Guardado neste servidor, por isso não é preciso reiniciar.
+1059	ID do cliente
+1060	A usar DOSSIER_GOOGLE_CLIENT_ID
+1061	De DOSSIER_GOOGLE_CLIENT_ID · escreva um para o guardar aqui
+1062	Segredo do cliente
+1063	O segredo guardado não pode ser lido, provavelmente porque o DOSSIER_SECRET mudou. Introduza-o outra vez.
+1064	Remover segredo guardado
+1065	Procurar vagas fica desligado, e nenhuma pesquisa sai do seu servidor.
+1066	Nada é enviado para lado nenhum
+1067	Pesquisa de emprego
+1068	Onde Procurar vagas procura. Escolha uma fonte, ou várias ao mesmo tempo; pode mudar quando quiser, e cada uma guarda a sua chave.
+1069	Fonte de vagas
+1070	Fontes a pesquisar
+1071	Marque pelo menos uma fonte.
+1072	-
+1073	-
+1074	ID da aplicação
+1075	Chave da aplicação
+1076	o site de programadores do Adzuna
+1077	Não é preciso chave. O agente de emprego não pesquisa nesta fonte; escolha o JSearch, o Adzuna ou o FreeHire para ele.
+1078	Não é preciso chave. O Dossier pesquisa o catálogo público do FreeHire em {}.
+1079	Não é preciso chave. O Dossier pesquisa o seu próprio FreeHire em {}.
+1080	Não é preciso chave. O Dossier lê as páginas do emprego.co.mz como um visitante; escolha Moçambique como país. Sem palavras-chave, o local escolhe as vagas de uma cidade.
+1081	Não é preciso chave. O Dossier lê a página de ofertas da CONTACT como um visitante; escolha Moçambique como país. As palavras-chave são procuradas nos títulos e locais das ofertas.
+1082	Não é preciso chave. O Dossier lê as ofertas atuais da Kukwira, normalmente poucas; escolha Moçambique como país. As ofertas não dizem onde é o trabalho, por isso o local não é usado.
+1083	Mostrar Startups no menu
+1084	Startups lista startups que contratam através da Y Combinator e do “Who is hiring?” do Hacker News. Oculte-o se não contratam onde vive.
+1085	Chave de
+1086	-
+1087	A usar {} · escreva uma para a guardar aqui
+1088	Obtenha uma em
+1089	A Kukwira só envia a sua lista de ofertas; as suas palavras-chave são procuradas no seu servidor.
+1090	{}Nada da sua pesquisa nem do seu perfil sai do seu servidor.
+1091	As suas pesquisas (palavras-chave, local e filtros) vão para {}. {}Nada do seu perfil vai.
+1092	A enviar uma pequena pesquisa…
+1093	Não testado desde a última alteração · um teste gasta uma pesquisa do seu plano
+1094	A carregar as definições…
+1095	Definições
+1096	-
+1097	hoje às {}
+1098	ontem às {}
+1099	Desconhecido
