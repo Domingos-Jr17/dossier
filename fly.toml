@@ -18,7 +18,9 @@ primary_region = "jnb"
   # Where it is reached, for Google's redirect. Same name as `app` above.
   DOSSIER_PUBLIC_URL = "https://dossier-CHANGE-ME.fly.dev"
   # Secrets, set with `fly secrets set`, not here: DATABASE_URL,
-  # DOSSIER_PASSWORD, DOSSIER_SECRET, DOSSIER_AI_KEY.
+  # DOSSIER_PASSWORD, DOSSIER_SECRET, DOSSIER_AI_KEY, and, for the off-site
+  # copy of the backups (MOCAMBIQUE.md), DOSSIER_BACKUP_S3_ENDPOINT, _BUCKET,
+  # _KEY_ID and _SECRET.
 
 # Backups and export files.
 [mounts]

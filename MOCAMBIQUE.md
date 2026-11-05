@@ -118,9 +118,23 @@ O arranque aplica as migrações da base de dados sozinho. Se falhar, `fly logs 
 
 ### 7. Depois
 - **Uma só máquina** em cada aplicação: com mais, cada uma teria o seu volume.
-- **Cópias de segurança:** a cópia nocturna do Dossier fica em `/data`, no mesmo Fly. Faça também `fly volumes snapshots` ou um `pg_dump` para fora. Veja a retenção dos instantâneos em fly.io/docs.
+- **Cópias de segurança:** a cópia nocturna do Dossier fica em `/data`, no mesmo Fly. Envie-a também para fora, como se explica a seguir, e faça `fly volumes snapshots` ou um `pg_dump` da base de dados. Veja a retenção dos instantâneos em fly.io/docs.
 - **Atualizar:** `git merge upstream/main`, copie o `Dockerfile` outra vez para `Dockerfile.fly` (o último passo, `FROM production AS fly`, fica) e `fly deploy`.
 - **Memória:** `fly scale memory 1024 --app dossier-CHANGE-ME` desce para 1 GB, o mínimo. Veja a memória em `fly dashboard`.
+
+### Cópia de segurança fora do Fly (Cloudflare R2)
+A cópia nocturna em `/data` perde-se se o volume se perder. Com um bucket do Cloudflare R2, o Dossier envia lá também cada cópia nocturna (às 03:00, hora do servidor).
+
+1. No painel da Cloudflare, abra **R2 Object Storage** e crie um bucket, por exemplo `dossier-backups`. Veja no painel se o R2 pede um método de pagamento para ser ativado.
+2. Em **Manage API tokens**, crie um token com a permissão **Object Read & Write** só para esse bucket. Guarde o *Access Key ID*, o *Secret Access Key* e o endereço `https://<ID DA CONTA>.r2.cloudflarestorage.com`.
+3. Ponha-os nos segredos do Fly:
+   ```sh
+   fly secrets set --app dossier-CHANGE-ME      DOSSIER_BACKUP_S3_ENDPOINT="https://<ID DA CONTA>.r2.cloudflarestorage.com"      DOSSIER_BACKUP_S3_BUCKET="dossier-backups"      DOSSIER_BACKUP_S3_KEY_ID="..."      DOSSIER_BACKUP_S3_SECRET="..."
+   ```
+4. No bucket, em **Settings → Object lifecycle rules**, apague os objetos com mais de 30 dias: o Dossier não apaga nada no bucket.
+5. Na manhã seguinte, o ficheiro `dossier-backup-nightly-…json` está no bucket. Se falhar, a linha das cópias nocturnas em Definições → Os seus dados diz porquê (por exemplo, `403 (AccessDenied)` é um token sem permissão para esse bucket).
+
+Cada ficheiro tem **todos os seus dados em texto simples** (perfil, candidaturas, documentos), sem as chaves de API em claro, e fica na sua conta da Cloudflare. Por isso o token só deve poder escrever nesse bucket, e a conta deve ter autenticação em dois passos. Para recuperar, descarregue o ficheiro e importe-o em Definições → Os seus dados. As cópias feitas antes de uma importação não são enviadas.
 
 ### Avisos
 - Não construí a imagem nem usei o Fly: o ambiente onde trabalhei não tem Docker nem conta do Fly. Se o `fly deploy` falhar, o erro diz o passo; os suspeitos são o `Dockerfile.fly` e as permissões do volume.
