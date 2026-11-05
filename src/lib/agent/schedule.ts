@@ -14,10 +14,10 @@ import { AGENT_JOB_KEY, agentScanJob } from "./jobs";
 
 // The job agent's daily run (E16-4): a timer in this process, like the
 // nightly backups and the inbox check, so it's only right with one instance.
-// Every 15 minutes it starts the day's run once the chosen hour has come, in
+// Every hour it starts the day's run once the chosen hour has come, in
 // the user's time zone, not the server's (usually UTC in Docker).
 
-const EVERY_MS = 15 * 60 * 1000;
+const EVERY_MS = 60 * 60 * 1000;
 
 /** The moment the run is due on `day`, at `hour` in `timeZone`. */
 const dueOn = (day: string, hour: number, timeZone: string) => {

@@ -197,6 +197,8 @@ export async function readReply(emailId: string, signal?: AbortSignal): Promise<
   });
 }
 
+const IDLE_CHECK_MINUTES = 60;
+
 const globalForSync = globalThis as unknown as { inboxTimer?: ReturnType<typeof setTimeout>; inboxRunning?: boolean };
 
 /** One scheduled check: interviews changed in Google Calendar, then new mail while reading is on. */
@@ -225,11 +227,21 @@ export async function checkInboxNow(): Promise<SyncResult | null> {
   }
 }
 
+/**
+ * Minutes to the next check: the chosen interval while an account is connected.
+ * Without one there is nothing to check, so it looks seldom and a database
+ * that sleeps when idle gets to.
+ */
+async function minutesToNextCheck(): Promise<number> {
+  const [connection, settings] = await Promise.all([googleConnection(), loadSettings()]);
+  return connection.status === "connected" ? settings.gmailInterval : IDLE_CHECK_MINUTES;
+}
+
 /** Starts the inbox timer, once per process (dev reloads keep the one they have). */
 export function startInboxSchedule(): void {
   if (globalForSync.inboxTimer) return;
   const schedule = async () => {
-    const minutes = (await loadSettings().catch(() => null))?.gmailInterval ?? 10;
+    const minutes = await minutesToNextCheck().catch(() => 10);
     globalForSync.inboxTimer = setTimeout(() => {
       void scheduledCheck()
         .catch(() => {})

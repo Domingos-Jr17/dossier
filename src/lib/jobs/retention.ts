@@ -15,8 +15,8 @@ import { removeOldZips } from "./zip-pdfs";
 // A plain timer in this process, like the nightly backups.
 
 const HOUR_MS = 60 * 60 * 1000;
-/** How often the sweep runs. */
-const EVERY_MS = 15 * 60 * 1000;
+/** How often the sweep runs: seldom, so a database that sleeps when idle gets to. */
+const EVERY_MS = HOUR_MS;
 
 /** Deletes finished jobs older than the retention, zips nobody downloaded and expired postings pasted for Claude (#221); returns how many jobs went. */
 export async function sweepFinishedJobs(now = new Date(), hours?: number): Promise<number> {
@@ -35,7 +35,7 @@ export async function sweepFinishedJobs(now = new Date(), hours?: number): Promi
 
 const globalForSweep = globalThis as unknown as { jobSweepTimer?: ReturnType<typeof setInterval> };
 
-/** Sweeps now and every 15 minutes, once per process (dev reloads keep the timer they have). */
+/** Sweeps now and every hour, once per process (dev reloads keep the timer they have). */
 export function startJobSweep(): void {
   if (globalForSweep.jobSweepTimer) return;
   const sweep = () => void sweepFinishedJobs().catch((error: unknown) => logServerError("job sweep", error));
