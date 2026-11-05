@@ -1,0 +1,7 @@
+# Scripts and files that Linux reads inside the images must keep LF line
+# endings, also on Windows (core.autocrlf=true would make them CRLF, and a
+# script that starts with "#!/bin/sh" plus CR fails with "not found").
+*.sh text eol=lf
+Dockerfile* text eol=lf
+# Prisma checksums each migration file: the same bytes on every machine.
+*.sql text eol=lf
