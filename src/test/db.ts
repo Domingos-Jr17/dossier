@@ -22,7 +22,12 @@ export function testDatabaseUrl(): string {
 }
 
 export function createTestClient(): PrismaClient {
-  return new PrismaClient({ adapter: new PrismaPg({ connectionString: testDatabaseUrl() }) });
+  return new PrismaClient({
+    adapter: new PrismaPg({ connectionString: testDatabaseUrl() }),
+    // Prisma gives a transaction 5 seconds, which a database far away can't
+    // keep to: the export reads every table in one (200 ms a query is 17 queries).
+    transactionOptions: { maxWait: 60_000, timeout: 60_000 },
+  });
 }
 
 /** Empties every table, so each test starts from a blank database. */
