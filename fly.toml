@@ -1,9 +1,10 @@
 # Dossier on Fly.io (this fork). Step by step in MOCAMBIQUE.md.
 # Change the app's name: it must be unique on Fly, and becomes
 # https://<name>.fly.dev.
-app = "dossier-CHANGE-ME"
-# Johannesburg, the closest to Mozambique. See `fly platform regions`.
-primary_region = "jnb"
+app = "dossier-moz"
+# Frankfurt, next to the Neon database (Neon has no region in Africa, and the
+# database is queried many times per page). See `fly platform regions`.
+primary_region = "fra"
 
 [build]
   dockerfile = "Dockerfile.fly"
@@ -16,7 +17,7 @@ primary_region = "jnb"
   DOSSIER_JOBS_SOURCE = "multi"
   DOSSIER_INTERFACE_LANGUAGE = "pt-PT"
   # Where it is reached, for Google's redirect. Same name as `app` above.
-  DOSSIER_PUBLIC_URL = "https://dossier-CHANGE-ME.fly.dev"
+  DOSSIER_PUBLIC_URL = "https://dossier-moz.fly.dev"
   # Secrets, set with `fly secrets set`, not here: DATABASE_URL,
   # DOSSIER_PASSWORD, DOSSIER_SECRET, DOSSIER_AI_KEY, and, for the off-site
   # copy of the backups (MOCAMBIQUE.md), DOSSIER_BACKUP_S3_ENDPOINT, _BUCKET,
