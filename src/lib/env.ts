@@ -75,6 +75,19 @@ const schema = z.object({
         error: "DOSSIER_BACKUP_RETENTION_DAYS must be at least 1.",
       }),
     ),
+  // An off-site copy of each nightly backup, in a bucket of an S3-compatible
+  // store such as Cloudflare R2 (backup-offsite.ts). All four, or none. Never
+  // echo the key or the secret.
+  DOSSIER_BACKUP_S3_ENDPOINT: optional(
+    z.url({ protocol: /^https?$/, error: "DOSSIER_BACKUP_S3_ENDPOINT must be an http:// or https:// URL." }).transform((url) => url.replace(/\/+$/, "")),
+  ),
+  DOSSIER_BACKUP_S3_BUCKET: optional(
+    z.string().trim().regex(/^[a-z0-9][a-z0-9.-]{1,61}[a-z0-9]$/, { error: "DOSSIER_BACKUP_S3_BUCKET must be a bucket name: 3 to 63 lowercase letters, digits, dots or hyphens." }),
+  ),
+  DOSSIER_BACKUP_S3_KEY_ID: optional(z.string().trim()),
+  DOSSIER_BACKUP_S3_SECRET: optional(z.string().trim()),
+  // R2 wants "auto" (the default); other stores want their region, e.g. eu-central-1.
+  DOSSIER_BACKUP_S3_REGION: optional(z.string().trim()),
   // The daily usage ping (usage-ping.ts): unset, Dossier asks after
   // sign-in and sends nothing before a yes; on or off answers for good.
   DOSSIER_TELEMETRY: optional(
@@ -206,6 +219,20 @@ const schema = z.object({
     z.url({ protocol: /^https?$/, error: "DOSSIER_TYPESAFE_TEST_BASE_URL must be an http:// or https:// URL." }),
   ),
 }).check((context) => {
+  const bucket = [
+    "DOSSIER_BACKUP_S3_ENDPOINT",
+    "DOSSIER_BACKUP_S3_BUCKET",
+    "DOSSIER_BACKUP_S3_KEY_ID",
+    "DOSSIER_BACKUP_S3_SECRET",
+  ] as const;
+  const missing = bucket.filter((name) => !context.value[name]);
+  if (missing.length > 0 && missing.length < bucket.length) {
+    context.issues.push({
+      code: "custom",
+      input: context.value,
+      message: `The off-site backup needs all of ${bucket.join(", ")}. Set ${missing.join(", ")}, or remove the others.`,
+    });
+  }
   if (context.value.DOSSIER_JOBS_SOURCE === "arbeitsagentur" && context.value.DOSSIER_JOBS_ARBEITSAGENTUR === "off") {
     context.issues.push({
       code: "custom",

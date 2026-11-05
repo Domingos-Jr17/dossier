@@ -1,8 +1,9 @@
 import "server-only";
 
-import { stat, unlink } from "node:fs/promises";
+import { readFile, stat, unlink } from "node:fs/promises";
 import path from "node:path";
 
+import { uploadOffsite } from "@/lib/backup-offsite";
 import { backupsDir, listBackups, writeBackup } from "@/lib/backups";
 import { env } from "@/lib/env";
 import { logServerError } from "@/lib/log";
@@ -10,7 +11,8 @@ import { loadSettings, saveSettings } from "@/lib/settings-data";
 
 // Nightly backups (E10-7, SET-10): while "Nightly backups" is on, an export
 // is written at 03:00 server time, and backups older than
-// DOSSIER_BACKUP_RETENTION_DAYS are removed. A plain timer in this process,
+// DOSSIER_BACKUP_RETENTION_DAYS are removed, and a copy goes to the bucket of
+// DOSSIER_BACKUP_S3_* when there is one. A plain timer in this process,
 // so it's only safe with a single instance of the app (E12-5).
 
 const HOUR = 3;
@@ -39,8 +41,11 @@ export async function pruneBackups(now: Date, days = env.DOSSIER_BACKUP_RETENTIO
 export async function runNightlyBackup(now = new Date()): Promise<"written" | "off"> {
   if (!(await loadSettings()).nightlyBackup) return "off";
   try {
-    await writeBackup("nightly", now);
+    const name = await writeBackup("nightly", now);
     await pruneBackups(now);
+    // The off-site copy, while DOSSIER_BACKUP_S3_* are set. The local backup
+    // stays if it fails; the row in Settings shows why.
+    await uploadOffsite(name, await readFile(path.join(backupsDir(), name), "utf8"));
     await saveSettings({ backupProblem: null });
     return "written";
   } catch (error) {

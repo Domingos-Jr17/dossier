@@ -20,6 +20,8 @@ vi.mock("@/lib/env", () => ({
   env: { get DOSSIER_DATA_DIR() { return dataDir.path; }, DOSSIER_BACKUP_RETENTION_DAYS: 14, DOSSIER_SECRET: "s".repeat(32) },
 }));
 vi.mock("@/lib/log", () => ({ logServerError: vi.fn() }));
+const offsite = vi.hoisted(() => ({ upload: vi.fn<(name: string, body: string) => Promise<"uploaded" | "off">>(async () => "off") }));
+vi.mock("@/lib/backup-offsite", () => ({ uploadOffsite: offsite.upload }));
 
 const prisma = () => db.client!;
 const backups = () => readdir(path.join(dataDir.path, "backups")).catch(() => [] as string[]);
@@ -32,6 +34,23 @@ beforeEach(async () => {
 afterAll(async () => {
   await rm(dataDir.path, { recursive: true, force: true });
   await prisma().$disconnect();
+});
+
+describe("nightly backups' off-site copy", () => {
+  it("goes to the bucket with the backup's name and text", async () => {
+    offsite.upload.mockClear();
+    await runNightlyBackup(new Date(2026, 8, 28, 3, 0));
+    const [name, body] = offsite.upload.mock.calls[0];
+    expect(name).toBe("dossier-backup-nightly-2026-09-28-030000.json");
+    expect(JSON.parse(body)).toHaveProperty("applications");
+  });
+
+  it("keeps the local backup and the reason when the copy fails", async () => {
+    offsite.upload.mockRejectedValueOnce(new Error("The off-site copy failed: the bucket answered 403 (AccessDenied)."));
+    await expect(runNightlyBackup(new Date(2026, 8, 28, 3, 0))).rejects.toThrow("AccessDenied");
+    expect(await backups()).toEqual(["dossier-backup-nightly-2026-09-28-030000.json"]);
+    expect((await loadSettings()).backupProblem).toContain("AccessDenied");
+  });
 });
 
 describe("nightly backups (E10-7)", () => {

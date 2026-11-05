@@ -134,6 +134,40 @@ describe("parseEnv", () => {
   });
 });
 
+describe("off-site backup variables", () => {
+  const bucket = {
+    DOSSIER_BACKUP_S3_ENDPOINT: "https://abc123.r2.cloudflarestorage.com/",
+    DOSSIER_BACKUP_S3_BUCKET: "dossier-backups",
+    DOSSIER_BACKUP_S3_KEY_ID: "key-id",
+    DOSSIER_BACKUP_S3_SECRET: "the-secret",
+  };
+
+  it("is off unless a bucket is set", () => {
+    expect(parseEnv(valid).DOSSIER_BACKUP_S3_ENDPOINT).toBeUndefined();
+    expect(parseEnv(valid).DOSSIER_BACKUP_S3_BUCKET).toBeUndefined();
+  });
+
+  it("reads a bucket, without the endpoint's trailing slash", () => {
+    expect(parseEnv({ ...valid, ...bucket, DOSSIER_BACKUP_S3_REGION: "eu-central-1" })).toMatchObject({
+      DOSSIER_BACKUP_S3_ENDPOINT: "https://abc123.r2.cloudflarestorage.com",
+      DOSSIER_BACKUP_S3_BUCKET: "dossier-backups",
+      DOSSIER_BACKUP_S3_REGION: "eu-central-1",
+    });
+  });
+
+  it("wants all four or none, and names what's missing", () => {
+    expect(problems({ ...valid, DOSSIER_BACKUP_S3_BUCKET: "dossier-backups" })).toEqual([
+      "The off-site backup needs all of DOSSIER_BACKUP_S3_ENDPOINT, DOSSIER_BACKUP_S3_BUCKET, DOSSIER_BACKUP_S3_KEY_ID, DOSSIER_BACKUP_S3_SECRET. Set DOSSIER_BACKUP_S3_ENDPOINT, DOSSIER_BACKUP_S3_KEY_ID, DOSSIER_BACKUP_S3_SECRET, or remove the others.",
+    ]);
+  });
+
+  it("rejects a bad bucket name without echoing the secret", () => {
+    const messages = problems({ ...valid, ...bucket, DOSSIER_BACKUP_S3_BUCKET: "Not A Bucket" });
+    expect(messages).toEqual(["DOSSIER_BACKUP_S3_BUCKET must be a bucket name: 3 to 63 lowercase letters, digits, dots or hyphens."]);
+    expect(messages.join()).not.toContain("the-secret");
+  });
+});
+
 describe("job search variables (E14-4)", () => {
   it("reads the source and its keys", () => {
     expect(
