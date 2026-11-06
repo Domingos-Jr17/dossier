@@ -27,6 +27,9 @@ const LONG_WEEKDAY = `(${Object.keys(LONG_WEEKDAYS).join("|")})`;
 /** A name in a list: "Kukwira", "South Africa", "emprego.co.mz". */
 const NAME = String.raw`(?:[\p{Lu}\d][\p{L}\d.\-]*(?: [\p{Lu}\d][\p{L}\d.\-]*){0,2}|[\p{L}\d-]+\.[\p{L}.]+)`;
 
+/** "A, B and C" as "A, B e C": only the last "and", the one the list was joined with. */
+const andToE = (list: string) => list.replace(/ and (?!.* and )/, " e ");
+
 /** "Mar 2021" or "2021" in Portuguese; "Present" as "Presente". */
 const monthYear = (value: string) =>
   value === "Present" ? "Presente" : value.replace(new RegExp(`^${MONTH} `), (_, month: string) => `${MONTHS[month]} `);
@@ -56,6 +59,12 @@ export const PT_PT_PATTERNS: Dictionary["patterns"] = [
   [new RegExp(`^(${NAME}(?:, ${NAME})*) and (${NAME})$`, "u"), ([list, last], translate) => `${list.split(", ").map(translate).join(", ")} e ${translate(last)}`],
   // A list of quoted texts: "“Excel”, “SAP” and “Power BI”"
   [/^(“[^”]+”(?:, “[^”]+”)*) and (“[^”]+”)$/u, ([list, last]) => `${list} e ${last}`],
+  // The tailoring summary's lists of what the user named themselves ("Educore - ERP Escolar and Landing Pages"):
+  // names of any shape, so the "and" before the last one is turned inside these sentences only. A
+  // pattern for "{} and {}" in general would also turn job titles like "Finance and Accounting".
+  [/^Reworded your (.+) roles for this job$/u, ([list]) => `Adaptei as funções em ${andToE(list)} a esta vaga`],
+  [/^Reworded your (.+) projects for this job$/u, ([list]) => `Adaptei os projetos ${andToE(list)} a esta vaga`],
+  [/^Left out (.+), which this job isn't about$/u, ([list]) => `Deixei de fora ${andToE(list)}, que não são o foco desta vaga`],
   // Counts: "9 of 31"
   [/^(\d+) of (\d+)$/u, ([part, whole]) => `${part} de ${whole}`],
   // What the agent searches: "financeiro · Mozambique · via Kukwira"

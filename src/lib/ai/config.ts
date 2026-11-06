@@ -57,8 +57,8 @@ type AiEnv = Pick<
 
 /**
  * Settings win once a provider is saved there; until then the environment
- * decides. The two are never mixed, except that an env key still serves a
- * saved provider of the same kind that has no key of its own.
+ * decides. The two are never mixed, except that an env key, address and model
+ * still serve a saved provider of the same kind that has none of its own.
  */
 export function resolveAiConfig(saved: SavedSettings | null, source: AiEnv, secret?: string): AiConfig {
   const envProvider = source.DOSSIER_AI_PROVIDER ? FROM_ENV[source.DOSSIER_AI_PROVIDER] : null;
@@ -79,10 +79,16 @@ export function resolveAiConfig(saved: SavedSettings | null, source: AiEnv, secr
     apiKey = source.DOSSIER_AI_KEY ?? null;
   }
 
+  // What DOSSIER_AI_* say serves a saved provider of the same kind that has no
+  // address or model of its own, as it serves its key: saving only a key in
+  // Settings mustn't send a DeepSeek key to OpenAI's address.
+  const fromEnv = !useSaved || envProvider === provider;
+  const envAddress = source.DOSSIER_AI_URL || (source.DOSSIER_AI_PROVIDER === "deepseek" ? DEEPSEEK_URL : null);
+
   return {
     provider,
-    baseUrl: (useSaved ? saved!.baseUrl : source.DOSSIER_AI_URL) || (!useSaved && source.DOSSIER_AI_PROVIDER === "deepseek" ? DEEPSEEK_URL : defaults.baseUrl),
-    model: (useSaved ? saved!.model : source.DOSSIER_AI_MODEL) || defaults.model,
+    baseUrl: (useSaved ? saved!.baseUrl : null) || (fromEnv ? envAddress : null) || defaults.baseUrl,
+    model: (useSaved ? saved!.model : null) || (fromEnv ? source.DOSSIER_AI_MODEL : null) || defaults.model,
     apiKey,
     apiKeyProblem,
     timeoutMs: (source.DOSSIER_AI_TIMEOUT_SECONDS ?? defaults.timeoutSeconds) * 1000,

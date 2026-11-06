@@ -38,6 +38,30 @@ describe("resolveAiConfig", () => {
     expect(resolveAiConfig(nothingSaved, { ...deepseek, DOSSIER_AI_URL: "https://proxy.example/v1" }).baseUrl).toBe("https://proxy.example/v1");
   });
 
+  it("keeps DeepSeek's address and model for an OpenAI-compatible provider saved without its own", () => {
+    const deepseek = { DOSSIER_AI_PROVIDER: "deepseek", DOSSIER_AI_MODEL: "deepseek-flash", DOSSIER_AI_KEY: "sk-deepseek" } as const;
+    // Saving only a key in Settings saves the provider with no address: it mustn't fall back to OpenAI's.
+    expect(resolveAiConfig({ ...nothingSaved, provider: "OPENAI" } as never, deepseek)).toMatchObject({
+      provider: "OPENAI",
+      baseUrl: "https://api.deepseek.com",
+      model: "deepseek-flash",
+      apiKey: "sk-deepseek",
+    });
+    // What's saved still wins.
+    expect(resolveAiConfig({ ...nothingSaved, provider: "OPENAI", baseUrl: "https://proxy.example/v1", model: "m1" } as never, deepseek)).toMatchObject({
+      baseUrl: "https://proxy.example/v1",
+      model: "m1",
+    });
+    // Another kind of provider doesn't borrow DeepSeek's address or model.
+    expect(resolveAiConfig({ ...nothingSaved, provider: "MISTRAL" } as never, deepseek)).toMatchObject({
+      baseUrl: "https://api.mistral.ai/v1",
+      model: "mistral-medium-latest",
+      apiKey: null,
+    });
+    // Without DOSSIER_AI_PROVIDER=deepseek, OpenAI-compatible keeps OpenAI's address.
+    expect(resolveAiConfig({ ...nothingSaved, provider: "OPENAI" } as never, noEnv).baseUrl).toBe("https://api.openai.com/v1");
+  });
+
   it("uses the DOSSIER_AI_* variables until a provider is saved", () => {
     const config = resolveAiConfig(nothingSaved, {
       DOSSIER_AI_PROVIDER: "anthropic",

@@ -98,4 +98,7 @@ FROM production AS fly
 USER root
 COPY docker/fly-start.sh ./fly-start.sh
 RUN chmod 755 ./fly-start.sh
+# The standalone build is copied as root, and Next.js writes its route cache
+# under .next/server as `node` ("EACCES: mkdir .next/server/route-cache").
+RUN chown -R node:node /app/.next
 CMD ["./fly-start.sh"]

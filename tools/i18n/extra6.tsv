@@ -1,0 +1,74 @@
+# Texts found in production (November 2026) that the dictionary didn't know
+Several sources	Várias fontes
+your AI server	o seu servidor de IA
+1 hour	1 hora
+7 days	7 dias
+30 days	30 dias
+1 week ago	há 1 semana
+19 countries · free key, about 250 searches a day	19 países · chave gratuita, cerca de 250 pesquisas por dia
+# Document languages (the list in Settings → Documents)
+Dutch	Neerlandês
+German	Alemão
+French	Francês
+Spanish	Espanhol
+Italian	Italiano
+Portuguese	Português (do Brasil)
+Polish	Polaco
+Swedish	Sueco
+Danish	Dinamarquês
+Norwegian	Norueguês
+Finnish	Finlandês
+Czech	Checo
+Greek	Grego
+Turkish	Turco
+Arabic	Árabe
+Persian	Persa
+Hindi	Hindi
+Japanese	Japonês
+Korean	Coreano
+# AI provider messages (src/lib/ai)
+Couldn't reach the server. Check the address and that it's running.	Não foi possível chegar ao servidor. Verifique o endereço e se está a funcionar.
+The server didn't accept the API key. Check it in Settings → AI provider.	O servidor não aceitou a chave de API. Verifique-a em Definições → Fornecedor de IA.
+The AI provider is limiting requests right now. Wait a minute and try again.	O fornecedor de IA está a limitar os pedidos neste momento. Espere um minuto e tente de novo.
+The AI provider is overloaded right now. Try again in a moment.	O fornecedor de IA está sobrecarregado neste momento. Tente de novo daqui a pouco.
+The model took too long to answer. Try again, or pick a faster model.	O modelo demorou demasiado a responder. Tente de novo ou escolha um modelo mais rápido.
+That's more text than the model can take in at once. Try a shorter posting, or a model with a larger context.	É mais texto do que o modelo consegue receber de uma vez. Experimente uma vaga mais curta ou um modelo com mais contexto.
+The model's answer didn't come back in the expected shape. Try again.	A resposta do modelo não veio no formato esperado. Tente de novo.
+The model's answer was cut off before it was finished. Try again, or pick another model in Settings → AI provider.	A resposta do modelo foi cortada antes de acabar. Tente de novo ou escolha outro modelo em Definições → Fornecedor de IA.
+The AI provider ran into a problem. Try again in a moment.	O fornecedor de IA teve um problema. Tente de novo daqui a pouco.
+The server doesn't have the model “{}”. Pick another one in Settings → AI provider.	O servidor não tem o modelo “{}”. Escolha outro em Definições → Fornecedor de IA.
+Choose a model in Settings → AI provider first.	Escolha primeiro um modelo em Definições → Fornecedor de IA.
+No JSON found in the answer.	Não se encontrou JSON na resposta.
+The answer wasn't valid JSON.	A resposta não era JSON válido.
+Add your Anthropic API key in Settings → AI provider first.	Acrescente primeiro a sua chave de API da Anthropic em Definições → Fornecedor de IA.
+Add your Mistral API key in Settings → AI provider first.	Acrescente primeiro a sua chave de API da Mistral em Definições → Fornecedor de IA.
+The model declined to answer this one. Try rewording it, or try again.	O modelo recusou-se a responder a esta. Experimente reformulá-la ou tente de novo.
+The AI server sent the request to another address. Dossier won't send your API key there: put that address in Settings → AI provider instead.	O servidor de IA reencaminhou o pedido para outro endereço. O Dossier não envia lá a sua chave de API: ponha esse endereço em Definições → Fornecedor de IA.
+Couldn't reach LM Studio. Check the address, that its server is running (Developer tab), and, with Dossier in Docker, that Serve on Local Network is on.	Não foi possível chegar ao LM Studio. Verifique o endereço, se o servidor está a funcionar (separador Developer) e, com o Dossier em Docker, se o Serve on Local Network está ligado.
+LM Studio has “{}” loaded with {} tokens of context, and Dossier needs {}. Eject it in LM Studio and Dossier loads it again with enough, or load it yourself with a larger context length.	O LM Studio tem o “{}” carregado com {} tokens de contexto, e o Dossier precisa de {}. Ejete-o no LM Studio e o Dossier volta a carregá-lo com o suficiente, ou carregue-o você com um contexto maior.
+Mistral lets this API key make 0 requests a minute, so nothing gets through. Check the plan and limits of its workspace in Mistral's console, then try again.	A Mistral deixa esta chave de API fazer 0 pedidos por minuto, por isso nada passa. Veja o plano e os limites da sua área de trabalho na consola da Mistral e tente de novo.
+Your Mistral plan doesn't include “{}”. Pick another model in Settings → AI provider.	O seu plano da Mistral não inclui o “{}”. Escolha outro modelo em Definições → Fornecedor de IA.
+Dossier in Docker? There, localhost is Dossier's own container: use http://host.docker.internal:11434 for Ollama on this computer, or http://ollama:11434 for the Compose service.	Dossier em Docker? Aí, localhost é o contentor do próprio Dossier: use http://host.docker.internal:11434 para o Ollama neste computador, ou http://ollama:11434 para o serviço do Compose.
+That's LM Studio on the computer Dossier's Docker runs on; without Docker, use http://localhost:1234. Can't connect? Start the server in LM Studio's Developer tab, and turn on Serve on Local Network there.	Este é o LM Studio do computador onde corre o Docker do Dossier; sem Docker, use http://localhost:1234. Não liga? Inicie o servidor no separador Developer do LM Studio e ative aí o Serve on Local Network.
+# Application forms on other sites (apply-form-panel)
+doesn't allow sending from here: its form checks that a person is filling it in. Use the assistant or the bookmark, and press Send yourself.	não permite o envio a partir daqui: o formulário verifica que é uma pessoa a preenchê-lo. Use o assistente ou o favorito e carregue você em Enviar.
+Dossier sends the form the way	O Dossier envia o formulário da mesma forma que o faz a página de
+'s page does, with your tailored resume as the CV and the cover letter as the message. You see everything first, and nothing goes without your tick.	, com o seu currículo adaptado como CV e a carta de apresentação como mensagem. Vê tudo primeiro, e nada sai sem a sua confirmação.
+Chosen from Kukwira's list:	Escolhido da lista da Kukwira:
+# Email conversation (Gmail)
+No text.	Sem texto.
+Not read yet	Ainda não lido
+What I read	O que li
+Answer anyway	Responder mesmo assim
+They settled on this time. Add it to your calendar and dashboard?	Combinaram esta hora. Acrescentá-la ao calendário e ao painel?
+Move to Interview too	Passar também para Entrevista
+Your answer	A sua resposta
+Times to offer	Horas a propor
+I'll answer from your profile and this application, and only with facts that are in them.	Respondo a partir do seu perfil e desta candidatura, e só com factos que lá estão.
+Your profile doesn't say:	O seu perfil não diz:
+Fill in the […] above, or tell me below and draft again.	Preencha os […] acima, ou diga-me abaixo e escreva de novo.
+Tell the AI	Dizer à IA
+No answer needed	Não é preciso responder
+Review and send	Rever e enviar
+Send your answer?	Enviar a sua resposta?
+, in the same thread. This can't be unsent.	, na mesma conversa. Não se pode desfazer.

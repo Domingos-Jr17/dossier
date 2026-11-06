@@ -24,3 +24,32 @@ test("switches the interface to Portuguese and back", async ({ page }) => {
   await expect(page.getByRole("heading", { level: 1, name: "Applications" })).toBeVisible();
   await expect(page.locator("html")).toHaveAttribute("lang", "en");
 });
+
+// The translator waits for the page to hydrate (whenHydrated). Changing text
+// React hasn't hydrated yet fails the hydration ("Minified React error #418")
+// and left "A carregar o seu painel…" showing in production.
+test("loads the screens in Portuguese without a hydration error", async ({ page }) => {
+  const errors: string[] = [];
+  page.on("pageerror", (error) => errors.push(error.message));
+  page.on("console", (message) => {
+    if (message.type() === "error") errors.push(message.text());
+  });
+
+  await page.goto("/jobs");
+  await page.getByRole("button", { name: "Português" }).click();
+  await expect(page.getByRole("heading", { level: 1, name: "Procurar vagas" })).toBeVisible();
+
+  // Full page loads, with the language already chosen: the case that hydrates with the translator waiting.
+  for (const [path, heading] of [
+    ["/jobs", "Procurar vagas"],
+    ["/applications", "Candidaturas"],
+    ["/settings", "Definições"],
+    ["/profile", "O seu perfil"],
+  ]) {
+    await page.goto(path);
+    await expect(page.getByRole("heading", { level: 1, name: heading })).toBeVisible();
+    await expect(page.getByText("A carregar o seu painel…")).toHaveCount(0);
+  }
+
+  expect(errors.filter((error) => /#418|hydrat/i.test(error))).toEqual([]);
+});
