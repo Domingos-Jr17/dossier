@@ -108,6 +108,8 @@ export async function importExport(db: PrismaClient, data: DossierExport): Promi
         tx.profileField.deleteMany(),
         tx.language.deleteMany(),
         tx.education.deleteMany(),
+        tx.certification.deleteMany(),
+        tx.customSection.deleteMany(),
         tx.publication.deleteMany(),
         tx.reference.deleteMany(),
         tx.fact.deleteMany(),
@@ -121,15 +123,16 @@ export async function importExport(db: PrismaClient, data: DossierExport): Promi
       await tx.language.createMany({ data: profile.languages });
       await tx.experience.createMany({ data: profile.experience.map((entry) => omit(entry, "skillIds")) });
       await tx.experienceSkill.createMany({
-        data: profile.experience.flatMap((entry) => entry.skillIds.map((skillId) => ({ experienceId: entry.id, skillId }))),
-        skipDuplicates: true,
+        data: profile.experience.flatMap((entry) => [...new Set(entry.skillIds)].map((skillId) => ({ experienceId: entry.id, skillId }))),
       });
       await tx.project.createMany({ data: profile.projects.map((entry) => omit(entry, "skillIds")) });
       await tx.projectSkill.createMany({
-        data: profile.projects.flatMap((entry) => entry.skillIds.map((skillId) => ({ projectId: entry.id, skillId }))),
-        skipDuplicates: true,
+        data: profile.projects.flatMap((entry) => [...new Set(entry.skillIds)].map((skillId) => ({ projectId: entry.id, skillId }))),
       });
       await tx.education.createMany({ data: profile.education });
+      await tx.certification.createMany({ data: profile.certifications });
+      await tx.customSection.createMany({ data: profile.customSections.map((section) => omit(section, "items")) });
+      await tx.customItem.createMany({ data: profile.customSections.flatMap((section) => section.items.map((item) => ({ ...item, sectionId: section.id }))) });
       await tx.publication.createMany({ data: profile.publications });
       await tx.reference.createMany({ data: profile.references });
       await tx.fact.createMany({ data: profile.facts });
@@ -143,6 +146,8 @@ export async function importExport(db: PrismaClient, data: DossierExport): Promi
           ...omit(application, "events", "documents", "messages", "notes", "facts", "userNote"),
           extracted: json(application.extracted),
           match: json(application.match),
+          sections: json(application.sections),
+          frozen: json(application.frozen),
         })),
       });
       await tx.statusEvent.createMany({
@@ -212,7 +217,7 @@ export async function importExport(db: PrismaClient, data: DossierExport): Promi
           applicationId: startup.applicationId && applicationIds.has(startup.applicationId) ? startup.applicationId : null,
         })),
       });
-      await tx.startupBlock.createMany({ data: startupBlocks, skipDuplicates: true });
+      await tx.startupBlock.createMany({ data: [...new Map(startupBlocks.map((block) => [block.hash, block])).values()] });
     },
     // A big export takes longer than the default five seconds.
     { timeout: 120_000, maxWait: 10_000 },

@@ -18,8 +18,8 @@ const profile = {
   ],
   education: [{ id: "e1", degree: "Licenciatura em Economia", school: "UEM", notes: "", startYear: 2008, startMonth: 2, endYear: 2012, endMonth: 12, current: false }],
   experience: [
-    { id: "x1", role: "Gestora de Produtos", company: "Banco Exemplo", location: "", descriptor: "", bullets: "", skillIds: [], startYear: 2021, startMonth: 3, endYear: null, endMonth: null, current: true },
-    { id: "x2", role: "Analista Sénior", company: "Consultores Exemplo", location: "", descriptor: "", bullets: "", skillIds: [], startYear: 2017, startMonth: 1, endYear: 2021, endMonth: 2, current: false },
+    { id: "x1", role: "Gestora de Produtos", company: "Banco Exemplo", location: "", descriptor: "", volunteering: false, bullets: "", skillIds: [], startYear: 2021, startMonth: 3, endYear: null, endMonth: null, current: true },
+    { id: "x2", role: "Analista Sénior", company: "Consultores Exemplo", location: "", descriptor: "", volunteering: false, bullets: "", skillIds: [], startYear: 2017, startMonth: 1, endYear: 2021, endMonth: 2, current: false },
   ],
 };
 const personal = { ...EMPTY_PERSONAL, gender: "Feminino" as const, civilState: "Solteiro(a)" as const, birthPlace: "Cidade de Maputo", postalCode: "1100", nationality: "Moçambique" };

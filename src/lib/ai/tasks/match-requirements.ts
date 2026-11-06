@@ -1,7 +1,7 @@
 import { z } from "zod";
 
 import { matchSchema, type Extracted, type Match } from "@/lib/application-data";
-import { experienceMonths, formatDateRange, formatMonthYear, languageLevelLabel, sameName, type ProfileData } from "@/lib/profile";
+import { experienceMonths, formatDateRange, formatMonthYear, languageLevelLabel, paidRoles, sameName, type ProfileData } from "@/lib/profile";
 
 import { system, UNTRUSTED_POSTING, type Task, type TaskOptions } from "./prompt-parts";
 
@@ -48,6 +48,7 @@ export const matchRequirements: Task<MatchInput, Match> = async (provider, { req
   const needsModel = requirements.length > 0;
   const answer = needsModel
     ? await provider.complete({
+        task: "match-requirements",
         system: system(INSTRUCTIONS, UNTRUSTED_POSTING),
         messages: [
           {
@@ -99,7 +100,8 @@ function classify(
     // Ids must be the profile's own: a model can't add a role by naming one.
     const inField = mapped?.roles ? profile.experience.filter((entry) => mapped.roles!.includes(entry.id)) : null;
     if (inField && inField.length === 0) return { ...base, result: "gap", note: "No role in your profile in this field" };
-    const counted = inField ?? profile.experience;
+    // Years of experience are paid roles' (#294).
+    const counted = paidRoles(inField ?? profile.experience);
     const dated = counted.filter((entry) => entry.startYear !== null);
     if (dated.length === 0) return { ...base, result: "gap", note: "Add your experience to check this" };
     const first = dated.reduce(

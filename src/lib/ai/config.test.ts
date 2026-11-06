@@ -53,11 +53,9 @@ describe("resolveAiConfig", () => {
       model: "m1",
     });
     // Another kind of provider doesn't borrow DeepSeek's address or model.
-    expect(resolveAiConfig({ ...nothingSaved, provider: "MISTRAL" } as never, deepseek)).toMatchObject({
-      baseUrl: "https://api.mistral.ai/v1",
-      model: "mistral-medium-latest",
-      apiKey: null,
-    });
+    const mistral = resolveAiConfig({ ...nothingSaved, provider: "MISTRAL" } as never, deepseek);
+    expect(mistral).toMatchObject({ baseUrl: "https://api.mistral.ai/v1", apiKey: null });
+    expect(mistral.model).not.toBe("deepseek-flash");
     // Without DOSSIER_AI_PROVIDER=deepseek, OpenAI-compatible keeps OpenAI's address.
     expect(resolveAiConfig({ ...nothingSaved, provider: "OPENAI" } as never, noEnv).baseUrl).toBe("https://api.openai.com/v1");
   });
@@ -71,7 +69,7 @@ describe("resolveAiConfig", () => {
     expect(config).toMatchObject({
       provider: "ANTHROPIC",
       baseUrl: "https://api.anthropic.com",
-      model: "claude-sonnet-5",
+      model: "claude-sonnet-5-5",
       apiKey: "sk-env",
       timeoutMs: 90_000,
     });
@@ -81,7 +79,7 @@ describe("resolveAiConfig", () => {
     expect(resolveAiConfig(nothingSaved, { DOSSIER_AI_PROVIDER: "mistral", DOSSIER_AI_KEY: "mk-env" })).toMatchObject({
       provider: "MISTRAL",
       baseUrl: "https://api.mistral.ai/v1",
-      model: "mistral-medium-latest",
+      model: "mistral-small-2603",
       apiKey: "mk-env",
       timeoutMs: 120_000,
     });

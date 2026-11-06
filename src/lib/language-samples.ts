@@ -336,6 +336,7 @@ export function sampleProfile(sample: Sample): ProfileData {
         company: sample.company,
         location: sample.city,
         descriptor: "",
+        volunteering: false,
         bullets: sample.bullet,
         startYear: 2021,
         startMonth: 3,
@@ -359,8 +360,10 @@ export function sampleProfile(sample: Sample): ProfileData {
         current: false,
       },
     ],
+    certifications: [],
     publications: [],
     references: [],
+    customSections: [],
     facts: [],
     photo: null,
   };

@@ -74,6 +74,7 @@ export type CoverLetterInput = {
  */
 export const writeCoverLetter: Task<CoverLetterInput, Unit[]> = async (provider, { profile, extracted, match, tone, facts, posting }, options) => {
   const answer = await provider.complete({
+    task: "write-cover-letter",
     system: system(
       INSTRUCTIONS,
       gapRule(options.letterGaps),

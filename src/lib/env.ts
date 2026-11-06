@@ -50,13 +50,19 @@ const schema = z.object({
   ),
   DATABASE_URL: required(
     "DATABASE_URL",
-    "Set it to your PostgreSQL connection string, e.g. postgresql://user:password@host:5432/dossier.",
+    "Set it to your PostgreSQL connection string, e.g. postgresql://user:password@host:5432/dossier, or to an SQLite file, e.g. file:/data/dossier.db.",
   ).pipe(
     // Never echo the value: it contains the database password.
-    z.string().regex(/^postgres(ql)?:\/\//, {
-      error:
-        "DATABASE_URL must be a PostgreSQL connection string starting with postgresql://.",
-    }),
+    z
+      .string()
+      .regex(/^(postgres(ql)?:\/\/|file:)/, {
+        error:
+          "DATABASE_URL must be a PostgreSQL connection string starting with postgresql://, or an SQLite file starting with file:.",
+      })
+      // A relative path would mean another file to the migrations, which run in another folder.
+      .refine((url) => !url.startsWith("file:") || path.isAbsolute(url.slice("file:".length)), {
+        error: "DATABASE_URL must give the SQLite file's full path, e.g. file:/data/dossier.db.",
+      }),
   ),
   DOSSIER_DATA_DIR: z
     .preprocess(unsetIfEmpty, z.string().default("/data"))
@@ -208,6 +214,16 @@ const schema = z.object({
   DOSSIER_USAGE_PING_TEST_URL: optional(
     z.url({ protocol: /^https?$/, error: "DOSSIER_USAGE_PING_TEST_URL must be an http:// or https:// URL." }),
   ),
+  // Where the project's backend is (announcements/check.ts), when it isn't
+  // the real one: for development against a local copy, and the end-to-end tests.
+  DOSSIER_API_URL: optional(
+    z.url({ protocol: /^https?$/, error: "DOSSIER_API_URL must be an http:// or https:// URL." }).transform((url) => url.replace(/\/+$/, "")),
+  ),
+  // Set by the desktop app on a server it starts: the token it signs in with
+  // for this launch (desktop.ts). Never set on a server otherwise.
+  DOSSIER_DESKTOP_TOKEN: optional(z.string()),
+  // And where it prints PDFs (pdf/desktop-print.ts), with its own Chromium.
+  DOSSIER_DESKTOP_PRINT_URL: optional(z.url({ protocol: /^https?$/, error: "DOSSIER_DESKTOP_PRINT_URL must be an http:// or https:// URL." })),
   // For the end-to-end tests only: asks <url> for the latest release instead
   // of GitHub's API (e2e/fake-jobs.mts answers).
   DOSSIER_UPDATES_TEST_BASE_URL: optional(

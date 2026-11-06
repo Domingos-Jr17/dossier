@@ -55,9 +55,19 @@ describe("the fact guard (E6-6)", () => {
   });
 
   it("flags acronyms and credentials the profile doesn't have", () => {
-    expect(check("An MBA and a certified scrum master")).toEqual(["MBA", "certified"]);
+    const uncertified = sourcesFor({ ...profile, certifications: [] }, extracted, sample.ledgerly.posting, 11);
+    expect(unverifiedFacts("An MBA and a certified scrum master", uncertified)).toEqual(["MBA", "certified"]);
+    // Jane is certified in accessibility (#293).
+    expect(check("A Certified Accessibility Specialist since 2022")).toEqual([]);
     expect(check("An MSc in Design for Interaction from TU Delft")).toEqual([]);
     expect(check("Knows WCAG 2.2 well")).toEqual([]);
+  });
+
+  it("takes what the candidate's own sections say as true (#298)", () => {
+    const item = { id: "i1", title: "Chartered MBA, 2009", subtitle: "", startYear: null, startMonth: null, endYear: null, endMonth: null, current: false, details: "", link: "", onResumes: true };
+    const backed = sourcesFor({ ...profile, customSections: [{ id: "s1", title: "Honours", format: "LINES", items: [item] }] }, extracted, sample.ledgerly.posting, 11);
+    expect(unverifiedFacts("An MBA since 2009", backed)).toEqual([]);
+    expect(check("An MBA since 2009")).toEqual(["MBA", "2009"]);
   });
 
   it("flags years the profile doesn't have", () => {
@@ -69,11 +79,14 @@ describe("the fact guard (E6-6)", () => {
     expect(check("Designer com nove anos de experiência, desde março de 2015.")).toEqual([]);
     expect(check("Liderou uma equipa de dezoito designers")).toEqual(["dezoito"]);
     expect(check("Sete anos na Northwind Logistics, três deles a liderar")).toEqual(["Sete"]);
-    expect(check("Sou certificada em Scrum e tenho a certificação PMP")).toEqual(["Scrum", "PMP", "certificada", "certificação"]);
+    // Jane is certified in accessibility (#293), so what backs "certificada" is taken away.
+    const uncertified = sourcesFor({ ...profile, certifications: [] }, extracted, sample.ledgerly.posting, 11);
+    expect(unverifiedFacts("Sou certificada em Scrum e tenho a certificação PMP", uncertified)).toEqual(["Scrum", "PMP", "certificada", "certificação"]);
   });
 
   it("flags plans and commitments the candidate never stated", () => {
-    expect(check("Estou a planear iniciar uma certificação em design de serviços.")).toEqual(["certificação", "Estou a planear"]);
+    const uncertified = sourcesFor({ ...profile, certifications: [] }, extracted, sample.ledgerly.posting, 11);
+    expect(unverifiedFacts("Estou a planear iniciar uma certificação em design de serviços.", uncertified)).toEqual(["certificação", "Estou a planear"]);
     expect(check("Next year I plan to complete a course in accessibility.")).toEqual(["I plan to"]);
     expect(check("Vou iniciar um mestrado em setembro.")).toEqual(["Vou iniciar"]);
     // What the candidate told the AI backs it.
@@ -96,6 +109,13 @@ describe("the fact guard on runaway output", () => {
   it("reads text ending in thousands of blank lines quickly", () => {
     const started = performance.now();
     expect(check(`Led the redesign at Northwind Logistics.${"\n".repeat(100_000)}`)).toEqual([]);
+    expect(performance.now() - started).toBeLessThan(500);
+  });
+
+  it("reads words with a long run of marks inside quickly", () => {
+    const started = performance.now();
+    expect(factSources([`a${".".repeat(100_000)}b.`]).words.size).toBe(1);
+    check(`A${"-".repeat(100_000)}b`);
     expect(performance.now() - started).toBeLessThan(500);
   });
 });
