@@ -5,3 +5,5 @@
 Dockerfile* text eol=lf
 # Prisma checksums each migration file: the same bytes on every machine.
 *.sql text eol=lf
+# The Prisma schemas: prisma/sqlite/schema.prisma is made from prisma/schema.prisma and a test compares them byte for byte.
+*.prisma text eol=lf
